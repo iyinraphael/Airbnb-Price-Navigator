@@ -14,6 +14,7 @@
 		EBDD78A9232DCB6C008CFC6D /* Airbnb_Price_Navigator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78A7232DCB6C008CFC6D /* Airbnb_Price_Navigator.xcdatamodeld */; };
 		EBDD78AB232DCB71008CFC6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBDD78AA232DCB71008CFC6D /* Assets.xcassets */; };
 		EBDD78AE232DCB71008CFC6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBDD78AC232DCB71008CFC6D /* LaunchScreen.storyboard */; };
+		EBDD78B9232DCF28008CFC6D /* Propetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78B8232DCF28008CFC6D /* Propetry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		EBDD78AA232DCB71008CFC6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBDD78AD232DCB71008CFC6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBDD78AF232DCB71008CFC6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBDD78B8232DCF28008CFC6D /* Propetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Propetry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,9 @@
 		EBDD789D232DCB6C008CFC6D /* Airbnb-Price-Navigator */ = {
 			isa = PBXGroup;
 			children = (
+				EBDD78B7232DCEAD008CFC6D /* Model Controller */,
+				EBDD78B6232DCE9B008CFC6D /* View Controller */,
+				EBDD78B5232DCE8B008CFC6D /* Model */,
 				EBDD789E232DCB6C008CFC6D /* AppDelegate.swift */,
 				EBDD78A0232DCB6C008CFC6D /* SceneDelegate.swift */,
 				EBDD78A2232DCB6C008CFC6D /* ViewController.swift */,
@@ -68,6 +73,28 @@
 				EBDD78A7232DCB6C008CFC6D /* Airbnb_Price_Navigator.xcdatamodeld */,
 			);
 			path = "Airbnb-Price-Navigator";
+			sourceTree = "<group>";
+		};
+		EBDD78B5232DCE8B008CFC6D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EBDD78B8232DCF28008CFC6D /* Propetry.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EBDD78B6232DCE9B008CFC6D /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
+		EBDD78B7232DCEAD008CFC6D /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Model Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +172,7 @@
 				EBDD78A9232DCB6C008CFC6D /* Airbnb_Price_Navigator.xcdatamodeld in Sources */,
 				EBDD789F232DCB6C008CFC6D /* AppDelegate.swift in Sources */,
 				EBDD78A1232DCB6C008CFC6D /* SceneDelegate.swift in Sources */,
+				EBDD78B9232DCF28008CFC6D /* Propetry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
