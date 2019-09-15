@@ -12,10 +12,16 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    let propetryController = PropertyController()
+    let property = Property(zipCode: "90210", propertyType: "Villa", roomType: "Private room", accomodates: 5, bathrooms: 5, bedrooms: 2, beds: 2, bedType: "Real Bed")
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        propetryController.postPropeties(property: property) { (predict, error) in
+            if let predict = predict {
+              print("\(predict)")
+            }
+        }
         return true
     }
 
