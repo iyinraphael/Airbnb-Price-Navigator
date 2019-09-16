@@ -24,10 +24,10 @@ class PropertyViewController: UIViewController {
     var zipcodeTextField = UITextField()
     var propertyTypeTextField = UITextField()
     var roomTypeTextField = UITextField()
-    var bedorooms = UITextField()
-    var bathrooms = UITextField()
-    var bedTypes =  UITextField()
-    var accommodates = UITextField()
+    var bedoroomsTextField = UITextField()
+    var bathroomsTextField = UITextField()
+    var bedTypesTextField =  UITextField()
+    var accommodatesTextField = UITextField()
 
     
     var headerLabel = UILabel()
@@ -56,29 +56,70 @@ class PropertyViewController: UIViewController {
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15.0).isActive = true
         
         
+        //MARK: - Header Text
         stackview.addArrangedSubview(headerLabel)
-        headerLabel.translatesAutoresizingMaskIntoConstraints = false
         headerLabel.text = "Find out the value of your propery"
         
         //MARK: - Zipcode
         stackview.addArrangedSubview(zipcodeStackView)
         zipcodeStackView.axis = .vertical
-        zipcodeStackView.translatesAutoresizingMaskIntoConstraints = false
         zipcodeStackView.addArrangedSubview(zipcodeLabel)
         zipcodeLabel.text = "Zipcode"
         zipcodeStackView.addArrangedSubview(zipcodeTextField)
         zipcodeTextField.borderStyle = .line
+        zipcodeTextField.placeholder = "90210"
       
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
         propertyTypeStackView.axis = .vertical
-        propertyTypeStackView.translatesAutoresizingMaskIntoConstraints = false
         propertyTypeStackView.addArrangedSubview(propertyLabel)
         propertyLabel.text = "Property Type"
         propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
         propertyTypeTextField.borderStyle = .line
+        propertyTypeTextField.placeholder = "House"
         propertyTypeTextField.rightView = propertyTypeButton
     
+        //MARK: - Room Type
+        stackview.addArrangedSubview(roomTypeStackView)
+        roomTypeStackView.axis = .vertical
+        roomTypeStackView.addArrangedSubview(roomTypeLabel)
+        roomTypeLabel.text = "Room Type"
+        
+        roomTypeStackView.addArrangedSubview(roomTypeTextField)
+        roomTypeTextField.borderStyle = .line
+        roomTypeTextField.placeholder = "Entire Property"
+        roomTypeTextField.rightView = roomTypeButton
+        
+        //MARK: - Bedtroom and Bathroom
+        stackview.addArrangedSubview(bedAndBathStackView)
+        bedAndBathStackView.axis = .horizontal
+        bedAndBathStackView.distribution = .fillEqually
+        bedAndBathStackView.spacing = 5.0
+        bedAndBathStackView.addArrangedSubview(bedroomsStackView)
+        bedAndBathStackView.addArrangedSubview(bathroomsStackView)
+        
+        bedAndBathStackView.axis = .horizontal
+        
+        bedroomsStackView.addArrangedSubview(bedroomsLabel)
+        bedroomsStackView.addArrangedSubview(bedoroomsTextField)
+        bedroomsStackView.axis = .vertical
+    
+        bedroomsLabel.text = "Bedrooms"
+
+        bedoroomsTextField.borderStyle = .line
+        bedoroomsTextField.placeholder = "0"
+
+        bathroomsStackView.addArrangedSubview(bathroomsLabel)
+        bathroomsStackView.addArrangedSubview(bathroomsTextField)
+        bathroomsStackView.axis = .vertical
+
+        bathroomsLabel.text = "Bathrooms"
+
+        bathroomsTextField.borderStyle = .line
+        bathroomsTextField.placeholder = "0"
+       
+        
+        
         
     }
     
