@@ -20,7 +20,7 @@ class PropertyViewController: UIViewController {
     let bedAndBathStackView = UIStackView()
     let bedTypesStackView = UIStackView()
     let accommodatStackView = UIStackView()
-    
+
     var zipcodeTextField = UITextField()
     var propertyTypeTextField = UITextField()
     var roomTypeTextField = UITextField()
@@ -28,7 +28,7 @@ class PropertyViewController: UIViewController {
     var bathrooms = UITextField()
     var bedTypes =  UITextField()
     var accommodates = UITextField()
-    var submitButton = UIButton()
+
     
     var headerLabel = UILabel()
     var zipcodeLabel = UILabel()
@@ -39,13 +39,17 @@ class PropertyViewController: UIViewController {
     var bedTypesLabel = UILabel()
     var accommodateLabel = UILabel()
     
+    var propertyTypeButton = UIButton()
+    var roomTypeButton = UIButton()
+    var bedTypesButton = UIButton()
+    var submitButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(stackview)
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.spacing = 5
-        stackview.distribution = .fillEqually
+        stackview.spacing = 5.0
         stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         stackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50.0).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15.0).isActive = true
@@ -54,14 +58,28 @@ class PropertyViewController: UIViewController {
         
         stackview.addArrangedSubview(headerLabel)
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.text = "Find out the value of your propery"
         
+        //MARK: - Zipcode
         stackview.addArrangedSubview(zipcodeStackView)
         zipcodeStackView.axis = .vertical
         zipcodeStackView.translatesAutoresizingMaskIntoConstraints = false
+        zipcodeStackView.addArrangedSubview(zipcodeLabel)
+        zipcodeLabel.text = "Zipcode"
+        zipcodeStackView.addArrangedSubview(zipcodeTextField)
+        zipcodeTextField.borderStyle = .line
+      
+        //MARK: - Property Type
+        stackview.addArrangedSubview(propertyTypeStackView)
+        propertyTypeStackView.axis = .vertical
+        propertyTypeStackView.translatesAutoresizingMaskIntoConstraints = false
+        propertyTypeStackView.addArrangedSubview(propertyLabel)
+        propertyLabel.text = "Property Type"
+        propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
+        propertyTypeTextField.borderStyle = .line
+        propertyTypeTextField.rightView = propertyTypeButton
+    
         
-        
-        
-       
     }
     
     // MARK: - Navigation
