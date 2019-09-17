@@ -49,26 +49,32 @@ class PropertyViewController: UIViewController {
         view.addSubview(stackview)
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.spacing = 5.0
-        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50.0).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15.0).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15.0).isActive = true
+        stackview.spacing = 10.0
+        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -140.0).isActive = true
+        stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
         
         
         //MARK: - Header Text
         stackview.addArrangedSubview(headerLabel)
-        headerLabel.text = "Find out the value of your propery"
+        headerLabel.text = "Find out the value of your property!"
+        headerLabel.textAlignment = .center
+        headerLabel.font = .boldSystemFont(ofSize: 20.0)
+        headerLabel.adjustsFontSizeToFitWidth = true
+        headerLabel.numberOfLines = 2
         
         //MARK: - Zipcode
         stackview.addArrangedSubview(zipcodeStackView)
-        zipcodeStackView.axis = .vertical
         zipcodeStackView.addArrangedSubview(zipcodeLabel)
-        zipcodeLabel.text = "Zipcode"
         zipcodeStackView.addArrangedSubview(zipcodeTextField)
+        zipcodeStackView.axis = .vertical
+       
+        zipcodeLabel.text = "Zipcode"
         zipcodeTextField.borderStyle = .line
         zipcodeTextField.placeholder = "90210"
-      
+        zipcodeTextField.
+    
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
         propertyTypeStackView.axis = .vertical
@@ -139,7 +145,11 @@ class PropertyViewController: UIViewController {
         accommodatesTextField.placeholder = "0"
         accommodatesTextField.borderStyle = .line
         
-        
+        //MARK: - Submit button
+        stackview.addArrangedSubview(submitButton)
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.backgroundColor = .gray
         
     }
     
