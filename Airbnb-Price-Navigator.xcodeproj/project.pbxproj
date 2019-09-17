@@ -18,6 +18,7 @@
 		EBDD78BD232DD601008CFC6D /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78BC232DD601008CFC6D /* NetworkController.swift */; };
 		EBDD78BF232DFB60008CFC6D /* PropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */; };
 		EBDD78C1232FEBA8008CFC6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78C0232FEBA7008CFC6D /* SceneDelegate.swift */; };
+		EBF9AC1923315F06004664D4 /* PropertyTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9AC1823315F06004664D4 /* PropertyTypeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		EBDD78BC232DD601008CFC6D /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViewController.swift; sourceTree = "<group>"; };
 		EBDD78C0232FEBA7008CFC6D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EBF9AC1823315F06004664D4 /* PropertyTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */,
+				EBF9AC1823315F06004664D4 /* PropertyTypeTableViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 			files = (
 				EBDD78A3232DCB6C008CFC6D /* ViewController.swift in Sources */,
 				EBDD78A9232DCB6C008CFC6D /* Airbnb_Price_Navigator.xcdatamodeld in Sources */,
+				EBF9AC1923315F06004664D4 /* PropertyTypeTableViewController.swift in Sources */,
 				EBDD789F232DCB6C008CFC6D /* AppDelegate.swift in Sources */,
 				EBDD78BF232DFB60008CFC6D /* PropertyViewController.swift in Sources */,
 				EBDD78BB232DD5C3008CFC6D /* PropertryController.swift in Sources */,

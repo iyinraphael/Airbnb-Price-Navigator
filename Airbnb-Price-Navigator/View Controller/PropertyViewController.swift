@@ -44,6 +44,9 @@ class PropertyViewController: UIViewController {
     var bedTypesButton = UIButton()
     var submitButton = UIButton()
     
+    var property: Property?
+    var propertyController = PropertyController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(stackview)
@@ -161,6 +164,12 @@ class PropertyViewController: UIViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    }
+    
+    private func updateView() {
+        
+        
         
     }
   
