@@ -119,7 +119,6 @@ class PropertyViewController: UIViewController {
         bathroomsTextField.placeholder = "0"
        
         //MARK: - Bed Types
-        
         stackview.addArrangedSubview(bedTypesStackView)
         bedTypesStackView.addArrangedSubview(bedTypesLabel)
         bedTypesStackView.addArrangedSubview(bedTypesTextField)
@@ -129,6 +128,16 @@ class PropertyViewController: UIViewController {
         bedTypesTextField.placeholder = "Standard Bed"
         bedTypesTextField.rightView = bedTypesButton
         bedTypesTextField.borderStyle = .line
+        
+        //MARK: - Accommodation
+        stackview.addArrangedSubview(accommodatStackView)
+        accommodatStackView.addArrangedSubview(accommodateLabel)
+        accommodatStackView.addArrangedSubview(accommodatesTextField)
+        accommodatStackView.axis = .vertical
+        
+        accommodateLabel.text = "Accomodates how many guest?"
+        accommodatesTextField.placeholder = "0"
+        accommodatesTextField.borderStyle = .line
         
         
         
