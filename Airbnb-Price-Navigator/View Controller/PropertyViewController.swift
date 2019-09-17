@@ -118,6 +118,17 @@ class PropertyViewController: UIViewController {
         bathroomsTextField.borderStyle = .line
         bathroomsTextField.placeholder = "0"
        
+        //MARK: - Bed Types
+        
+        stackview.addArrangedSubview(bedTypesStackView)
+        bedTypesStackView.addArrangedSubview(bedTypesLabel)
+        bedTypesStackView.addArrangedSubview(bedTypesTextField)
+        bedTypesStackView.axis = .vertical
+        
+        bedTypesLabel.text = "Bed Types"
+        bedTypesTextField.placeholder = "Standard Bed"
+        bedTypesTextField.rightView = bedTypesButton
+        bedTypesTextField.borderStyle = .line
         
         
         
