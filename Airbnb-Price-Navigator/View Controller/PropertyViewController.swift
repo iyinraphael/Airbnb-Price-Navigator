@@ -50,10 +50,11 @@ class PropertyViewController: UIViewController {
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.spacing = 10.0
-        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 58).isActive = true
         stackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -140.0).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
+    
         
         
         //MARK: - Header Text
@@ -70,16 +71,17 @@ class PropertyViewController: UIViewController {
         zipcodeStackView.addArrangedSubview(zipcodeTextField)
         zipcodeStackView.axis = .vertical
        
-        zipcodeLabel.text = "Zipcode"
+        zipcodeLabel.text = "Zip Code"
+        zipcodeLabel.font = .boldSystemFont(ofSize: 12)
         zipcodeTextField.borderStyle = .line
         zipcodeTextField.placeholder = "90210"
-        zipcodeTextField.
     
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
         propertyTypeStackView.axis = .vertical
         propertyTypeStackView.addArrangedSubview(propertyLabel)
         propertyLabel.text = "Property Type"
+        propertyLabel.font = .boldSystemFont(ofSize: 12)
         propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
         propertyTypeTextField.borderStyle = .line
         propertyTypeTextField.placeholder = "House"
@@ -90,6 +92,7 @@ class PropertyViewController: UIViewController {
         roomTypeStackView.axis = .vertical
         roomTypeStackView.addArrangedSubview(roomTypeLabel)
         roomTypeLabel.text = "Room Type"
+        roomTypeLabel.font = .boldSystemFont(ofSize: 12)
         
         roomTypeStackView.addArrangedSubview(roomTypeTextField)
         roomTypeTextField.borderStyle = .line
@@ -111,7 +114,7 @@ class PropertyViewController: UIViewController {
         bedroomsStackView.axis = .vertical
     
         bedroomsLabel.text = "Bedrooms"
-
+        bedroomsLabel.font = .boldSystemFont(ofSize: 12)
         bedoroomsTextField.borderStyle = .line
         bedoroomsTextField.placeholder = "0"
 
@@ -120,7 +123,7 @@ class PropertyViewController: UIViewController {
         bathroomsStackView.axis = .vertical
 
         bathroomsLabel.text = "Bathrooms"
-
+        bathroomsLabel.font = .boldSystemFont(ofSize: 12)
         bathroomsTextField.borderStyle = .line
         bathroomsTextField.placeholder = "0"
        
@@ -131,6 +134,7 @@ class PropertyViewController: UIViewController {
         bedTypesStackView.axis = .vertical
         
         bedTypesLabel.text = "Bed Types"
+        bedTypesLabel.font = .boldSystemFont(ofSize: 12)
         bedTypesTextField.placeholder = "Standard Bed"
         bedTypesTextField.rightView = bedTypesButton
         bedTypesTextField.borderStyle = .line
@@ -140,8 +144,10 @@ class PropertyViewController: UIViewController {
         accommodatStackView.addArrangedSubview(accommodateLabel)
         accommodatStackView.addArrangedSubview(accommodatesTextField)
         accommodatStackView.axis = .vertical
+        stackview.setCustomSpacing(55, after: accommodatStackView)
         
         accommodateLabel.text = "Accomodates how many guest?"
+        accommodateLabel.font = .boldSystemFont(ofSize: 12)
         accommodatesTextField.placeholder = "0"
         accommodatesTextField.borderStyle = .line
         
@@ -149,7 +155,7 @@ class PropertyViewController: UIViewController {
         stackview.addArrangedSubview(submitButton)
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(.white, for: .normal)
-        submitButton.backgroundColor = .gray
+        submitButton.backgroundColor = .lightGray
         
     }
     
