@@ -10,7 +10,7 @@ import UIKit
 
 class PropertyTypeTableViewController: UIViewController {
     
-    //MARK: Property 
+    //MARK: Property
     var tableView: UITableView!
     
     

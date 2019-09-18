@@ -19,6 +19,7 @@
 		EBDD78BF232DFB60008CFC6D /* PropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */; };
 		EBDD78C1232FEBA8008CFC6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDD78C0232FEBA7008CFC6D /* SceneDelegate.swift */; };
 		EBF9AC1923315F06004664D4 /* PropertyTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9AC1823315F06004664D4 /* PropertyTypeTableViewController.swift */; };
+		EBF9AC1B2332887C004664D4 /* PropertyTypeTableCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9AC1A2332887C004664D4 /* PropertyTypeTableCellController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyViewController.swift; sourceTree = "<group>"; };
 		EBDD78C0232FEBA7008CFC6D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EBF9AC1823315F06004664D4 /* PropertyTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeTableViewController.swift; sourceTree = "<group>"; };
+		EBF9AC1A2332887C004664D4 /* PropertyTypeTableCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeTableCellController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */,
 				EBF9AC1823315F06004664D4 /* PropertyTypeTableViewController.swift */,
+				EBF9AC1A2332887C004664D4 /* PropertyTypeTableCellController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBDD78A3232DCB6C008CFC6D /* ViewController.swift in Sources */,
+				EBF9AC1B2332887C004664D4 /* PropertyTypeTableCellController.swift in Sources */,
 				EBDD78A9232DCB6C008CFC6D /* Airbnb_Price_Navigator.xcdatamodeld in Sources */,
 				EBF9AC1923315F06004664D4 /* PropertyTypeTableViewController.swift in Sources */,
 				EBDD789F232DCB6C008CFC6D /* AppDelegate.swift in Sources */,
