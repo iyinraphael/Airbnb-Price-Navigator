@@ -47,6 +47,8 @@ class PropertyViewController: UIViewController {
     var property: Property?
     var propertyController = PropertyController()
     
+    var dropdown: DropDownTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(stackview)
@@ -93,7 +95,6 @@ class PropertyViewController: UIViewController {
         propertyTypeButton.setImage(UIImage(named: "slide-down"), for: .normal)
         propertyTypeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
         propertyTypeButton.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
-        propertyTypeButton.addTarget(self, action: #selector(updateTable), for: .touchUpInside)
         propertyTypeTextField.rightView = propertyTypeButton
         propertyTypeTextField.rightViewMode = .always
         
@@ -178,10 +179,6 @@ class PropertyViewController: UIViewController {
     private func updateView() {
         
         
-        
-    }
-  
-    @objc func updateTable() {
         
     }
     

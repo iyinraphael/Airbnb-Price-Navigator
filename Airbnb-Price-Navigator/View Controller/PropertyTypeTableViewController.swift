@@ -35,6 +35,19 @@ class PropertyTypeTableViewController: UIViewController {
         
     }
     
+}
+
+
+extension PropertyTypeTableViewController: UITableViewDataSource, UITableViewDelegate {
+   
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! PropertyTypeTableViewCell
+        cell.propertyTypeLabel.text = propertyTypeArray[indexPath.row]
+        return cell
+    }
     
 }
