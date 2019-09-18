@@ -8,12 +8,15 @@
 
 import UIKit
 
+let reuseIdentifier = "Cell"
+
 class PropertyTypeTableViewController: UIViewController {
     
-    //MARK: Property
+    //MARK: - Property
     var tableView: UITableView!
+    var propertyTypeArray = [String]()
     
-    
+    //MARK: - Set up
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +28,13 @@ class PropertyTypeTableViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        tableView.register(PropertyTypeTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         self.tableView = tableView
+        
+        propertyTypeArray += ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest Suite", "Bungalow", "Villa", "other"]
+        
     }
+    
+    
     
 }

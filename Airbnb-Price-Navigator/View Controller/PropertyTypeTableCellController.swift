@@ -8,9 +8,8 @@
 
 import UIKit
 
-class ProprtyTypeTableViewCell: UITableViewCell {
+class PropertyTypeTableViewCell: UITableViewCell {
     
-    //MARK: - Property
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

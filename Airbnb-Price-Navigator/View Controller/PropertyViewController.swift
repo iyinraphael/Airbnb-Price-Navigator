@@ -39,7 +39,7 @@ class PropertyViewController: UIViewController {
     var bedTypesLabel = UILabel()
     var accommodateLabel = UILabel()
     
-    var propertyTypeButton = UIButton()
+    var propertyTypeButton = UIButton(type: .custom)
     var roomTypeButton = UIButton()
     var bedTypesButton = UIButton()
     var submitButton = UIButton()
@@ -81,14 +81,22 @@ class PropertyViewController: UIViewController {
     
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
-        propertyTypeStackView.axis = .vertical
         propertyTypeStackView.addArrangedSubview(propertyLabel)
+        propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
+        propertyTypeStackView.axis = .vertical
+       
         propertyLabel.text = "Property Type"
         propertyLabel.font = .boldSystemFont(ofSize: 12)
-        propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
         propertyTypeTextField.borderStyle = .line
         propertyTypeTextField.placeholder = "House"
+        
+        propertyTypeButton.setImage(UIImage(named: "slide-down"), for: .normal)
+        propertyTypeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+        propertyTypeButton.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
+        propertyTypeButton.addTarget(self, action: #selector(updateTable), for: .touchUpInside)
         propertyTypeTextField.rightView = propertyTypeButton
+        propertyTypeTextField.rightViewMode = .always
+        
     
         //MARK: - Room Type
         stackview.addArrangedSubview(roomTypeStackView)
@@ -173,5 +181,9 @@ class PropertyViewController: UIViewController {
         
     }
   
+    @objc func updateTable() {
+        
+    }
+    
 
 }
