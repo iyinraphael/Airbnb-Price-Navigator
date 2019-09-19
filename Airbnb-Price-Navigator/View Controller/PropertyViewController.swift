@@ -47,7 +47,7 @@ class PropertyViewController: UIViewController {
     var property: Property?
     var propertyController = PropertyController()
     
-    var dropdown: DropDownTextField!
+    var dropdown: DropDownTextField = DropDownTextField(frame: CGRect.zero, title: "Practice", options: ["five", "six", "seven"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,11 +81,14 @@ class PropertyViewController: UIViewController {
         zipcodeTextField.borderStyle = .line
         zipcodeTextField.placeholder = "90210"
     
+        stackview.addArrangedSubview(dropdown)
+        
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
         propertyTypeStackView.addArrangedSubview(propertyLabel)
         propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
         propertyTypeStackView.axis = .vertical
+        
        
         propertyLabel.text = "Property Type"
         propertyLabel.font = .boldSystemFont(ofSize: 12)
