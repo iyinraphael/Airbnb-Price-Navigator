@@ -138,3 +138,23 @@ extension UIView {
         ])
     }
 }
+
+
+extension UIImage {
+    
+    enum Theme {
+        case dropDown
+        case dropUp
+        
+        var name: String {
+            switch self {
+            case .dropDown: return "slide-down"
+            case .dropUp: return "slide-up"
+            }
+        }
+        
+        var image: UIImage {
+            return UIImage(named: self.name)!
+        }
+    }
+}

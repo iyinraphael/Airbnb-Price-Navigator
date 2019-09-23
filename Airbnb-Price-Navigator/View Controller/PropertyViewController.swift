@@ -80,8 +80,6 @@ class PropertyViewController: UIViewController {
         zipcodeLabel.font = .boldSystemFont(ofSize: 12)
         zipcodeTextField.borderStyle = .line
         zipcodeTextField.placeholder = "90210"
-    
-        stackview.addArrangedSubview(dropdown)
         
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
