@@ -47,7 +47,9 @@ class PropertyViewController: UIViewController {
     var property: Property?
     var propertyController = PropertyController()
     
-    var dropdown: DropDownTextField = DropDownTextField(frame: CGRect.zero, title: "Practice", options: ["five", "six", "seven"])
+    var dropDown: DropDownTextField!
+    private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +82,8 @@ class PropertyViewController: UIViewController {
         zipcodeLabel.font = .boldSystemFont(ofSize: 12)
         zipcodeTextField.borderStyle = .line
         zipcodeTextField.placeholder = "90210"
+        
+        addDropDown()
         
         //MARK: - Property Type
         stackview.addArrangedSubview(propertyTypeStackView)
@@ -170,6 +174,15 @@ class PropertyViewController: UIViewController {
         submitButton.setTitleColor(.white, for: .normal)
         submitButton.backgroundColor = .lightGray
         
+    }
+    
+    private func addDropDown() {
+        let lm = stackview.layoutMargins
+        let height: CGFloat = 40.0
+        let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
+        dropDown = DropDownTextField(frame: dropDownFrame, title: "Select Flavour", options: flavourOptions)
+        //dropDown.delegate = self
+        stackview.addArrangedSubview(dropDown)
     }
     
     // MARK: - Navigation

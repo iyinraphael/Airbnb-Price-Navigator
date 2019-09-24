@@ -11,12 +11,25 @@ import UIKit
 class DropDownTextField: UIView {
     
     //MARK: - Property
+    var boldColor = UIColor.black
+    var lightColor = UIColor.white
+    var dropDownColor = UIColor.gray
+    var font = UIFont.systemFont(ofSize: 12, weight: .light)
+    
     private var options: [String]
-    let button = UIButton(type: .custom)
     private var initialHeight: CGFloat = 0
     private let rowHeight: CGFloat = 40
     
+    
     //MARK: - UI
+//    let slideArrow: UIImageView = {
+//        let image = UIImage.Theme.dropDown.image
+//        image.withRenderingMode(.alwaysTemplate)
+//        let imageView = UIImageView(image: image)
+//        imageView.contentMode = .scaleAspectFit
+//        return imageView
+//    }()
+    
     let tapView: UIView = UIView()
     
     lazy var tableView: UITableView = {
@@ -30,8 +43,18 @@ class DropDownTextField: UIView {
     
     let animationView = UIView()
     
+    lazy var newButtom: UIButton = {
+        let button = UIButton(type: .custom)
+        button.imageView?.image = UIImage.Theme.dropDown.image
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+        button.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
+        return button
+    }()
+    
     lazy var textField: UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(frame: .zero)
+        textField.textColor = boldColor
+        textField.autocapitalizationType = .sentences
         textField.returnKeyType = .done
         textField.keyboardType = .alphabet
         textField.borderStyle = .line
@@ -42,11 +65,11 @@ class DropDownTextField: UIView {
     init(frame: CGRect, title: String, options: [String]) {
         self.options = options
         super.init(frame: frame)
-        self.textField.text = title
+        self.textField.placeholder = title
         calculateHeight()
-        setupViews()
+        setUpViews()
     }
-    
+
     private override init(frame: CGRect) {
         options = []
         super.init(frame: frame)
@@ -67,34 +90,50 @@ extension DropDownTextField {
     
     private func calculateHeight() {
         self.initialHeight = self.bounds.height
-        let rowCount = self.options.count + 1 //Add one so that you can include 'other'
+        let rowCount = self.options.count
         let newHeight = self.initialHeight + (CGFloat(rowCount) * rowHeight)
         self.frame.size = CGSize(width: self.frame.width, height: newHeight)
     }
     
-    
-    private func setupViews() {
-        removeSubviews()
+    private func setUpViews() {
+        removeSubView()
+        //addSlideIndicator()
         addTextField()
         addTapView()
         addTableView()
         addAnimationView()
     }
     
-    private func removeSubviews() {
+    
+    private func removeSubView() {
         for view in self.subviews {
             view.removeFromSuperview()
         }
     }
     
+
+//    private func addSlideIndicator() {
+//        slideArrow.translatesAutoresizingMaskIntoConstraints = false
+//        addSubview(slideArrow)
+//        let triSize: CGFloat = 12.0
+//        NSLayoutConstraint.activate([
+//            slideArrow.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            slideArrow.heightAnchor.constraint(equalToConstant: triSize),
+//            slideArrow.widthAnchor.constraint(equalToConstant: triSize),
+//            slideArrow.centerYAnchor.constraint(equalTo: topAnchor, constant: initialHeight / 2)
+//        ])
+//    }
     
     private func addTextField() {
+        textField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textField)
-        button.setImage(UIImage(named: "slide-down"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-        button.frame =  CGRect(x: 0, y: 0, width: 12, height: 12)
-        textField.rightView = button
-       
+        textField.rightView = newButtom
+        NSLayoutConstraint.activate([
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            textField.centerYAnchor.constraint(equalTo: topAnchor, constant: initialHeight / 2),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
+        ])
+        textField.font = self.font
         //        textField.delegate = self
     }
     
@@ -103,7 +142,10 @@ extension DropDownTextField {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(animateMenu))
         tapView.addGestureRecognizer(tapGesture)
         addSubview(tapView)
-        tapView.constraintsPinTo(leading: leadingAnchor, trailing: trailingAnchor, top: topAnchor, bottom: textField.bottomAnchor)
+        tapView.constraintsPinTo(leading: leadingAnchor,
+                                 trailing: trailingAnchor,
+                                 top: topAnchor,
+                                 bottom: textField.bottomAnchor)
     }
     
     private func addTableView() {
@@ -112,7 +154,10 @@ extension DropDownTextField {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(tableView)
-        tableView.constraintsPinTo(leading: leadingAnchor, trailing: trailingAnchor, top: textField.bottomAnchor, bottom: bottomAnchor)
+        tableView.constraintsPinTo(leading: leadingAnchor,
+                                   trailing: trailingAnchor,
+                                   top: textField.bottomAnchor,
+                                   bottom: bottomAnchor)
         //        tableView.isHidden = true
     }
     
@@ -120,7 +165,7 @@ extension DropDownTextField {
         self.addSubview(animationView)
         animationView.frame = CGRect(x: 0.0, y: initialHeight, width: bounds.width, height: bounds.height - initialHeight)
         self.sendSubviewToBack(animationView)
-        animationView.backgroundColor = .white
+        animationView.backgroundColor = dropDownColor
         //        animationView.isHidden = true
     }
 }
