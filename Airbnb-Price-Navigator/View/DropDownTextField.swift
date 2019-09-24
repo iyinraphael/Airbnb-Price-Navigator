@@ -43,9 +43,9 @@ class DropDownTextField: UIView {
     
     let animationView = UIView()
     
-    lazy var newButtom: UIButton = {
+    lazy var newButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.imageView?.image = UIImage.Theme.dropDown.image
+        button.setImage(UIImage.Theme.dropDown.image, for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
         button.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
         return button
@@ -54,14 +54,12 @@ class DropDownTextField: UIView {
     lazy var textField: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.textColor = boldColor
-        textField.autocapitalizationType = .sentences
         textField.returnKeyType = .done
         textField.keyboardType = .alphabet
         textField.borderStyle = .line
-        textField.rightViewMode = .always
         return textField
     }()
-    
+     
     init(frame: CGRect, title: String, options: [String]) {
         self.options = options
         super.init(frame: frame)
@@ -127,12 +125,13 @@ extension DropDownTextField {
     private func addTextField() {
         textField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textField)
-        textField.rightView = newButtom
         NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: leadingAnchor),
             textField.centerYAnchor.constraint(equalTo: topAnchor, constant: initialHeight / 2),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
         ])
+        textField.rightView = newButton
+        textField.rightViewMode = .always
         textField.font = self.font
         //        textField.delegate = self
     }
