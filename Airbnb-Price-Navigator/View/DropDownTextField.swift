@@ -20,12 +20,13 @@ class DropDownTextField: UIView {
     var lightColor = UIColor.white
     var dropDownColor = UIColor.gray
     var font = UIFont.systemFont(ofSize: 12, weight: .light)
+    var delegate: DropDownTextFieldDelegate?
     
     private var options: [String]
     private var initialHeight: CGFloat = 0
     private let rowHeight: CGFloat = 40
+    private var isDroppedDown = false
     
-    var delegate: DropDownTextFieldDelegate?
     
     
     //MARK: - UI
@@ -33,6 +34,7 @@ class DropDownTextField: UIView {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(DropDownCell.self, forCellReuseIdentifier: "option")
         tableView.bounces = false
         tableView.backgroundColor = .clear
         tableView.separatorInset = UIEdgeInsets.zero
@@ -77,7 +79,7 @@ class DropDownTextField: UIView {
     }
     
     @objc func animateMenu() {
-        //
+        menuAnimate(up: isDroppedDown)
     }
 
 }
@@ -119,7 +121,7 @@ extension DropDownTextField {
         textField.rightView = newButton
         textField.rightViewMode = .always
         textField.font = self.font
-        //        textField.delegate = self
+        textField.delegate = self
     }
     
     private func addTapView() {
@@ -143,7 +145,7 @@ extension DropDownTextField {
                                    trailing: trailingAnchor,
                                    top: textField.bottomAnchor,
                                    bottom: bottomAnchor)
-        //        tableView.isHidden = true
+       tableView.isHidden = true
     }
     
     private func addAnimationView() {
@@ -160,7 +162,7 @@ extension DropDownTextField {
                                             .isActive = true
         self.sendSubviewToBack(animationView)
         animationView.backgroundColor = dropDownColor
-        //        animationView.isHidden = true
+        animationView.isHidden = true
     }
 }
 
@@ -198,6 +200,7 @@ extension UIImage {
     }
 }
 
+
 extension DropDownTextField: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -216,5 +219,58 @@ extension DropDownTextField: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height / CGFloat(options.count + 1)
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == options.count {
+            //otherChosen()
+        } else {
+            let chosen = options[indexPath.row]
+            textField.text = chosen
+            self.delegate?.optionSelected(option: chosen)
+            animateMenu()
+        }
+    }
+}
+
+extension DropDownTextField {
+
+    private func menuAnimate(up: Bool) {
+        let downFrame = animationView.frame
+        let upFrame = CGRect(x: 0, y: self.initialHeight, width: self.bounds.width, height: 0)
+        animationView.frame = up ? downFrame : upFrame
+        animationView.isHidden = false
+        tableView.isHidden = true
+
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.animationView.frame = up ? upFrame : downFrame
+        }, completion: { (bool) in
+            self.isDroppedDown = !self.isDroppedDown
+            self.animationView.isHidden = up
+            self.animationView.frame = downFrame
+            self.tableView.isHidden = up
+            self.delegate?.menuDidAnimate(up: up)
+        })
+    }
+}
+
+extension DropDownTextField: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        let capitalized = text.capitalized
+        textField.text = capitalized
+        delegate?.optionSelected(option: capitalized)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.textField.resignFirstResponder()
+        return true
+    }
+    
+    func otherChosen() {
+        animateMenu()
+        textField.text = ""
+        textField.becomeFirstResponder()
     }
 }

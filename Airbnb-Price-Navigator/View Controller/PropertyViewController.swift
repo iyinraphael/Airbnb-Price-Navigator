@@ -181,7 +181,7 @@ class PropertyViewController: UIViewController {
         let height: CGFloat = 40.0
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
         dropDown = DropDownTextField(frame: dropDownFrame, title: "Select Flavour", options: flavourOptions)
-        //dropDown.delegate = self
+        dropDown.delegate = self
         
         stackview.addArrangedSubview(propertyTypeStackView)
         propertyTypeStackView.addArrangedSubview(propertyLabel)
@@ -209,6 +209,7 @@ class PropertyViewController: UIViewController {
 
 
 extension PropertyViewController: DropDownTextFieldDelegate {
+    
     func menuDidAnimate(up: Bool) {
         print("animating: \(up)")
     }
