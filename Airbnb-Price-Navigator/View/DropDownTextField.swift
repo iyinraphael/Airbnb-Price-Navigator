@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol DropDownTextFieldDelegate {
+    func menuDidAnimate(up: Bool)
+    func optionSelected(option: String)
+}
+
 class DropDownTextField: UIView {
     
     //MARK: - Property
@@ -19,6 +24,8 @@ class DropDownTextField: UIView {
     private var options: [String]
     private var initialHeight: CGFloat = 0
     private let rowHeight: CGFloat = 40
+    
+    var delegate: DropDownTextFieldDelegate?
     
     
     //MARK: - UI
@@ -127,8 +134,8 @@ extension DropDownTextField {
     }
     
     private func addTableView() {
-        //         tableView.delegate = self
-        //         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(tableView)
@@ -141,8 +148,16 @@ extension DropDownTextField {
     
     private func addAnimationView() {
         self.addSubview(animationView)
-        animationView.frame = CGRect(x: 0.0, y: initialHeight, width: bounds.width, height: bounds.height - initialHeight)
-        animationView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 0.0).isActive = true
+        animationView.frame = CGRect(x: 0.0,
+                                     y: initialHeight,
+                                     width: bounds.width,
+                                     height: bounds.height - initialHeight)
+        animationView.topAnchor.constraint(equalTo: textField.bottomAnchor,
+                                           constant: 0.0)
+                                           .isActive = true
+        animationView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor,
+                                            constant: 0.0)
+                                            .isActive = true
         self.sendSubviewToBack(animationView)
         animationView.backgroundColor = dropDownColor
         //        animationView.isHidden = true
@@ -180,5 +195,26 @@ extension UIImage {
         var image: UIImage {
             return UIImage(named: self.name)!
         }
+    }
+}
+
+extension DropDownTextField: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return options.count + 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "option") as? DropDownCell ?? DropDownCell()
+        cell.lightColor = self.lightColor
+        cell.cellFont = font
+        let title = indexPath.row < options.count ? options[indexPath.row] : "Other"
+        cell.configureCell(with: title)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height / CGFloat(options.count + 1)
+        
     }
 }

@@ -206,3 +206,16 @@ class PropertyViewController: UIViewController {
     
 
 }
+
+
+extension PropertyViewController: DropDownTextFieldDelegate {
+    func menuDidAnimate(up: Bool) {
+        print("animating: \(up)")
+    }
+    
+    func optionSelected(option: String) {
+        print("option selected: \(option)")
+    }
+    
+    
+}
