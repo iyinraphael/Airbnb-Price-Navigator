@@ -86,22 +86,22 @@ class PropertyViewController: UIViewController {
         addDropDown()
         
         //MARK: - Property Type
-        stackview.addArrangedSubview(propertyTypeStackView)
-        propertyTypeStackView.addArrangedSubview(propertyLabel)
-        propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
-        propertyTypeStackView.axis = .vertical
-        
-       
-        propertyLabel.text = "Property Type"
-        propertyLabel.font = .boldSystemFont(ofSize: 12)
-        propertyTypeTextField.borderStyle = .line
-        propertyTypeTextField.placeholder = "House"
-        
-        propertyTypeButton.setImage(UIImage(named: "slide-down"), for: .normal)
-        propertyTypeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-        propertyTypeButton.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
-        propertyTypeTextField.rightView = propertyTypeButton
-        propertyTypeTextField.rightViewMode = .always
+//        stackview.addArrangedSubview(propertyTypeStackView)
+//        propertyTypeStackView.addArrangedSubview(propertyLabel)
+//        propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
+//        propertyTypeStackView.axis = .vertical
+//
+//
+//        propertyLabel.text = "Property Type"
+//        propertyLabel.font = .boldSystemFont(ofSize: 12)
+//        propertyTypeTextField.borderStyle = .line
+//        propertyTypeTextField.placeholder = "House"
+//
+//        propertyTypeButton.setImage(UIImage(named: "slide-down"), for: .normal)
+//        propertyTypeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+//        propertyTypeButton.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
+//        propertyTypeTextField.rightView = propertyTypeButton
+//        propertyTypeTextField.rightViewMode = .always
         
     
         //MARK: - Room Type
@@ -182,7 +182,15 @@ class PropertyViewController: UIViewController {
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
         dropDown = DropDownTextField(frame: dropDownFrame, title: "Select Flavour", options: flavourOptions)
         //dropDown.delegate = self
-        stackview.addArrangedSubview(dropDown)
+        
+        stackview.addArrangedSubview(propertyTypeStackView)
+        propertyTypeStackView.addArrangedSubview(propertyLabel)
+        propertyTypeStackView.addArrangedSubview(dropDown)
+        propertyTypeStackView.axis = .vertical
+        
+        
+        propertyLabel.text = "Property Type"
+        propertyLabel.font = .boldSystemFont(ofSize: 12)
     }
     
     // MARK: - Navigation

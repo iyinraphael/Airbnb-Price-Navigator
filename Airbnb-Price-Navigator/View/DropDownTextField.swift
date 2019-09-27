@@ -22,14 +22,6 @@ class DropDownTextField: UIView {
     
     
     //MARK: - UI
-//    let slideArrow: UIImageView = {
-//        let image = UIImage.Theme.dropDown.image
-//        image.withRenderingMode(.alwaysTemplate)
-//        let imageView = UIImageView(image: image)
-//        imageView.contentMode = .scaleAspectFit
-//        return imageView
-//    }()
-    
     let tapView: UIView = UIView()
     
     lazy var tableView: UITableView = {
@@ -109,19 +101,6 @@ extension DropDownTextField {
         }
     }
     
-
-//    private func addSlideIndicator() {
-//        slideArrow.translatesAutoresizingMaskIntoConstraints = false
-//        addSubview(slideArrow)
-//        let triSize: CGFloat = 12.0
-//        NSLayoutConstraint.activate([
-//            slideArrow.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            slideArrow.heightAnchor.constraint(equalToConstant: triSize),
-//            slideArrow.widthAnchor.constraint(equalToConstant: triSize),
-//            slideArrow.centerYAnchor.constraint(equalTo: topAnchor, constant: initialHeight / 2)
-//        ])
-//    }
-    
     private func addTextField() {
         textField.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textField)
@@ -163,6 +142,7 @@ extension DropDownTextField {
     private func addAnimationView() {
         self.addSubview(animationView)
         animationView.frame = CGRect(x: 0.0, y: initialHeight, width: bounds.width, height: bounds.height - initialHeight)
+        animationView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 0.0).isActive = true
         self.sendSubviewToBack(animationView)
         animationView.backgroundColor = dropDownColor
         //        animationView.isHidden = true
