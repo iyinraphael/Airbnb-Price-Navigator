@@ -11,24 +11,22 @@ import UIKit
 class PropertyViewController: UIViewController {
 
     //MARK: - Properties
-    let stackview = UIStackView()
-    let zipcodeStackView = UIStackView()
-    let propertyTypeStackView = UIStackView()
-    let roomTypeStackView = UIStackView()
-    let bedroomsStackView =  UIStackView()
-    let bathroomsStackView = UIStackView()
-    let bedAndBathStackView = UIStackView()
-    let bedTypesStackView = UIStackView()
-    let accommodatStackView = UIStackView()
+    var stackview: UIStackView!
+    var zipcodeStackView: UIStackView!
+    var roomTypeStackView: UIStackView!
+    var propertyTypeStackView: UIStackView!
+    var bedroomsStackView: UIStackView!
+    var bathroomsStackView:  UIStackView!
+    var bedAndBathStackView: UIStackView!
+    var bedTypesStackView: UIStackView!
+    var accommodatStackView: UIStackView!
 
-    var propertyTypeTextField = UITextField()
-    var roomTypeTextField = UITextField()
     var bedoroomsTextField = UITextField()
     var bathroomsTextField = UITextField()
     var bedTypesTextField =  UITextField()
     var accommodatesTextField = UITextField()
 
-    var propertyLabel = UILabel()
+    var propertyLabel: UILabel!
     var roomTypeLabel = UILabel()
     var bedroomsLabel = UILabel()
     var bathroomsLabel = UILabel()
@@ -43,24 +41,28 @@ class PropertyViewController: UIViewController {
     var property: Property?
     var propertyController = PropertyController()
     
-    var dropDown: DropDownTextField!
+    var dropDownPropertyTextfield: DropDownTextField!
+    var dropDownRoomTypeTextfield: DropDownTextField!
     private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //MARK: - Header Text and Zip Code label
+        
+        stackview = UIStackView()
         view.addSubview(stackview)
+        
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.spacing = 10.0
-        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 58).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -140.0).isActive = true
+        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
-    
+
         
         
-        //MARK: - Header Text
         let _: UILabel = {
             let headerLabel = UILabel()
             stackview.addArrangedSubview(headerLabel)
@@ -72,10 +74,8 @@ class PropertyViewController: UIViewController {
            
             return headerLabel
         }()
-
         
-        
-        //MARK: - Zipcode
+        zipcodeStackView = UIStackView()
         stackview.addArrangedSubview(zipcodeStackView)
         zipcodeStackView.axis = .vertical
 
@@ -98,119 +98,134 @@ class PropertyViewController: UIViewController {
         }()
         
         
-        addDropDown()
-        
         //MARK: - Property Type
-//        stackview.addArrangedSubview(propertyTypeStackView)
-//        propertyTypeStackView.addArrangedSubview(propertyLabel)
-//        propertyTypeStackView.addArrangedSubview(propertyTypeTextField)
-//        propertyTypeStackView.axis = .vertical
-//
-//
-//        propertyLabel.text = "Property Type"
-//        propertyLabel.font = .boldSystemFont(ofSize: 12)
-//        propertyTypeTextField.borderStyle = .line
-//        propertyTypeTextField.placeholder = "House"
-//
-//        propertyTypeButton.setImage(UIImage(named: "slide-down"), for: .normal)
-//        propertyTypeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-//        propertyTypeButton.frame = CGRect(x: 0, y: 0, width: 12, height: 12)
-//        propertyTypeTextField.rightView = propertyTypeButton
-//        propertyTypeTextField.rightViewMode = .always
-        
+        addDropDownPropertyTextfield()
+
     
         //MARK: - Room Type
-        stackview.addArrangedSubview(roomTypeStackView)
-        roomTypeStackView.axis = .vertical
-        roomTypeStackView.addArrangedSubview(roomTypeLabel)
-        roomTypeLabel.text = "Room Type"
-        roomTypeLabel.font = .boldSystemFont(ofSize: 12)
-        
-        roomTypeStackView.addArrangedSubview(roomTypeTextField)
-        roomTypeTextField.borderStyle = .line
-        roomTypeTextField.placeholder = "Entire Property"
-        roomTypeTextField.rightView = roomTypeButton
+        addDropDownRoomTypeTextfield()
+//        stackview.addArrangedSubview(roomTypeStackView)
+//        roomTypeStackView.axis = .vertical
+//        roomTypeStackView.addArrangedSubview(roomTypeLabel)
+//        roomTypeLabel.text = "Room Type"
+//        roomTypeLabel.font = .boldSystemFont(ofSize: 12)
+//
+//        roomTypeStackView.addArrangedSubview(roomTypeTextField)
+//        roomTypeTextField.borderStyle = .line
+//        roomTypeTextField.placeholder = "Entire Property"
+//        roomTypeTextField.rightView = roomTypeButton
         
         //MARK: - Bedtroom and Bathroom
-        stackview.addArrangedSubview(bedAndBathStackView)
-        bedAndBathStackView.axis = .horizontal
-        bedAndBathStackView.distribution = .fillEqually
-        bedAndBathStackView.spacing = 5.0
-        bedAndBathStackView.addArrangedSubview(bedroomsStackView)
-        bedAndBathStackView.addArrangedSubview(bathroomsStackView)
-        
-        bedAndBathStackView.axis = .horizontal
-        
-        bedroomsStackView.addArrangedSubview(bedroomsLabel)
-        bedroomsStackView.addArrangedSubview(bedoroomsTextField)
-        bedroomsStackView.axis = .vertical
-    
-        bedroomsLabel.text = "Bedrooms"
-        bedroomsLabel.font = .boldSystemFont(ofSize: 12)
-        bedoroomsTextField.borderStyle = .line
-        bedoroomsTextField.placeholder = "0"
+//        stackview.addArrangedSubview(bedAndBathStackView)
+//        bedAndBathStackView.axis = .horizontal
+//        bedAndBathStackView.distribution = .fillEqually
+//        bedAndBathStackView.spacing = 5.0
+//        bedAndBathStackView.addArrangedSubview(bedroomsStackView)
+//        bedAndBathStackView.addArrangedSubview(bathroomsStackView)
+//
+//        bedAndBathStackView.axis = .horizontal
+//
+//        bedroomsStackView.addArrangedSubview(bedroomsLabel)
+//        bedroomsStackView.addArrangedSubview(bedoroomsTextField)
+//        bedroomsStackView.axis = .vertical
+//
+//        bedroomsLabel.text = "Bedrooms"
+//        bedroomsLabel.font = .boldSystemFont(ofSize: 12)
+//        bedoroomsTextField.borderStyle = .line
+//        bedoroomsTextField.placeholder = "0"
+//
+//        bathroomsStackView.addArrangedSubview(bathroomsLabel)
+//        bathroomsStackView.addArrangedSubview(bathroomsTextField)
+//        bathroomsStackView.axis = .vertical
 
-        bathroomsStackView.addArrangedSubview(bathroomsLabel)
-        bathroomsStackView.addArrangedSubview(bathroomsTextField)
-        bathroomsStackView.axis = .vertical
-
-        bathroomsLabel.text = "Bathrooms"
-        bathroomsLabel.font = .boldSystemFont(ofSize: 12)
-        bathroomsTextField.borderStyle = .line
-        bathroomsTextField.placeholder = "0"
-       
+//        bathroomsLabel.text = "Bathrooms"
+//        bathroomsLabel.font = .boldSystemFont(ofSize: 12)
+//        bathroomsTextField.borderStyle = .line
+//        bathroomsTextField.placeholder = "0"
+//
         //MARK: - Bed Types
-        stackview.addArrangedSubview(bedTypesStackView)
-        bedTypesStackView.addArrangedSubview(bedTypesLabel)
-        bedTypesStackView.addArrangedSubview(bedTypesTextField)
-        bedTypesStackView.axis = .vertical
-        
-        bedTypesLabel.text = "Bed Types"
-        bedTypesLabel.font = .boldSystemFont(ofSize: 12)
-        bedTypesTextField.placeholder = "Standard Bed"
-        bedTypesTextField.rightView = bedTypesButton
-        bedTypesTextField.borderStyle = .line
+//        stackview.addArrangedSubview(bedTypesStackView)
+//        bedTypesStackView.addArrangedSubview(bedTypesLabel)
+//        bedTypesStackView.addArrangedSubview(bedTypesTextField)
+//        bedTypesStackView.axis = .vertical
+//
+//        bedTypesLabel.text = "Bed Types"
+//        bedTypesLabel.font = .boldSystemFont(ofSize: 12)
+//        bedTypesTextField.placeholder = "Standard Bed"
+//        bedTypesTextField.rightView = bedTypesButton
+//        bedTypesTextField.borderStyle = .line
         
         //MARK: - Accommodation
-        stackview.addArrangedSubview(accommodatStackView)
-        accommodatStackView.addArrangedSubview(accommodateLabel)
-        accommodatStackView.addArrangedSubview(accommodatesTextField)
-        accommodatStackView.axis = .vertical
-        stackview.setCustomSpacing(55, after: accommodatStackView)
-        
-        accommodateLabel.text = "Accomodates how many guest?"
-        accommodateLabel.font = .boldSystemFont(ofSize: 12)
-        accommodatesTextField.placeholder = "0"
-        accommodatesTextField.borderStyle = .line
+//        stackview.addArrangedSubview(accommodatStackView)
+//        accommodatStackView.addArrangedSubview(accommodateLabel)
+//        accommodatStackView.addArrangedSubview(accommodatesTextField)
+//        accommodatStackView.axis = .vertical
+//        stackview.setCustomSpacing(55, after: accommodatStackView)
+//
+//        accommodateLabel.text = "Accomodates how many guest?"
+//        accommodateLabel.font = .boldSystemFont(ofSize: 12)
+//        accommodatesTextField.placeholder = "0"
+//        accommodatesTextField.borderStyle = .line
         
         //MARK: - Submit button
-        stackview.addArrangedSubview(submitButton)
-        submitButton.setTitle("Submit", for: .normal)
-        submitButton.setTitleColor(.white, for: .normal)
-        submitButton.backgroundColor = .lightGray
-        
+//        stackview.addArrangedSubview(submitButton)
+//        submitButton.setTitle("Submit", for: .normal)
+//        submitButton.setTitleColor(.white, for: .normal)
+//        submitButton.backgroundColor = .lightGray
+//
     }
     
-    private func addDropDown() {
+    private func addDropDownPropertyTextfield() {
         let lm = view.layoutMargins
-        let height: CGFloat = 40.0
+        let height: CGFloat = 30.0
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
-        dropDown = DropDownTextField(frame: dropDownFrame, title: "Select Flavour", options: flavourOptions)
-        dropDown.delegate = self
         
+        propertyLabel = UILabel()
+        propertyLabel.text = "Property Type"
+        propertyLabel.font = .boldSystemFont(ofSize: 12.0)
+        
+        dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: "House", options: flavourOptions)
+        dropDownPropertyTextfield.delegate = self
+        
+        propertyTypeStackView = UIStackView()
         view.addSubview(propertyTypeStackView)
+        
         propertyTypeStackView.translatesAutoresizingMaskIntoConstraints = false
-        propertyTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        propertyTypeStackView.axis = .vertical
+        propertyTypeStackView.topAnchor.constraint(equalTo: stackview.bottomAnchor, constant: 10).isActive = true
         propertyTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         propertyTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
-        propertyTypeStackView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: -300).isActive = true
-
+        
         propertyTypeStackView.addArrangedSubview(propertyLabel)
-        propertyTypeStackView.addArrangedSubview(dropDown)
-        propertyTypeStackView.axis = .vertical
+        propertyTypeStackView.addArrangedSubview(dropDownPropertyTextfield)
+    }
     
-        propertyLabel.text = "Property Type"
-        propertyLabel.font = .boldSystemFont(ofSize: 12)
+    private func addDropDownRoomTypeTextfield() {
+        let lm = view.layoutMargins
+        let height: CGFloat = 30.0
+        let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
+        
+        let roomTypeLabel = UILabel()
+        roomTypeLabel.text = "Room Type"
+        roomTypeLabel.font = .boldSystemFont(ofSize: 12.0)
+    
+        dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Entire Property", options: flavourOptions)
+        dropDownRoomTypeTextfield.delegate = self
+        
+        
+        roomTypeStackView = UIStackView()
+        view.addSubview(roomTypeStackView)
+        
+        roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
+        roomTypeStackView.axis = .vertical
+        roomTypeStackView.topAnchor.constraint(equalTo: stackview.bottomAnchor, constant: 60).isActive = true
+        roomTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
+        roomTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
+        
+        roomTypeStackView.addArrangedSubview(roomTypeLabel)
+        roomTypeStackView.addArrangedSubview(dropDownRoomTypeTextfield)
+        
+        
     }
     
     // MARK: - Navigation
