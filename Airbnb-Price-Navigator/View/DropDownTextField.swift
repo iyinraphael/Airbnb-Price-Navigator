@@ -96,7 +96,6 @@ extension DropDownTextField {
     
     private func setUpViews() {
         removeSubView()
-        //addSlideIndicator()
         addTextField()
         addTapView()
         addTableView()
@@ -152,7 +151,7 @@ extension DropDownTextField {
         self.addSubview(animationView)
         animationView.frame = CGRect(x: 0.0,
                                      y: initialHeight,
-                                     width: bounds.width,
+                                     width: 335,
                                      height: bounds.height - initialHeight)
         animationView.topAnchor.constraint(equalTo: textField.bottomAnchor,
                                            constant: 0.0)
@@ -246,6 +245,10 @@ extension DropDownTextField {
             self.animationView.frame = up ? upFrame : downFrame
         }, completion: { (bool) in
             self.isDroppedDown = !self.isDroppedDown
+            if self.isDroppedDown == true {
+                self.newButton.setImage(UIImage.Theme.dropUp.image, for: .normal)  }
+            else {
+                self.newButton.setImage(UIImage.Theme.dropDown.image, for: .normal)}
             self.animationView.isHidden = up
             self.animationView.frame = downFrame
             self.tableView.isHidden = up

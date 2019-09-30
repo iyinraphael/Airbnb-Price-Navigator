@@ -177,18 +177,22 @@ class PropertyViewController: UIViewController {
     }
     
     private func addDropDown() {
-        let lm = stackview.layoutMargins
+        let lm = view.layoutMargins
         let height: CGFloat = 40.0
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
         dropDown = DropDownTextField(frame: dropDownFrame, title: "Select Flavour", options: flavourOptions)
         dropDown.delegate = self
+        view.addSubview(propertyTypeStackView)
+        propertyTypeStackView.translatesAutoresizingMaskIntoConstraints = false
+        propertyTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        propertyTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
+        propertyTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
+        propertyTypeStackView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: -300).isActive = true
         
-        stackview.addArrangedSubview(propertyTypeStackView)
         propertyTypeStackView.addArrangedSubview(propertyLabel)
         propertyTypeStackView.addArrangedSubview(dropDown)
         propertyTypeStackView.axis = .vertical
-        
-        
+    
         propertyLabel.text = "Property Type"
         propertyLabel.font = .boldSystemFont(ofSize: 12)
     }
