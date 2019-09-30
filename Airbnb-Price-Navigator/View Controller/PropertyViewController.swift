@@ -21,7 +21,6 @@ class PropertyViewController: UIViewController {
     let bedTypesStackView = UIStackView()
     let accommodatStackView = UIStackView()
 
-    var zipcodeTextField = UITextField()
     var propertyTypeTextField = UITextField()
     var roomTypeTextField = UITextField()
     var bedoroomsTextField = UITextField()
@@ -29,9 +28,6 @@ class PropertyViewController: UIViewController {
     var bedTypesTextField =  UITextField()
     var accommodatesTextField = UITextField()
 
-    
-    var headerLabel = UILabel()
-    var zipcodeLabel = UILabel()
     var propertyLabel = UILabel()
     var roomTypeLabel = UILabel()
     var bedroomsLabel = UILabel()
@@ -65,23 +61,42 @@ class PropertyViewController: UIViewController {
         
         
         //MARK: - Header Text
-        stackview.addArrangedSubview(headerLabel)
-        headerLabel.text = "Find out the value of your property!"
-        headerLabel.textAlignment = .center
-        headerLabel.font = .boldSystemFont(ofSize: 20.0)
-        headerLabel.adjustsFontSizeToFitWidth = true
-        headerLabel.numberOfLines = 2
+        let _: UILabel = {
+            let headerLabel = UILabel()
+            stackview.addArrangedSubview(headerLabel)
+            headerLabel.text = "Find out the value of your property!"
+            headerLabel.textAlignment = .center
+            headerLabel.font = .boldSystemFont(ofSize: 20.0)
+            headerLabel.adjustsFontSizeToFitWidth = true
+            headerLabel.numberOfLines = 2
+           
+            return headerLabel
+        }()
+
+        
         
         //MARK: - Zipcode
         stackview.addArrangedSubview(zipcodeStackView)
-        zipcodeStackView.addArrangedSubview(zipcodeLabel)
-        zipcodeStackView.addArrangedSubview(zipcodeTextField)
         zipcodeStackView.axis = .vertical
-       
-        zipcodeLabel.text = "Zip Code"
-        zipcodeLabel.font = .boldSystemFont(ofSize: 12)
-        zipcodeTextField.borderStyle = .line
-        zipcodeTextField.placeholder = "90210"
+
+        let _: UILabel = {
+            let zipcodeLabel = UILabel()
+            zipcodeLabel.text = "Zip Code"
+            zipcodeLabel.font = .boldSystemFont(ofSize: 12)
+            zipcodeStackView.addArrangedSubview(zipcodeLabel)
+            
+            return zipcodeLabel
+        }()
+        
+        let zipcodeTextField: UITextField = {
+            let zipcodeTextField = UITextField()
+            zipcodeTextField.borderStyle = .line
+            zipcodeTextField.placeholder = "90210"
+            zipcodeStackView.addArrangedSubview(zipcodeTextField)
+            
+            return zipcodeTextField
+        }()
+        
         
         addDropDown()
         
@@ -182,13 +197,14 @@ class PropertyViewController: UIViewController {
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
         dropDown = DropDownTextField(frame: dropDownFrame, title: "Select Flavour", options: flavourOptions)
         dropDown.delegate = self
+        
         view.addSubview(propertyTypeStackView)
         propertyTypeStackView.translatesAutoresizingMaskIntoConstraints = false
         propertyTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         propertyTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         propertyTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
         propertyTypeStackView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: -300).isActive = true
-        
+
         propertyTypeStackView.addArrangedSubview(propertyLabel)
         propertyTypeStackView.addArrangedSubview(dropDown)
         propertyTypeStackView.axis = .vertical
