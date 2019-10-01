@@ -56,7 +56,8 @@ class PropertyViewController: UIViewController {
         
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.spacing = 10.0
+        stackview.distribution = .fillEqually
+        stackview.spacing = 50.0
         stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
@@ -215,6 +216,7 @@ class PropertyViewController: UIViewController {
         
         roomTypeStackView = UIStackView()
         view.addSubview(roomTypeStackView)
+        view.sendSubviewToBack(roomTypeStackView)
         
         roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
         roomTypeStackView.axis = .vertical
@@ -224,6 +226,8 @@ class PropertyViewController: UIViewController {
         
         roomTypeStackView.addArrangedSubview(roomTypeLabel)
         roomTypeStackView.addArrangedSubview(dropDownRoomTypeTextfield)
+        
+        
         
         
     }
