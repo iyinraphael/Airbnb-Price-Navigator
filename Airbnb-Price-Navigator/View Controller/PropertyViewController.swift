@@ -40,6 +40,7 @@ class PropertyViewController: UIViewController {
     
     var property: Property?
     var propertyController = PropertyController()
+    var bool = true
     
     var dropDownPropertyTextfield: DropDownTextField!
     var dropDownRoomTypeTextfield: DropDownTextField!
@@ -199,6 +200,8 @@ class PropertyViewController: UIViewController {
         
         propertyTypeStackView.addArrangedSubview(propertyLabel)
         propertyTypeStackView.addArrangedSubview(dropDownPropertyTextfield)
+        
+      
     }
     
     private func addDropDownRoomTypeTextfield() {
@@ -212,11 +215,11 @@ class PropertyViewController: UIViewController {
     
         dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Entire Property", options: flavourOptions)
         dropDownRoomTypeTextfield.delegate = self
+    
         
         
         roomTypeStackView = UIStackView()
         view.addSubview(roomTypeStackView)
-        view.sendSubviewToBack(roomTypeStackView)
         
         roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
         roomTypeStackView.axis = .vertical
@@ -226,6 +229,7 @@ class PropertyViewController: UIViewController {
         
         roomTypeStackView.addArrangedSubview(roomTypeLabel)
         roomTypeStackView.addArrangedSubview(dropDownRoomTypeTextfield)
+        
         
         
         
@@ -250,7 +254,13 @@ class PropertyViewController: UIViewController {
 extension PropertyViewController: DropDownTextFieldDelegate {
     
     func menuDidAnimate(up: Bool) {
-        print("animating: \(up)")
+        
+        
+        if dropDownPropertyTextfield.isDroppedDown == true {
+            view.sendSubviewToBack(roomTypeStackView)
+        } else {
+            view.bringSubviewToFront(roomTypeStackView)
+        }
     }
     
     func optionSelected(option: String) {

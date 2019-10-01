@@ -25,7 +25,7 @@ class DropDownTextField: UIView {
     private var options: [String]
     private var initialHeight: CGFloat = 0
     private let rowHeight: CGFloat = 40
-    private var isDroppedDown = false
+    var isDroppedDown = false
     
     
     
