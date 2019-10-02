@@ -46,6 +46,7 @@ class PropertyViewController: UIViewController {
     var dropDownRoomTypeTextfield: DropDownTextField!
     var dropDownBedTypeTextfield: DropDownTextField!
     private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
+    var dropDownViews = [UIView]()
 
     
     override func viewDidLoad() {
@@ -117,6 +118,7 @@ class PropertyViewController: UIViewController {
         bedAndBathStackView.distribution = .fillEqually
         bedAndBathStackView.spacing = 5.0
         bedAndBathStackView.axis = .vertical
+        bedAndBathStackView.tag = 2
         bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 340).isActive = true
         bedAndBathStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedAndBathStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -154,6 +156,7 @@ class PropertyViewController: UIViewController {
         view.addSubview(accommodatStackView)
         accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
         accommodatStackView.axis = .vertical
+        accommodatStackView.tag = 4
         accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 440).isActive = true
         accommodatStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         accommodatStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -168,6 +171,7 @@ class PropertyViewController: UIViewController {
         //MARK: - Submit button
         view.addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
+        submitButton.tag = 5
         submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 550).isActive = true
         submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -216,6 +220,7 @@ class PropertyViewController: UIViewController {
         roomTypeStackView = UIStackView()
         view.addSubview(roomTypeStackView)
         roomTypeStackView.axis = .vertical
+        roomTypeStackView.tag = 1
         roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
         roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 290).isActive = true
         roomTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
@@ -238,6 +243,7 @@ class PropertyViewController: UIViewController {
         view.addSubview(bedTypesStackView)
         bedTypesStackView.translatesAutoresizingMaskIntoConstraints = false
         bedTypesStackView.axis = .vertical
+        bedTypesStackView.tag = 3
         bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 390).isActive = true
         bedTypesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedTypesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -269,9 +275,35 @@ extension PropertyViewController: DropDownTextFieldDelegate {
     
     func menuDidAnimate(up: Bool) {
         
+        if dropDownPropertyTextfield.isDroppedDown == true {
+                 view.viewWithTag(1)?.isHidden = true
+                 view.viewWithTag(2)?.isHidden = true
+                 view.viewWithTag(3)?.isHidden = true
+                view.viewWithTag(4)?.isHidden = true
+            }
         
-    
+        else if dropDownRoomTypeTextfield.isDroppedDown == true {
+            view.viewWithTag(2)?.isHidden = true
+            view.viewWithTag(3)?.isHidden = true
+            view.viewWithTag(4)?.isHidden = true
+        }
+        
+        else if dropDownBedTypeTextfield.isDroppedDown == true {
+            view.viewWithTag(4)?.isHidden = true
+            view.viewWithTag(5)?.isHidden = true
+        }
+        
+        else  {
+            view.viewWithTag(1)?.isHidden = false
+            view.viewWithTag(2)?.isHidden = false
+            view.viewWithTag(3)?.isHidden = false
+            view.viewWithTag(4)?.isHidden = false
+            view.viewWithTag(5)?.isHidden = false
+
+        }
     }
+    
+  
     
     func optionSelected(option: String) {
         print("option selected: \(option)")
