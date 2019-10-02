@@ -18,7 +18,6 @@ class PropertyViewController: UIViewController {
     var bedroomsStackView: UIStackView!
     var bathroomsStackView:  UIStackView!
     var bedAndBathStackView: UIStackView!
-    lazy var roomBathBedStackView: UIStackView = UIStackView()
     var bedTypesStackView: UIStackView!
     var accommodatStackView: UIStackView!
 
@@ -147,27 +146,35 @@ class PropertyViewController: UIViewController {
         bathroomsTextField.borderStyle = .line
         bathroomsTextField.placeholder = "0"
 
-//        MARK: - Bed Types
-       
+        //MARK: - Bed Types
+        addDropdownBedTypeTextfield()
         
         //MARK: - Accommodation
-//        stackview.addArrangedSubview(accommodatStackView)
-//        accommodatStackView.addArrangedSubview(accommodateLabel)
-//        accommodatStackView.addArrangedSubview(accommodatesTextField)
-//        accommodatStackView.axis = .vertical
-//        stackview.setCustomSpacing(55, after: accommodatStackView)
-//
-//        accommodateLabel.text = "Accomodates how many guest?"
-//        accommodateLabel.font = .boldSystemFont(ofSize: 12)
-//        accommodatesTextField.placeholder = "0"
-//        accommodatesTextField.borderStyle = .line
+        accommodatStackView = UIStackView()
+        view.addSubview(accommodatStackView)
+        accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
+        accommodatStackView.axis = .vertical
+        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 440).isActive = true
+        accommodatStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
+        accommodatStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
+        accommodatStackView.addArrangedSubview(accommodateLabel)
+        accommodatStackView.addArrangedSubview(accommodatesTextField)
+
+        accommodateLabel.text = "Accomodates how many guest?"
+        accommodateLabel.font = .boldSystemFont(ofSize: 12)
+        accommodatesTextField.placeholder = "0"
+        accommodatesTextField.borderStyle = .line
         
         //MARK: - Submit button
-//        stackview.addArrangedSubview(submitButton)
-//        submitButton.setTitle("Submit", for: .normal)
-//        submitButton.setTitleColor(.white, for: .normal)
-//        submitButton.backgroundColor = .lightGray
-//
+        view.addSubview(submitButton)
+        submitButton.translatesAutoresizingMaskIntoConstraints = false
+        submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 550).isActive = true
+        submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
+        submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.backgroundColor = .lightGray
+
     }
     
     private func addDropDownPropertyTextfield() {
@@ -224,7 +231,8 @@ class PropertyViewController: UIViewController {
         let height: CGFloat = 30.0
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
         
-        
+        dropDownBedTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Standard Bed", options: flavourOptions)
+        dropDownBedTypeTextfield.delegate = self
         
         bedTypesStackView = UIStackView()
         view.addSubview(bedTypesStackView)
@@ -235,14 +243,10 @@ class PropertyViewController: UIViewController {
         bedTypesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
         bedTypesStackView.addArrangedSubview(bedTypesLabel)
-        bedTypesStackView.addArrangedSubview(bedTypesTextField)
-        bedTypesStackView.axis = .vertical
+        bedTypesStackView.addArrangedSubview(dropDownBedTypeTextfield)
         
         bedTypesLabel.text = "Bed Types"
         bedTypesLabel.font = .boldSystemFont(ofSize: 12)
-        bedTypesTextField.placeholder = "Standard Bed"
-        bedTypesTextField.rightView = bedTypesButton
-        bedTypesTextField.borderStyle = .line
     }
     
     
