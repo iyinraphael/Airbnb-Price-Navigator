@@ -32,8 +32,10 @@ class PropertyViewController: UIViewController {
     var bathroomsLabel: UILabel!
     var bedTypesLabel: UILabel!
     var accommodateLabel: UILabel!
+    
     var submitButton: UIButton!
     var menuBar: UIBarButtonItem!
+    var logoButton: UIBarButtonItem!
    
     var dropDownPropertyTextfield: DropDownTextField!
     var dropDownRoomTypeTextfield: DropDownTextField!
@@ -63,6 +65,8 @@ class PropertyViewController: UIViewController {
         menuBar.target = self
         menuBar.action = #selector(showMenuBar)
         menuBar.tintColor = .black
+    
+    
         navigationItem.rightBarButtonItem = menuBar
         navigationItem.title = "Airbnb Price Navigator"
         
@@ -281,7 +285,10 @@ class PropertyViewController: UIViewController {
     }
     
     @objc func showMenuBar() {
-    
+        let vc  = MenuTableViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true, completion: nil)
+        
     }
     
     // MARK: - Navigation

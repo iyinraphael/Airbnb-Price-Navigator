@@ -32,7 +32,6 @@ class PropertyTypeTableViewController: UIViewController {
         self.tableView = tableView
         
         propertyTypeArray += ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest Suite", "Bungalow", "Villa", "other"]
-        
     }
     
 }
