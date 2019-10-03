@@ -33,17 +33,15 @@ class PropertyViewController: UIViewController {
     var bedTypesLabel: UILabel!
     var accommodateLabel: UILabel!
     var submitButton: UIButton!
-    
-    var property: Property?
-    var propertyController = PropertyController()
-    var bool = true
-    
+    var menuBar: UIBarButtonItem!
+   
     var dropDownPropertyTextfield: DropDownTextField!
     var dropDownRoomTypeTextfield: DropDownTextField!
     var dropDownBedTypeTextfield: DropDownTextField!
     private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
-    var dropDownViews = [UIView]()
 
+    var property: Property?
+    var propertyController = PropertyController()
     
     //MARK:- UI SETUP
     override func viewDidLoad() {
@@ -59,17 +57,21 @@ class PropertyViewController: UIViewController {
         stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
+       
+        menuBar = UIBarButtonItem()
+        menuBar.image = UIImage(named: "menu-bar")
+        menuBar.target = self
+        menuBar.action = #selector(showMenuBar)
+        menuBar.tintColor = .black
+        navigationItem.rightBarButtonItem = menuBar
+        navigationItem.title = "Airbnb Price Navigator"
         
+       
         addZipcodeTextField()
-        
         addDropDownPropertyTextfield()
-
         addDropDownRoomTypeTextfield()
-        
         addBedAndBathTextfield()
-        
         addDropdownBedTypeTextfield()
-    
         addAccomodationTexField()
         
 
@@ -142,10 +144,6 @@ class PropertyViewController: UIViewController {
         
         bedAndBathStackView.axis = .horizontal
         
-        bedroomsStackView.addArrangedSubview(bedroomsLabel)
-        bedroomsStackView.addArrangedSubview(bedroomTextField)
-        bedroomsStackView.axis = .vertical
-        
         bedroomsLabel = UILabel()
         bedroomsLabel.text = "Bedrooms"
         bedroomsLabel.font = .boldSystemFont(ofSize: 12)
@@ -154,9 +152,16 @@ class PropertyViewController: UIViewController {
         bedroomTextField.borderStyle = .line
         bedroomTextField.placeholder = "0"
         
-        bathroomsStackView.addArrangedSubview(bathroomsLabel)
-        bathroomsStackView.addArrangedSubview(bathroomsTextField)
-        bathroomsStackView.axis = .vertical
+        bedroomsStackView.addArrangedSubview(bedroomsLabel)
+        bedroomsStackView.addArrangedSubview(bedroomTextField)
+        bedroomsStackView.axis = .vertical
+        
+
+        
+        bedroomTextField = UITextField()
+        bedroomTextField.borderStyle = .line
+        bedroomTextField.placeholder = "0"
+        
         
         bathroomsLabel = UILabel()
         bathroomsLabel.text = "Bathrooms"
@@ -165,6 +170,11 @@ class PropertyViewController: UIViewController {
         bathroomsTextField = UITextField()
         bathroomsTextField.borderStyle = .line
         bathroomsTextField.placeholder = "0"
+        
+        bathroomsStackView.addArrangedSubview(bathroomsLabel)
+        bathroomsStackView.addArrangedSubview(bathroomsTextField)
+        bathroomsStackView.axis = .vertical
+      
     }
     
     
@@ -227,6 +237,10 @@ class PropertyViewController: UIViewController {
         dropDownBedTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Standard Bed", options: flavourOptions)
         dropDownBedTypeTextfield.delegate = self
         
+        bedTypesLabel = UILabel()
+        bedTypesLabel.text = "Bed Types"
+        bedTypesLabel.font = .boldSystemFont(ofSize: 12)
+        
         bedTypesStackView = UIStackView()
         view.addSubview(bedTypesStackView)
         bedTypesStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -238,15 +252,22 @@ class PropertyViewController: UIViewController {
         
         bedTypesStackView.addArrangedSubview(bedTypesLabel)
         bedTypesStackView.addArrangedSubview(dropDownBedTypeTextfield)
-        
-        bedTypesLabel = UILabel()
-        bedTypesLabel.text = "Bed Types"
-        bedTypesLabel.font = .boldSystemFont(ofSize: 12)
+    
     }
     
     private func addAccomodationTexField() {
         accommodatStackView = UIStackView()
+        
+        accommodateLabel = UILabel()
+        accommodateLabel.text = "Accomodates how many guest?"
+        accommodateLabel.font = .boldSystemFont(ofSize: 12)
+        
+        accommodatesTextField = UITextField()
+        accommodatesTextField.placeholder = "0"
+        accommodatesTextField.borderStyle = .line
+        
         view.addSubview(accommodatStackView)
+        
         accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
         accommodatStackView.axis = .vertical
         accommodatStackView.tag = 4
@@ -256,15 +277,12 @@ class PropertyViewController: UIViewController {
         accommodatStackView.addArrangedSubview(accommodateLabel)
         accommodatStackView.addArrangedSubview(accommodatesTextField)
         
-        accommodateLabel = UILabel()
-        accommodateLabel.text = "Accomodates how many guest?"
-        accommodateLabel.font = .boldSystemFont(ofSize: 12)
-        
-        accommodatesTextField = UITextField()
-        accommodatesTextField.placeholder = "0"
-        accommodatesTextField.borderStyle = .line
+       
     }
     
+    @objc func showMenuBar() {
+    
+    }
     
     // MARK: - Navigation
 
