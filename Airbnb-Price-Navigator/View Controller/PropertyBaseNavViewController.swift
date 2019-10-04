@@ -9,7 +9,7 @@
 import UIKit
 
 
-class BaseNavViewController: UIViewController{
+class PropertyBaseNavViewController: UIViewController{
     
     var menuBar: UIBarButtonItem!
     var logoButton: UIBarButtonItem!
@@ -29,7 +29,7 @@ class BaseNavViewController: UIViewController{
     }
 
     @objc func showMenuBar() {
-        let vc  = MenuTableViewController()
+        let vc  = PropertyMenuViewController()
         vc.modalPresentationStyle = .overCurrentContext
         present(vc, animated: true, completion: nil)
     

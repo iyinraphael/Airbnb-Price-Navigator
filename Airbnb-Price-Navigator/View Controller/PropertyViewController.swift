@@ -8,10 +8,8 @@
 
 import UIKit
 
-class PropertyViewController: BaseNavViewController {
+class PropertyViewController: PropertyBaseNavViewController {
     
-    
-    var currentViewController: UIViewController?
     //MARK: - Properties
     var stackview: UIStackView!
     var zipcodeStackView: UIStackView!
@@ -44,8 +42,6 @@ class PropertyViewController: BaseNavViewController {
     private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
 
     var property: Property?
-    var baseViewController = BaseNavViewController()
-    
     //MARK:- UI SETUP
     
     

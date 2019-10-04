@@ -9,7 +9,7 @@
 import UIKit
 
 
-class MenuTableViewController: UIViewController {
+class PropertyMenuViewController: UIViewController {
     
     //MARK:- PROPERTIES
     var menuView: UIView!
