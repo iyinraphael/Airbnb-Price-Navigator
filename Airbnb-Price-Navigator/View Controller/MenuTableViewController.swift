@@ -69,6 +69,12 @@ class MenuTableViewController: UIViewController {
         discoveriesButton.setTitleColor(.black, for: .normal)
         discoveriesButton.addTarget(self, action: #selector(whatToDiscover), for: .touchUpInside)
         stackView.addArrangedSubview(discoveriesButton)
+        
+        ourTeamButton = UIButton(type: .custom)
+        ourTeamButton.setTitle("Our Team", for: .normal)
+        ourTeamButton.setTitleColor(.black, for: .normal)
+        ourTeamButton.addTarget(self, action: #selector(lookOurTeam), for: .touchUpInside)
+        stackView.addArrangedSubview(ourTeamButton)
 
     }
     
@@ -85,6 +91,10 @@ class MenuTableViewController: UIViewController {
     }
     
     @objc func whatToDiscover() {
+        
+    }
+    
+    @objc func lookOurTeam() {
         
     }
 }
