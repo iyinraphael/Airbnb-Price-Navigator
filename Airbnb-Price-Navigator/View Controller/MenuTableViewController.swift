@@ -39,12 +39,43 @@ class MenuTableViewController: UIViewController {
         menuView.addSubview(cancelButton)
         cancelButton.setImage(image, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-        cancelButton.topAnchor.constraint(equalTo: menuView.topAnchor, constant: 20).isActive = true
+        cancelButton.topAnchor.constraint(equalTo: menuView.topAnchor, constant: 10).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: menuView.leadingAnchor, constant: 320).isActive = true
+        
+        stackView = UIStackView()
+        menuView.addSubview(stackView)
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(equalTo: menuView.topAnchor, constant: 100).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: menuView.leadingAnchor, constant: 0).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: menuView.trailingAnchor, constant: 0).isActive = true
+        
+        homeButton = UIButton(type: .custom)
+        homeButton.setTitle("Home", for: .normal)
+        homeButton.setTitleColor(.black, for: .normal)
+        homeButton.addTarget(self, action: #selector(returnToHome), for: .touchUpInside)
+        stackView.addArrangedSubview(homeButton)
+        
+        aboutButton = UIButton(type: .custom)
+        aboutButton.setTitle("About", for: .normal)
+        aboutButton.setTitleColor(.black, for: .normal)
+        aboutButton.addTarget(self, action: #selector(whatIsAbout), for: .touchUpInside)
+        stackView.addArrangedSubview(homeButton)
+
     }
     
     @objc func cancel() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func returnToHome() {
+        
+    }
+    
+    @objc func whatIsAbout() {
+        
     }
 }
 
