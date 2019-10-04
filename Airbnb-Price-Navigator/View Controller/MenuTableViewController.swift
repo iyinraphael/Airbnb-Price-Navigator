@@ -38,11 +38,9 @@ class MenuTableViewController: UIViewController {
         let image = UIImage(named: "cancel")
         menuView.addSubview(cancelButton)
         cancelButton.setImage(image, for: .normal)
-        cancelButton.target(forAction: #selector(cancel), withSender: self)
+        cancelButton.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         cancelButton.topAnchor.constraint(equalTo: menuView.topAnchor, constant: 20).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: menuView.leadingAnchor, constant: 320).isActive = true
-        cancelButton.trailingAnchor.constraint(equalTo: menuView.trailingAnchor, constant: 10).isActive = true
-        
     }
     
     @objc func cancel() {
