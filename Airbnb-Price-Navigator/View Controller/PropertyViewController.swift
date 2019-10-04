@@ -8,8 +8,10 @@
 
 import UIKit
 
-class PropertyViewController: UIViewController {
-
+class PropertyViewController: BaseNavViewController {
+    
+    
+    var currentViewController: UIViewController?
     //MARK: - Properties
     var stackview: UIStackView!
     var zipcodeStackView: UIStackView!
@@ -34,8 +36,7 @@ class PropertyViewController: UIViewController {
     var accommodateLabel: UILabel!
     
     var submitButton: UIButton!
-    var menuBar: UIBarButtonItem!
-    var logoButton: UIBarButtonItem!
+    
    
     var dropDownPropertyTextfield: DropDownTextField!
     var dropDownRoomTypeTextfield: DropDownTextField!
@@ -43,9 +44,12 @@ class PropertyViewController: UIViewController {
     private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
 
     var property: Property?
-    var propertyController = PropertyController()
+    var baseViewController = BaseNavViewController()
     
     //MARK:- UI SETUP
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,17 +63,6 @@ class PropertyViewController: UIViewController {
         stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
-       
-        menuBar = UIBarButtonItem()
-        menuBar.image = UIImage(named: "menu-bar")
-        menuBar.target = self
-        menuBar.action = #selector(showMenuBar)
-        menuBar.tintColor = .black
-    
-    
-        navigationItem.rightBarButtonItem = menuBar
-        navigationItem.title = "Airbnb Price Navigator"
-        
        
         addZipcodeTextField()
         addDropDownPropertyTextfield()
@@ -284,12 +277,7 @@ class PropertyViewController: UIViewController {
        
     }
     
-    @objc func showMenuBar() {
-        let vc  = MenuTableViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        present(vc, animated: true, completion: nil)
-        
-    }
+   
     
     // MARK: - Navigation
 
