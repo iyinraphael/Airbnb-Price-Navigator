@@ -62,7 +62,7 @@ class MenuTableViewController: UIViewController {
         aboutButton.setTitle("About", for: .normal)
         aboutButton.setTitleColor(.black, for: .normal)
         aboutButton.addTarget(self, action: #selector(whatIsAbout), for: .touchUpInside)
-        stackView.addArrangedSubview(homeButton)
+        stackView.addArrangedSubview(aboutButton)
 
     }
     
