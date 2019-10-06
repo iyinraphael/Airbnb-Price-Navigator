@@ -15,9 +15,6 @@ class PropertyViewController: PropertyBaseNavViewController {
     var zipcodeStackView: UIStackView!
     var roomTypeStackView: UIStackView!
     var propertyTypeStackView: UIStackView!
-    var bedroomsStackView: UIStackView!
-    var bathroomsStackView:  UIStackView!
-    var bedAndBathStackView: UIStackView!
     var bedTypesStackView: UIStackView!
     var accommodatStackView: UIStackView!
 
@@ -28,7 +25,6 @@ class PropertyViewController: PropertyBaseNavViewController {
     
     var propertyLabel: UILabel!
     var roomTypeLabel: UILabel!
-    var bedroomsLabel: UILabel!
     var bathroomsLabel: UILabel!
     var bedTypesLabel: UILabel!
     var accommodateLabel: UILabel!
@@ -103,7 +99,6 @@ class PropertyViewController: PropertyBaseNavViewController {
             zipcodeLabel.text = "Zip Code"
             zipcodeLabel.font = .boldSystemFont(ofSize: 12)
             zipcodeStackView.addArrangedSubview(zipcodeLabel)
-            
             return zipcodeLabel
         }()
         
@@ -112,13 +107,12 @@ class PropertyViewController: PropertyBaseNavViewController {
             zipcodeTextField.borderStyle = .line
             zipcodeTextField.placeholder = "90210"
             zipcodeStackView.addArrangedSubview(zipcodeTextField)
-            
             return zipcodeTextField
         }()
     }
     
     private func addBedAndBathTextfield() {
-        bedAndBathStackView = UIStackView()
+        let bedAndBathStackView = UIStackView()
         view.addSubview(bedAndBathStackView)
         bedAndBathStackView.translatesAutoresizingMaskIntoConstraints = false
         bedAndBathStackView.axis = .horizontal
@@ -130,44 +124,39 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedAndBathStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedAndBathStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
-        bedroomsStackView = UIStackView()
-        bathroomsStackView = UIStackView()
+        let bedroomsStackView = UIStackView()
+        let bathroomsStackView = UIStackView()
+        bedroomsStackView.axis = .vertical
+        bathroomsStackView.axis = .vertical
         bedAndBathStackView.addArrangedSubview(bedroomsStackView)
         bedAndBathStackView.addArrangedSubview(bathroomsStackView)
-        
         bedAndBathStackView.axis = .horizontal
         
-        bedroomsLabel = UILabel()
-        bedroomsLabel.text = "Bedrooms"
-        bedroomsLabel.font = .boldSystemFont(ofSize: 12)
+        let _: UILabel = {
+            let bedroomsLabel = UILabel()
+            bedroomsLabel.text = "Bedrooms"
+            bedroomsLabel.font = .boldSystemFont(ofSize: 12)
+            bedroomsStackView.addArrangedSubview(bedroomsLabel)
+            return bedroomsLabel
+        }()
+       
+        let _: UILabel = {
+            let bathroomsLabel = UILabel()
+            bathroomsLabel.text = "Bathrooms"
+            bathroomsLabel.font = .boldSystemFont(ofSize: 12)
+            bathroomsStackView.addArrangedSubview(bathroomsLabel)
+            return bathroomsLabel
+        }()
         
         bedroomTextField = UITextField()
         bedroomTextField.borderStyle = .line
         bedroomTextField.placeholder = "0"
-        
-        bedroomsStackView.addArrangedSubview(bedroomsLabel)
         bedroomsStackView.addArrangedSubview(bedroomTextField)
-        bedroomsStackView.axis = .vertical
-        
-
-        
-        bedroomTextField = UITextField()
-        bedroomTextField.borderStyle = .line
-        bedroomTextField.placeholder = "0"
-        
-        
-        bathroomsLabel = UILabel()
-        bathroomsLabel.text = "Bathrooms"
-        bathroomsLabel.font = .boldSystemFont(ofSize: 12)
         
         bathroomsTextField = UITextField()
         bathroomsTextField.borderStyle = .line
         bathroomsTextField.placeholder = "0"
-        
-        bathroomsStackView.addArrangedSubview(bathroomsLabel)
         bathroomsStackView.addArrangedSubview(bathroomsTextField)
-        bathroomsStackView.axis = .vertical
-      
     }
     
     
