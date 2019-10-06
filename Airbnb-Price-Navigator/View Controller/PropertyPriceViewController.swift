@@ -16,6 +16,9 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     var priceLabel: UILabel!
     var valuesLabel: UILabel!
     
+    var barChart: BarChartData?
+    var dataset: [ChartDataSet]?
+    
     
     
 }

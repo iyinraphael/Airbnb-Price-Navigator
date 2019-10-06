@@ -10,8 +10,9 @@ import Foundation
 
 class PropertyController {
     
-    let baseUrl = URL(string: "https://d2qu1npgxlnkvp.cloudfront.net/prediction")!
+    let baseUrl = URL(string: "https://dnhbfbsykiic0.cloudfront.net/prediction")!
     typealias completionHandler = (Prediction?,Error?) -> Void
     var prediction: Prediction?
+
     
 }

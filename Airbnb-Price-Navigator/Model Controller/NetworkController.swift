@@ -33,6 +33,7 @@ extension PropertyController {
             let decoder = JSONDecoder()
             do {
                 let decodeJson = try decoder.decode(Prediction.self, from: data)
+                print("\(decodeJson)")
                 completion(decodeJson, nil)
             } catch {
                 NSLog("Error getting prediction \(error)")
