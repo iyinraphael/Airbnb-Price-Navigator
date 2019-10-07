@@ -286,15 +286,15 @@ class PropertyViewController: PropertyBaseNavViewController {
         }
         guard let property = property else {return}
         
-        DispatchQueue.main.async {
             self.propertyController.postPropeties(property: property) { (prediction, error) in
                 self.prediction = prediction
-                let vc = PropertyPriceViewController()
-                self.present(vc, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    let vc = PropertyPriceViewController()
+                    self.present(vc, animated: true, completion: nil)
+                }
             }
+   
         }
-      
-    }
    
 }
 
