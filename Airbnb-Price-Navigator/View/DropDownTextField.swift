@@ -53,11 +53,10 @@ class DropDownTextField: UIView {
     }()
     
     lazy var textField: UITextField = {
-        let textField = UITextField(frame: .zero)
+        let textField = UITextField()
         textField.textColor = boldColor
         textField.returnKeyType = .done
         textField.keyboardType = .alphabet
-        textField.borderStyle = .line
         return textField
     }()
      
@@ -117,6 +116,8 @@ extension DropDownTextField {
             textField.centerYAnchor.constraint(equalTo: topAnchor, constant: initialHeight / 2),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
         ])
+        textField.layer.borderWidth = 0.3
+        textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.rightView = newButton
         textField.rightViewMode = .always
         textField.font = self.font
@@ -128,6 +129,7 @@ extension DropDownTextField {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(animateMenu))
         tapView.addGestureRecognizer(tapGesture)
         addSubview(tapView)
+        tapView.layer.borderColor = UIColor.gray.cgColor
         tapView.constraintsPinTo(leading: leadingAnchor,
                                  trailing: trailingAnchor,
                                  top: topAnchor,
@@ -161,8 +163,8 @@ extension DropDownTextField {
                                             .isActive = true
         self.sendSubviewToBack(animationView)
         animationView.backgroundColor = dropDownColor
-        animationView.layer.borderWidth = 0.5
-        animationView.layer.shadowColor = UIColor.black.cgColor
+        animationView.layer.borderWidth = 0.3
+        animationView.layer.borderColor = UIColor.lightGray.cgColor
         animationView.isHidden = true
     }
 }
@@ -205,13 +207,13 @@ extension UIImage {
 extension DropDownTextField: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return options.count + 1
+        return options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "option") as? DropDownCell ?? DropDownCell()
         cell.cellFont = font
-        let title = indexPath.row < options.count ? options[indexPath.row] : "Other"
+        let title =  options[indexPath.row]
         cell.configureCell(with: title)
         return cell
     }
@@ -247,7 +249,8 @@ extension DropDownTextField {
         }, completion: { (bool) in
             self.isDroppedDown = !self.isDroppedDown
             if self.isDroppedDown == true {
-                self.newButton.setImage(UIImage.Theme.dropUp.image, for: .normal)  }
+                self.newButton.setImage(UIImage.Theme.dropUp.image, for: .normal)
+            }
             else {
                 self.newButton.setImage(UIImage.Theme.dropDown.image, for: .normal)}
             self.animationView.isHidden = up

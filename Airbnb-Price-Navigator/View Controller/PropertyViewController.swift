@@ -27,6 +27,8 @@ class PropertyViewController: PropertyBaseNavViewController {
     var dropDownBedTypeTextfield: DropDownTextField!
 
     var property: Property?
+    var prediction: Prediction?
+    let propertyController = PropertyController()
    
     //MARK:- UI SETUP
     override func viewDidLoad() {
@@ -55,6 +57,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 5
+        submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
         submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 550).isActive = true
         submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -84,14 +87,19 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let zipcodeLabel = UILabel()
             zipcodeLabel.text = "Zip Code"
-            zipcodeLabel.font = .boldSystemFont(ofSize: 12)
+            zipcodeLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             zipcodeStackView.addArrangedSubview(zipcodeLabel)
             return zipcodeLabel
         }()
         
         let _: UITextField = {
-            zipcodeTextField = UITextField()
-            zipcodeTextField.borderStyle = .line
+            zipcodeTextField = UITextField(frame: .zero)
+            zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
+            zipcodeTextField.frame.size.height = 40.0
+            zipcodeTextField.contentMode = .redraw
+            zipcodeTextField.layer.borderWidth = 0.3
+            zipcodeTextField.layer.borderColor = UIColor.gray.cgColor
+            zipcodeTextField.font = .systemFont(ofSize: 12.0, weight: .light)
             zipcodeTextField.placeholder = "90210"
             zipcodeStackView.addArrangedSubview(zipcodeTextField)
             return zipcodeTextField
@@ -114,7 +122,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let propertyLabel = UILabel()
             propertyLabel.text = "Property Type"
-            propertyLabel.font = .boldSystemFont(ofSize: 12.0)
+            propertyLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             propertyTypeStackView.addArrangedSubview(propertyLabel)
             return propertyLabel
         }()
@@ -143,7 +151,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let roomTypeLabel = UILabel()
             roomTypeLabel.text = "Room Type"
-            roomTypeLabel.font = .boldSystemFont(ofSize: 12.0)
+            roomTypeLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             roomTypeStackView.addArrangedSubview(roomTypeLabel)
             return roomTypeLabel
         }()
@@ -178,7 +186,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bedroomsLabel = UILabel()
             bedroomsLabel.text = "Bedrooms"
-            bedroomsLabel.font = .boldSystemFont(ofSize: 12)
+            bedroomsLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bedroomsStackView.addArrangedSubview(bedroomsLabel)
             return bedroomsLabel
         }()
@@ -186,18 +194,22 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bathroomsLabel = UILabel()
             bathroomsLabel.text = "Bathrooms"
-            bathroomsLabel.font = .boldSystemFont(ofSize: 12)
+            bathroomsLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bathroomsStackView.addArrangedSubview(bathroomsLabel)
             return bathroomsLabel
         }()
         
         bedroomTextField = UITextField()
-        bedroomTextField.borderStyle = .line
+        bedroomTextField.layer.borderWidth = 0.3
+        bedroomTextField.layer.borderColor = UIColor.gray.cgColor
+        bedroomTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bedroomTextField.placeholder = "0"
         bedroomsStackView.addArrangedSubview(bedroomTextField)
         
         bathroomsTextField = UITextField()
-        bathroomsTextField.borderStyle = .line
+        bathroomsTextField.layer.borderWidth = 0.3
+        bathroomsTextField.layer.borderColor = UIColor.gray.cgColor
+        bathroomsTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bathroomsTextField.placeholder = "0"
         bathroomsStackView.addArrangedSubview(bathroomsTextField)
     }
@@ -219,7 +231,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bedTypesLabel = UILabel()
             bedTypesLabel.text = "Bed Types"
-            bedTypesLabel.font = .boldSystemFont(ofSize: 12)
+            bedTypesLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bedTypesStackView.addArrangedSubview(bedTypesLabel)
             return bedTypesLabel
         }()
@@ -243,18 +255,46 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let accommodateLabel = UILabel()
             accommodateLabel.text = "Accomodates how many guest?"
-            accommodateLabel.font = .boldSystemFont(ofSize: 12)
+            accommodateLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             accommodatStackView.addArrangedSubview(accommodateLabel)
             return accommodateLabel
         }()
     
         
-        accommodatesTextField = UITextField()
+        accommodatesTextField = UITextField(frame: .zero)
+        accommodatesTextField.translatesAutoresizingMaskIntoConstraints = false
+        accommodatesTextField.frame.size.height = 40
+        accommodatesTextField.contentMode = .redraw
+        accommodatesTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         accommodatesTextField.placeholder = "0"
-        accommodatesTextField.borderStyle = .line
+        accommodatesTextField.layer.borderWidth = 0.3
+        accommodatesTextField.layer.borderColor = UIColor.gray.cgColor
         accommodatStackView.addArrangedSubview(accommodatesTextField)
     }
     
+    @objc func displayPrice() {
+        guard let zipcode = zipcodeTextField.text,
+        let propertyType = dropDownPropertyTextfield.textField.text,
+        let roomType = dropDownRoomTypeTextfield.textField.text,
+        let bedroomString = bedroomTextField.text,
+        let bathroomString = bathroomsTextField.text,
+        let bedTypes = dropDownBedTypeTextfield.textField.text,
+        let accomodationString = accommodatesTextField.text else {return}
+        
+        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString) {
+            property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: 2 , bedType: bedTypes)
+        }
+        guard let property = property else {return}
+        
+        DispatchQueue.main.async {
+            self.propertyController.postPropeties(property: property) { (prediction, error) in
+                self.prediction = prediction
+                let vc = PropertyPriceViewController()
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+      
+    }
    
 }
 
