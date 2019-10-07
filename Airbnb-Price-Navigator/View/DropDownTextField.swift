@@ -18,7 +18,7 @@ class DropDownTextField: UIView {
     //MARK: - Property
     var boldColor = UIColor.black
     var lightColor = UIColor.white
-    var dropDownColor = UIColor.gray
+    var dropDownColor = UIColor.white
     var font = UIFont.systemFont(ofSize: 12, weight: .light)
     var delegate: DropDownTextFieldDelegate?
     
@@ -161,6 +161,8 @@ extension DropDownTextField {
                                             .isActive = true
         self.sendSubviewToBack(animationView)
         animationView.backgroundColor = dropDownColor
+        animationView.layer.borderWidth = 0.5
+        animationView.layer.shadowColor = UIColor.black.cgColor
         animationView.isHidden = true
     }
 }
@@ -208,7 +210,6 @@ extension DropDownTextField: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "option") as? DropDownCell ?? DropDownCell()
-        cell.lightColor = self.lightColor
         cell.cellFont = font
         let title = indexPath.row < options.count ? options[indexPath.row] : "Other"
         cell.configureCell(with: title)
