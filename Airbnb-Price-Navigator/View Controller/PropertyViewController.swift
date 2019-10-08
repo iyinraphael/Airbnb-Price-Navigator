@@ -245,7 +245,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.addSubview(bedStackView)
         bedStackView.translatesAutoresizingMaskIntoConstraints = false
         bedStackView.axis = .vertical
-        bedStackView.tag = 5
+        bedStackView.tag = 4
         bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 440).isActive = true
         bedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
@@ -298,10 +298,11 @@ class PropertyViewController: PropertyBaseNavViewController {
         let bedroomString = bedroomTextField.text,
         let bathroomString = bathroomsTextField.text,
         let bedTypes = dropDownBedTypeTextfield.textField.text,
-        let accomodationString = accommodatesTextField.text else {return}
+        let accomodationString = accommodatesTextField.text,
+        let bedString = bedCountTextField.text else {return}
         
-        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString) {
-            property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: 2 , bedType: bedTypes)
+        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ) {
+            property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
         }
         guard let property = property else {return}
         
@@ -323,10 +324,12 @@ extension PropertyViewController: DropDownTextFieldDelegate {
     func menuDidAnimate(up: Bool) {
         
         if dropDownPropertyTextfield.isDroppedDown == true {
-                 view.viewWithTag(1)?.isHidden = true
-                 view.viewWithTag(2)?.isHidden = true
-                 view.viewWithTag(3)?.isHidden = true
+                view.viewWithTag(1)?.isHidden = true
+                view.viewWithTag(2)?.isHidden = true
+                view.viewWithTag(3)?.isHidden = true
                 view.viewWithTag(4)?.isHidden = true
+                view.viewWithTag(5)?.isHidden = true
+                view.viewWithTag(6)?.isHidden = true
             }
         
         else if dropDownRoomTypeTextfield.isDroppedDown == true {
@@ -338,6 +341,7 @@ extension PropertyViewController: DropDownTextFieldDelegate {
         else if dropDownBedTypeTextfield.isDroppedDown == true {
             view.viewWithTag(4)?.isHidden = true
             view.viewWithTag(5)?.isHidden = true
+            view.viewWithTag(6)?.isHidden = true
         }
         
         else  {
@@ -346,6 +350,7 @@ extension PropertyViewController: DropDownTextFieldDelegate {
             view.viewWithTag(3)?.isHidden = false
             view.viewWithTag(4)?.isHidden = false
             view.viewWithTag(5)?.isHidden = false
+            view.viewWithTag(6)?.isHidden = false
         }
     }
     
