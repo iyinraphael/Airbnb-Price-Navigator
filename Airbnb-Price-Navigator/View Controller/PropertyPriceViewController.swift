@@ -19,6 +19,8 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     var barChart: BarChartData?
     var dataset: [ChartDataSet]?
     
-    
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+    }
 }
