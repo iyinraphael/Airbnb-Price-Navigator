@@ -33,6 +33,8 @@ class PropertyViewController: PropertyBaseNavViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         stackview = UIStackView()
         view.addSubview(stackview)
         
@@ -261,6 +263,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedCountTextField = UITextField()
         bedCountTextField.layer.borderWidth = 1.0
         bedCountTextField.layer.borderColor = textFieldBorderColor
+        bedCountTextField.placeholder = "0"
         bedStackView.addArrangedSubview(bedCountTextField)
         
     }

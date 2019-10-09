@@ -23,8 +23,14 @@ class PropertyBaseNavViewController: UIViewController{
         menuBar.action = #selector(showMenuBar)
         menuBar.tintColor = .black
         
+        logoButton = UIBarButtonItem()
+        logoButton.image = UIImage(named: "globe")?.withRenderingMode(.alwaysOriginal)
+        
         navigationItem.rightBarButtonItem = menuBar
+        navigationItem.leftBarButtonItem = logoButton
         navigationItem.title = "Airbnb Price Navigator"
+        
+        self.addChild(PropertyViewController())
     
     }
 
