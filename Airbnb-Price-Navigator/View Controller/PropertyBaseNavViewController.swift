@@ -42,3 +42,11 @@ class PropertyBaseNavViewController: UIViewController{
     }
     
 }
+
+extension UITextField {
+    
+    func setHeigth() {
+        self.frame.size.height = 60
+    }
+    
+}

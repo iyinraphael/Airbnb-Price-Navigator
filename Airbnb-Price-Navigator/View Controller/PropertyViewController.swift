@@ -34,7 +34,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         super.viewDidLoad()
         
         
-        
+    
         stackview = UIStackView()
         view.addSubview(stackview)
         
@@ -99,6 +99,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             zipcodeTextField.layer.borderWidth = 1.0
             zipcodeTextField.layer.borderColor = textFieldBorderColor
             zipcodeTextField.placeholder = "90210"
+            zipcodeTextField.setHeigth()
             zipcodeStackView.addArrangedSubview(zipcodeTextField)
             return zipcodeTextField
         }()
