@@ -310,9 +310,9 @@ class PropertyViewController: PropertyBaseNavViewController {
         guard let property = property else {return}
         
             self.propertyController.postPropeties(property: property) { (prediction, error) in
-                self.prediction = prediction
+                let vc = PropertyPriceViewController()
+                 vc.predictions = prediction
                 DispatchQueue.main.async {
-                    let vc = PropertyPriceViewController()
                     self.present(vc, animated: true, completion: nil)
                 }
             }

@@ -26,6 +26,7 @@ class PropertyBaseNavViewController: UIViewController{
         logoButton = UIBarButtonItem()
         logoButton.image = UIImage(named: "globe")?.withRenderingMode(.alwaysOriginal)
         logoButton.imageInsets = .init(top: -5, left: -5, bottom: -5, right: 5)
+        
         navigationItem.rightBarButtonItem = menuBar
         navigationItem.leftBarButtonItem = logoButton
         navigationItem.title = "Airbnb Price Navigator"
