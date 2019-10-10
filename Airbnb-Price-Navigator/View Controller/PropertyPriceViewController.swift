@@ -38,7 +38,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         let barChartView  = HorizontalBarChartView()
         view.addSubview(barChartView)
         barChartView.translatesAutoresizingMaskIntoConstraints = false
-        barChartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 200).isActive = true
+        barChartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 300).isActive = true
         barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
@@ -62,17 +62,25 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
                 
             }
             
-            let dataset = BarChartDataSet(values: dataEntries, label: "Number of AirBnB Units")
+            let dataset = BarChartDataSet(values: dataEntries, label: " ")
             barChart = BarChartData(dataSet: dataset)
             dataset.colors = [UIColor.green]
+            dataset.drawValuesEnabled = false
             barChartView.data = barChart
             barChartView.xAxis.labelPosition = .bottom
-            barChartView.drawGridBackgroundEnabled = false
             barChartView.xAxis.valueFormatter =  IndexAxisValueFormatter(values: bins)
+            barChartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
             barChartView.xAxis.granularity = 1
+            barChartView.xAxis.granularityEnabled = true
+            barChartView.xAxis.labelCount = 10
+            barChartView.rightAxis.labelCount = 4
+            barChartView.leftAxis.labelCount = 0
             barChartView.xAxis.gridColor = .clear
             barChartView.leftAxis.gridColor = .clear
-            barChartView.rightAxis.gridColor = .clear
+            barChartView.rightAxis.axisMinimum = 0.0
+            barChartView.leftAxis.axisMinimum = 0.0
+            barChartView.rightAxis.axisLineColor = .clear
+            barChartView.leftAxis.axisLineColor = .clear
         }
         
         
