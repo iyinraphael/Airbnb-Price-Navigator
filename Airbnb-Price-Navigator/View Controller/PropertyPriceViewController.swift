@@ -13,8 +13,8 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     //MARK:- Properties
     var barChart: BarChartData?
-    var dataset: [ChartDataSet]?
     var predictions: Prediction?
+    let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,17 +42,31 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        barChartView.noDataText = "You need to provide data for the chart"
-        barChartView.noDataTextColor = .black
-        
+       
         let worthLabel = UILabel()
         worthLabel.text = "Your property could be worth"
         priceStackView.addArrangedSubview(worthLabel)
         
         let valuesLabel = UILabel()
         priceStackView.addArrangedSubview(valuesLabel)
+        
+        
+        var dataEntries = [BarChartDataEntry]()
         if let prediction = predictions {
             valuesLabel.text = "$\(prediction.prediction) / night"
+            
+            for i in 0..<bins.count {
+                
+                let dataEntry = BarChartDataEntry(x: Double(i), y: Double(prediction.plotValues[i]))
+                dataEntries.append(dataEntry)
+                
+            }
+            
+            let dataset = BarChartDataSet(values: dataEntries, label: "Number of AirBnB Units")
+            barChart = BarChartData(dataSet: dataset)
+            dataset.colors = [UIColor.green]
+            barChartView.data = barChart
+            
             
         }
         
