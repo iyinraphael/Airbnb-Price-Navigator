@@ -35,13 +35,13 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         priceStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 80).isActive = true
         priceStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
         
-        let barChartView  = BarChartView()
+        let barChartView  = HorizontalBarChartView()
         view.addSubview(barChartView)
         barChartView.translatesAutoresizingMaskIntoConstraints = false
-        barChartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 150).isActive = true
-        barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        barChartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 200).isActive = true
+        barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
        
         let worthLabel = UILabel()
         worthLabel.text = "Your property could be worth"
@@ -66,8 +66,13 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
             barChart = BarChartData(dataSet: dataset)
             dataset.colors = [UIColor.green]
             barChartView.data = barChart
-            
-            
+            barChartView.xAxis.labelPosition = .bottom
+            barChartView.drawGridBackgroundEnabled = false
+            barChartView.xAxis.valueFormatter =  IndexAxisValueFormatter(values: bins)
+            barChartView.xAxis.granularity = 1
+            barChartView.xAxis.gridColor = .clear
+            barChartView.leftAxis.gridColor = .clear
+            barChartView.rightAxis.gridColor = .clear
         }
         
         
