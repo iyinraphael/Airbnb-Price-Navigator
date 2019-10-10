@@ -25,7 +25,6 @@ class PropertyViewController: PropertyBaseNavViewController {
     var submitButton: UIButton!
     var textFieldBorderColor = UIColor(red: 220.0/255.0, green: 220.0/255.0, blue: 220.0/255.0, alpha: 1.0).cgColor
     
-    var property: Property?
     var prediction: Prediction?
     let propertyController = PropertyController()
    
@@ -305,19 +304,21 @@ class PropertyViewController: PropertyBaseNavViewController {
         let bedString = bedCountTextField.text else {return}
         
         if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ) {
-            property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
-        }
-        guard let property = property else {return}
-        
+           
+            let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
+            
             self.propertyController.postPropeties(property: property) { (prediction, error) in
                 let vc = PropertyPriceViewController()
-                 vc.predictions = prediction
+                vc.predictions = prediction
                 DispatchQueue.main.async {
                     self.present(vc, animated: true, completion: nil)
                 }
             }
-   
+        
         }
+        
+   
+    }
    
 }
 

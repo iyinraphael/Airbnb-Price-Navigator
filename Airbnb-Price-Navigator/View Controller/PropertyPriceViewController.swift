@@ -12,9 +12,6 @@ import Charts
 class PropertyPriceViewController: PropertyBaseNavViewController {
     
     //MARK:- Properties
-    var priceLabel: UILabel!
-    var priceStackView: UIStackView!
-    
     var barChart: BarChartData?
     var dataset: [ChartDataSet]?
     var predictions: Prediction?
@@ -29,13 +26,24 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     private func updatePrice() {
         guard isViewLoaded else {return}
-        priceStackView = UIStackView()
+        
+        let priceStackView = UIStackView()
         view.addSubview(priceStackView)
         priceStackView.axis = .vertical
         priceStackView.translatesAutoresizingMaskIntoConstraints = false
         priceStackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100).isActive = true
         priceStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 80).isActive = true
         priceStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
+        
+        let barChartView  = BarChartView()
+        view.addSubview(barChartView)
+        barChartView.translatesAutoresizingMaskIntoConstraints = false
+        barChartView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 150).isActive = true
+        barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        barChartView.noDataText = "You need to provide data for the chart"
+        barChartView.noDataTextColor = .black
         
         let worthLabel = UILabel()
         worthLabel.text = "Your property could be worth"
@@ -44,8 +52,10 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         let valuesLabel = UILabel()
         priceStackView.addArrangedSubview(valuesLabel)
         if let prediction = predictions {
-            valuesLabel.text = "$\(prediction.prediction)"
+            valuesLabel.text = "$\(prediction.prediction) / night"
+            
         }
+        
         
     }
 }
