@@ -15,6 +15,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     var barChart: BarChartData?
     var predictions: Prediction?
     let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
+    let greenGradient = UIColor(red: 0.0/255.0, green: 153.0/255.0, blue: 115.0/255.0, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +65,8 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
             
             let dataset = BarChartDataSet(values: dataEntries, label: " ")
             barChart = BarChartData(dataSet: dataset)
-            dataset.colors = [UIColor.green]
+            barChart?.barWidth = 0.5
+            dataset.colors = [greenGradient]
             dataset.drawValuesEnabled = false
             barChartView.data = barChart
             barChartView.xAxis.labelPosition = .bottom
@@ -81,6 +83,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
             barChartView.leftAxis.axisMinimum = 0.0
             barChartView.rightAxis.axisLineColor = .clear
             barChartView.leftAxis.axisLineColor = .clear
+        
         }
         
         
