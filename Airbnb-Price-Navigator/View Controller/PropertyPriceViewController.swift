@@ -32,8 +32,10 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         view.addSubview(priceStackView)
         priceStackView.axis = .vertical
         priceStackView.translatesAutoresizingMaskIntoConstraints = false
+        priceStackView.alignment = .fill
+        priceStackView.distribution = .fillProportionally
         priceStackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100).isActive = true
-        priceStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 80).isActive = true
+        priceStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -80).isActive = true
         priceStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
         
         let barChartView  = HorizontalBarChartView()
@@ -45,11 +47,16 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
        
         let worthLabel = UILabel()
+        worthLabel.adjustsFontSizeToFitWidth = true
         worthLabel.text = "Your property could be worth"
         priceStackView.addArrangedSubview(worthLabel)
         
         let valuesLabel = UILabel()
+        valuesLabel.textAlignment = .center
+        valuesLabel.adjustsFontSizeToFitWidth = true
+        valuesLabel.font = .systemFont(ofSize: 45.0, weight: .bold)
         priceStackView.addArrangedSubview(valuesLabel)
+        
         
         
         var dataEntries = [BarChartDataEntry]()
