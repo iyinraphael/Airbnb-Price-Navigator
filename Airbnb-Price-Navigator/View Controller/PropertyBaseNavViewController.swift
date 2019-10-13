@@ -9,14 +9,14 @@
 import UIKit
 
 
-class PropertyBaseNavViewController: UIViewController{
+class PropertyBaseNavViewController: UIViewController {
     
     var menuBar: UIBarButtonItem!
     var logoButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         menuBar = UIBarButtonItem()
         menuBar.image = UIImage(named: "menu-bar")
         menuBar.target = self
@@ -30,9 +30,6 @@ class PropertyBaseNavViewController: UIViewController{
         navigationItem.rightBarButtonItem = menuBar
         navigationItem.leftBarButtonItem = logoButton
         navigationItem.title = "Airbnb Price Navigator"
-        
-        self.addChild(PropertyViewController())
-    
     }
 
     @objc func showMenuBar() {

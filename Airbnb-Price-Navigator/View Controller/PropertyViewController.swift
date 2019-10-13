@@ -33,7 +33,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         super.viewDidLoad()
         
         
-    
+        view.backgroundColor = .white
         stackview = UIStackView()
         view.addSubview(stackview)
         
@@ -311,7 +311,7 @@ class PropertyViewController: PropertyBaseNavViewController {
                 let vc = PropertyPriceViewController()
                 vc.predictions = prediction
                 DispatchQueue.main.async {
-                    self.present(vc, animated: true, completion: nil)
+                    self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
                 }
             }
         
