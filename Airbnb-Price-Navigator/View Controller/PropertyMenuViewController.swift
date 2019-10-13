@@ -87,6 +87,8 @@ class PropertyMenuViewController: UIViewController {
     }
     
     @objc func returnToHome() {
+        let vc = PropertyViewController()
+        present(UINavigationController(rootViewController: vc), animated: false, completion: nil)
         
     }
     
