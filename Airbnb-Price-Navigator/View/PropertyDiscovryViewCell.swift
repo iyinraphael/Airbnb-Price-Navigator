@@ -20,7 +20,6 @@ class PropertyDiscoveryViewCell: UITableViewCell {
         let stackview = UIStackView()
         self.addSubview(stackview)
         stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.spacing = 10.0
         stackview.alignment = .center
         stackview.axis = .vertical
         stackview.distribution = .fillEqually
@@ -44,7 +43,10 @@ class PropertyDiscoveryViewCell: UITableViewCell {
         
         let _: UITextView = {
             textView = UITextView()
+            textView.autoresizingMask = .flexibleHeight
             stackview.addArrangedSubview(textView)
+            textView.widthAnchor.constraint(equalTo: stackview.widthAnchor).isActive = true
+            print(textView.text)
             return textView
         }()
     }
