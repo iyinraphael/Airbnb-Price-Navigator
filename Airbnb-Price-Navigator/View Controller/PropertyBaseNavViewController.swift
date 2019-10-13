@@ -41,8 +41,3 @@ class PropertyBaseNavViewController: UIViewController {
     
 }
 
-extension UITextField {
-    
-   
-    
-}
