@@ -18,6 +18,7 @@ class PropertyDiscoveryViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         let stackview = UIStackView()
+        self.addSubview(stackview)
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.spacing = 10.0
         stackview.alignment = .center

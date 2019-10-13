@@ -97,7 +97,8 @@ class PropertyMenuViewController: UIViewController {
     }
     
     @objc func whatToDiscover() {
-        
+        let vc = PropertyDiscoveriesTableViewController()
+        present(UINavigationController(rootViewController: vc), animated: false, completion: nil)
     }
     
     @objc func lookOurTeam() {
