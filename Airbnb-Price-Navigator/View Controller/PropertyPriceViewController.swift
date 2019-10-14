@@ -17,8 +17,6 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
     let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
     
-   
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -27,9 +25,6 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     private func updatePrice() {
         guard isViewLoaded else {return}
-        
-//        let backButton = UIBarButtonItem(image: nil, style: .done, target: nil, action: nil)
-//        navigationItem.backBarButtonItem = backButton
         
         let priceStackView = UIStackView()
         view.addSubview(priceStackView)
@@ -59,8 +54,6 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         valuesLabel.adjustsFontSizeToFitWidth = true
         valuesLabel.font = .systemFont(ofSize: 45.0, weight: .bold)
         priceStackView.addArrangedSubview(valuesLabel)
-        
-        
         
         var dataEntries = [BarChartDataEntry]()
         if let prediction = predictions {

@@ -24,10 +24,14 @@ class PropertyViewController: PropertyBaseNavViewController {
     var dropDownBedTypeTextfield: DropDownTextField!
     var submitButton: UIButton!
     var textFieldBorderColor = UIColor(red: 220.0/255.0, green: 220.0/255.0, blue: 220.0/255.0, alpha: 1.0).cgColor
+    let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
+
     
     var prediction: Prediction?
     let propertyController = PropertyController()
    
+    
+    
     //MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +40,6 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.backgroundColor = .white
         stackview = UIStackView()
         view.addSubview(stackview)
-        
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.distribution = .fillEqually
@@ -67,21 +70,20 @@ class PropertyViewController: PropertyBaseNavViewController {
         displayBeds()
         addAccomodationTexField()
         
-
         submitButton = UIButton()
         view.addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 6
         submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
-        submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 550).isActive = true
+        submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 610).isActive = true
         submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(.white, for: .normal)
         submitButton.backgroundColor = .lightGray
-
     }
     
+    //MARK:- Functions and Uitility
     private func addZipcodeTextField() {
 
         let zipcodeStackView = UIStackView()
@@ -107,7 +109,6 @@ class PropertyViewController: PropertyBaseNavViewController {
             return zipcodeTextField
         }()
     }
-    
     private func addDropDownPropertyTextfield() {
         let lm = view.layoutMargins
         let height: CGFloat = 30.0
@@ -131,6 +132,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
         dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: "House", options: propertyTypes)
+        dropDownPropertyTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownPropertyTextfield.delegate = self
         propertyTypeStackView.addArrangedSubview(dropDownPropertyTextfield)
         
@@ -146,7 +148,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         roomTypeStackView.axis = .vertical
         roomTypeStackView.tag = 1
         roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
-        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 290).isActive = true
+        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 310).isActive = true
         roomTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         roomTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
         
@@ -160,6 +162,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
         dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Entire Property", options: roomTypes)
+        dropDownRoomTypeTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownRoomTypeTextfield.delegate = self
         roomTypeStackView.addArrangedSubview(dropDownRoomTypeTextfield)
     }
@@ -173,7 +176,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedAndBathStackView.spacing = 5.0
         bedAndBathStackView.axis = .vertical
         bedAndBathStackView.tag = 2
-        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 340).isActive = true
+        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 360).isActive = true
         bedAndBathStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedAndBathStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -203,17 +206,20 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         bedroomTextField = UITextField()
         bedroomTextField.layer.borderWidth = 1.0
+        bedroomTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        bedroomTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bedroomTextField.layer.borderColor = textFieldBorderColor
         bedroomTextField.placeholder = "0"
         bedroomsStackView.addArrangedSubview(bedroomTextField)
         
         bathroomsTextField = UITextField()
         bathroomsTextField.layer.borderWidth = 1.0
+        bathroomsTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        bathroomsTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bathroomsTextField.layer.borderColor = textFieldBorderColor
         bathroomsTextField.placeholder = "0"
         bathroomsStackView.addArrangedSubview(bathroomsTextField)
     }
-    
     private func addDropdownBedTypeTextfield() {
         let lm = view.layoutMargins
         let height: CGFloat = 30.0
@@ -224,7 +230,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedTypesStackView.translatesAutoresizingMaskIntoConstraints = false
         bedTypesStackView.axis = .vertical
         bedTypesStackView.tag = 3
-        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 390).isActive = true
+        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 410).isActive = true
         bedTypesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedTypesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -240,6 +246,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         let bedTypes = ["Standard Beds", "Couches", "Futons", "Pull-out Couches", "Air Mattresses"]
         dropDownBedTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Standard Bed", options: bedTypes)
+        dropDownBedTypeTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownBedTypeTextfield.delegate = self
         bedTypesStackView.addArrangedSubview(dropDownBedTypeTextfield)
     }
@@ -252,7 +259,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedStackView.translatesAutoresizingMaskIntoConstraints = false
         bedStackView.axis = .vertical
         bedStackView.tag = 4
-        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 440).isActive = true
+        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460).isActive = true
         bedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -266,6 +273,8 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         bedCountTextField = UITextField()
         bedCountTextField.layer.borderWidth = 1.0
+        bedCountTextField.font = .systemFont(ofSize: 14.0, weight: .light)
+        bedCountTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         bedCountTextField.layer.borderColor = textFieldBorderColor
         bedCountTextField.placeholder = "0"
         bedStackView.addArrangedSubview(bedCountTextField)
@@ -278,7 +287,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
         accommodatStackView.axis = .vertical
         accommodatStackView.tag = 5
-        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 490).isActive = true
+        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 510).isActive = true
         accommodatStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         accommodatStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -290,13 +299,16 @@ class PropertyViewController: PropertyBaseNavViewController {
             return accommodateLabel
         }()
     
-        
         accommodatesTextField = UITextField(frame: .zero)
         accommodatesTextField.placeholder = "0"
         accommodatesTextField.layer.borderWidth = 1.0
+        accommodatesTextField.font = .systemFont(ofSize: 14.0, weight: .light)
+        accommodatesTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         accommodatesTextField.layer.borderColor = textFieldBorderColor
         accommodatStackView.addArrangedSubview(accommodatesTextField)
     }
+    
+    
     
     @objc func displayPrice() {
         guard let zipcode = zipcodeTextField.text,
@@ -309,6 +321,8 @@ class PropertyViewController: PropertyBaseNavViewController {
         let bedString = bedCountTextField.text else {return}
         
         if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ) {
+            
+             submitButton.backgroundColor = greenGradient
            
             let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
             
@@ -331,7 +345,6 @@ class PropertyViewController: PropertyBaseNavViewController {
 extension PropertyViewController: DropDownTextFieldDelegate {
     
     func menuDidAnimate(up: Bool) {
-        
         if dropDownPropertyTextfield.isDroppedDown == true {
                 view.viewWithTag(1)?.isHidden = true
                 view.viewWithTag(2)?.isHidden = true

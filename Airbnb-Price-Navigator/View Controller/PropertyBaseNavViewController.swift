@@ -11,6 +11,8 @@ import UIKit
 
 class PropertyBaseNavViewController: UIViewController {
     
+    
+    //MARK: - Properties
     var menuBar: UIBarButtonItem!
     var logoButton: UIBarButtonItem!
 
