@@ -18,12 +18,13 @@ class PropertyDiscoveryViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         let stackview = UIStackView()
+        self.isUserInteractionEnabled = false
         self.addSubview(stackview)
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.alignment = .center
+        stackview.spacing = 10.0
         stackview.axis = .vertical
-        stackview.distribution = .fillEqually
-        stackview.topAnchor.constraint(equalTo: self.topAnchor, constant: 0.0).isActive = true
+        stackview.topAnchor.constraint(equalTo: self.topAnchor, constant: 40.0).isActive = true
         stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
         stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0).isActive = true
@@ -36,6 +37,7 @@ class PropertyDiscoveryViewCell: UITableViewCell {
       
         let _ : UILabel = {
             label = UILabel()
+            label.sizeToFit()
             stackview.addArrangedSubview(label)
             return label
             
@@ -43,10 +45,12 @@ class PropertyDiscoveryViewCell: UITableViewCell {
         
         let _: UITextView = {
             textView = UITextView()
-            textView.autoresizingMask = .flexibleHeight
+            textView.isEditable = false
+            textView.textAlignment = .center
             stackview.addArrangedSubview(textView)
-            textView.widthAnchor.constraint(equalTo: stackview.widthAnchor).isActive = true
-            print(textView.text)
+            textView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
+            textView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
+          
             return textView
         }()
     }

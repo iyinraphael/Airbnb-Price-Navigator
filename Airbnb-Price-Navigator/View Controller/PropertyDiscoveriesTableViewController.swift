@@ -19,9 +19,7 @@ class PropertyDiscoveriesTableViewController: PropertyBaseNavViewController {
                 """,
                 
                 """
-                There is an option on Airbnb that enables for a home to be instantly bookable;
-                interestingly enough we’ve found that on average,
-                homes that are instantly bookable will have a lower listing price.
+                There is an option on Airbnb that enables for a home to be instantly bookable;interestingly enough we’ve found that on average, homes that are instantly bookable will have a lower listing price.
                 """,
                 
                 """
