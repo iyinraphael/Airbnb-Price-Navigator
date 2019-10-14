@@ -116,6 +116,7 @@ extension DropDownTextField {
             textField.centerYAnchor.constraint(equalTo: topAnchor, constant: initialHeight / 2),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
         ])
+        
         textField.layer.borderWidth = 0.3
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.rightView = newButton

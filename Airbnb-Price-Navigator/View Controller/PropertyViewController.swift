@@ -45,6 +45,20 @@ class PropertyViewController: PropertyBaseNavViewController {
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
        
+        let _: UILabel = {
+            let headerLabel = UILabel()
+            stackview.addArrangedSubview(headerLabel)
+            headerLabel.text = """
+                                Find out the value of
+                                your property!
+                                """
+            headerLabel.textAlignment = .center
+            headerLabel.font = .boldSystemFont(ofSize: 20.0)
+            headerLabel.numberOfLines = 2
+            
+            return headerLabel
+        }()
+        
         addZipcodeTextField()
         addDropDownPropertyTextfield()
         addDropDownRoomTypeTextfield()
@@ -69,18 +83,7 @@ class PropertyViewController: PropertyBaseNavViewController {
     }
     
     private func addZipcodeTextField() {
-        let _: UILabel = {
-            let headerLabel = UILabel()
-            stackview.addArrangedSubview(headerLabel)
-            headerLabel.text = "Find out the value of your property!"
-            headerLabel.textAlignment = .center
-            headerLabel.font = .boldSystemFont(ofSize: 20.0)
-            headerLabel.adjustsFontSizeToFitWidth = true
-            headerLabel.numberOfLines = 2
-            
-            return headerLabel
-        }()
-        
+
         let zipcodeStackView = UIStackView()
         stackview.addArrangedSubview(zipcodeStackView)
         zipcodeStackView.axis = .vertical
@@ -95,8 +98,10 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         let _: UITextField = {
             zipcodeTextField = UITextField(frame: .zero)
+            zipcodeTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
             zipcodeTextField.layer.borderWidth = 1.0
             zipcodeTextField.layer.borderColor = textFieldBorderColor
+            zipcodeTextField.font = .systemFont(ofSize: 14.0, weight: .light)
             zipcodeTextField.placeholder = "90210"
             zipcodeStackView.addArrangedSubview(zipcodeTextField)
             return zipcodeTextField

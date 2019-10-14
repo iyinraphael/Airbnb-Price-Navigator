@@ -15,7 +15,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     var barChart: BarChartData?
     var predictions: Prediction?
     let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
-    let greenGradient = UIColor(red: 0.0/255.0, green: 153.0/255.0, blue: 115.0/255.0, alpha: 1)
+    let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
     
    
     
