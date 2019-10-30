@@ -327,10 +327,13 @@ class PropertyViewController: PropertyBaseNavViewController {
             let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
             
             self.propertyController.postPropeties(property: property) { (prediction, error) in
-                let vc = PropertyPriceViewController()
-                vc.predictions = prediction
                 DispatchQueue.main.async {
-                    self.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+                    let vc = PropertyPriceViewController()
+                    vc.predictions = prediction
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    self.present(nav, animated: true, completion: nil)
+                    self.removeFromParent()
                 }
             }
         

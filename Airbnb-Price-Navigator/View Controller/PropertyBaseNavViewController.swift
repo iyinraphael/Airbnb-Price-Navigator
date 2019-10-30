@@ -26,6 +26,7 @@ class PropertyBaseNavViewController: UIViewController {
         menuBar.tintColor = .black
         
         logoButton = UIBarButtonItem()
+        logoButton.isEnabled = false
         logoButton.image = UIImage(named: "globe")?.withRenderingMode(.alwaysOriginal)
         logoButton.imageInsets = .init(top: -5, left: -5, bottom: -5, right: 5)
         
