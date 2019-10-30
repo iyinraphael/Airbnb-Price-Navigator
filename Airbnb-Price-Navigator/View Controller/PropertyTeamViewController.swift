@@ -8,11 +8,12 @@
 
 import UIKit
 
-let reuseIdentifier = "teamCell"
+
 class PropertyTeamViewController: PropertyBaseNavViewController {
     
+    let reuseIdentifier = "teamCell"
     var tableView: UITableView!
-    let imageName = ["iyin", "connor", "shreyas", "tomas", "jacob"]
+    let imageName = ["iyin", "conor", "shreyas", "tomas", "jacob"]
     let name = ["Iyin Raphael", "Connor Heraty", "Shreyas Jotish", "Tomas Fox", "Jacob Barlet"]
     let textTitle = ["""
         iOS Developer.
@@ -67,12 +68,9 @@ extension PropertyTeamViewController: UITableViewDataSource {
         let image = imageName[indexPath.row]
         let teamName = name[indexPath.row]
         let titleText = textTitle[indexPath.row]
-        cell.imageView?.image = UIImage(systemName: image)
+        cell.cellImageView.image = UIImage(named: image)
         cell.label.text = teamName
         cell.textView.text = titleText
         return cell
     }
-    
-    
-    
 }

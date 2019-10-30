@@ -108,7 +108,11 @@ class PropertyMenuViewController: UIViewController {
     }
     
     @objc func lookOurTeam() {
-        
+        let vc = PropertyTeamViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: false, completion: nil)
+        self.removeFromParent()
     }
 }
 

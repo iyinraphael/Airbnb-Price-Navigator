@@ -30,7 +30,9 @@ class PropertyTeamViewCell: UITableViewCell {
         stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0).isActive = true
         
         let _ : UIImageView = {
-            cellImageView = UIImageView(frame: CGRect(x: 50.0, y: 40.0, width: 100.0, height: 100.0))
+            cellImageView = UIImageView()
+            cellImageView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
+            cellImageView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
             cellImageView.clipsToBounds = true
             let radius = cellImageView.frame.width / 2
             cellImageView.layer.cornerRadius = radius
@@ -47,6 +49,9 @@ class PropertyTeamViewCell: UITableViewCell {
         let _ : UITextView = {
             textView = UITextView()
             stackview.addArrangedSubview(textView)
+            textView.textAlignment = .center
+            textView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
+            textView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
             return textView
         }()
            
