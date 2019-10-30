@@ -88,7 +88,10 @@ class PropertyMenuViewController: UIViewController {
     
     @objc func returnToHome() {
         let vc = PropertyViewController()
-        present(UINavigationController(rootViewController: vc), animated: false, completion: nil)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: false, completion: nil)
+        self.removeFromParent()
         
     }
     
@@ -98,7 +101,10 @@ class PropertyMenuViewController: UIViewController {
     
     @objc func whatToDiscover() {
         let vc = PropertyDiscoveriesTableViewController()
-        present(UINavigationController(rootViewController: vc), animated: false, completion: nil)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: false, completion: nil)
+        self.removeFromParent()
     }
     
     @objc func lookOurTeam() {
