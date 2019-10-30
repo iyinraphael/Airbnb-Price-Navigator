@@ -10,6 +10,8 @@
 		EB0507ED2353ABA900B950D8 /* PropertyDiscoveriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0507EC2353ABA900B950D8 /* PropertyDiscoveriesTableViewController.swift */; };
 		EB0507EF2353BE4000B950D8 /* PropertyDiscovryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0507EE2353BE4000B950D8 /* PropertyDiscovryViewCell.swift */; };
 		EB57821D2369F69D0070C5A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57821B2369F69C0070C5A6 /* SceneDelegate.swift */; };
+		EB57821F236A10080070C5A6 /* PropertyTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57821E236A10080070C5A6 /* PropertyTeamViewController.swift */; };
+		EB578221236A134A0070C5A6 /* PropertyTeamViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB578220236A134A0070C5A6 /* PropertyTeamViewCell.swift */; };
 		EBA8BB9723468BD70051E0AA /* PropertyMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8BB9623468BD70051E0AA /* PropertyMenuViewController.swift */; };
 		EBA8BB992347CA2A0051E0AA /* PropertyBaseNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8BB982347CA2A0051E0AA /* PropertyBaseNavViewController.swift */; };
 		EBA8BB9B2347F4D40051E0AA /* PropertyPriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8BB9A2347F4D40051E0AA /* PropertyPriceViewController.swift */; };
@@ -71,6 +73,8 @@
 		EB0507EC2353ABA900B950D8 /* PropertyDiscoveriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyDiscoveriesTableViewController.swift; sourceTree = "<group>"; };
 		EB0507EE2353BE4000B950D8 /* PropertyDiscovryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyDiscovryViewCell.swift; sourceTree = "<group>"; };
 		EB57821B2369F69C0070C5A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = ../../../../new/new/SceneDelegate.swift; sourceTree = "<group>"; };
+		EB57821E236A10080070C5A6 /* PropertyTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTeamViewController.swift; sourceTree = "<group>"; };
+		EB578220236A134A0070C5A6 /* PropertyTeamViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTeamViewCell.swift; sourceTree = "<group>"; };
 		EBA8BB9623468BD70051E0AA /* PropertyMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMenuViewController.swift; sourceTree = "<group>"; };
 		EBA8BB982347CA2A0051E0AA /* PropertyBaseNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBaseNavViewController.swift; sourceTree = "<group>"; };
 		EBA8BB9A2347F4D40051E0AA /* PropertyPriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPriceViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				EBA8BB982347CA2A0051E0AA /* PropertyBaseNavViewController.swift */,
 				EBDD78BE232DFB60008CFC6D /* PropertyViewController.swift */,
 				EBA8BB9623468BD70051E0AA /* PropertyMenuViewController.swift */,
+				EB57821E236A10080070C5A6 /* PropertyTeamViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 				EBA8BB9E2347F5E90051E0AA /* DropDownCell.swift */,
 				EBF9AC1E2332AF28004664D4 /* DropDownTextField.swift */,
 				EB0507EE2353BE4000B950D8 /* PropertyDiscovryViewCell.swift */,
+				EB578220236A134A0070C5A6 /* PropertyTeamViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -295,9 +301,11 @@
 				EBA8BB9723468BD70051E0AA /* PropertyMenuViewController.swift in Sources */,
 				EBDD78BB232DD5C3008CFC6D /* PropertryController.swift in Sources */,
 				EBDD78BD232DD601008CFC6D /* NetworkController.swift in Sources */,
+				EB57821F236A10080070C5A6 /* PropertyTeamViewController.swift in Sources */,
 				EBA8BB9B2347F4D40051E0AA /* PropertyPriceViewController.swift in Sources */,
 				EBA8BB9F2347F5E90051E0AA /* DropDownCell.swift in Sources */,
 				EBDD78B9232DCF28008CFC6D /* Propetry.swift in Sources */,
+				EB578221236A134A0070C5A6 /* PropertyTeamViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,62 @@
+//
+//  PropertyTeamViewCell.swift
+//  Airbnb-Price-Navigator
+//
+//  Created by Iyin Raphael on 10/30/19.
+//  Copyright © 2019 Iyin Raphael. All rights reserved.
+//
+
+import UIKit
+
+class PropertyTeamViewCell: UITableViewCell {
+    
+    var cellImageView: UIImageView!
+    var label: UILabel!
+    var textView: UITextView!
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        let stackview = UIStackView()
+        self.isUserInteractionEnabled = false
+        self.addSubview(stackview)
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.alignment = .center
+        stackview.spacing = 10.0
+        stackview.axis = .vertical
+        stackview.topAnchor.constraint(equalTo: self.topAnchor, constant: 40.0).isActive = true
+        stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0.0).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0).isActive = true
+        
+        let _ : UIImageView = {
+            cellImageView = UIImageView(frame: CGRect(x: 50.0, y: 40.0, width: 100.0, height: 100.0))
+            cellImageView.clipsToBounds = true
+            let radius = cellImageView.frame.width / 2
+            cellImageView.layer.cornerRadius = radius
+            stackview.addArrangedSubview(cellImageView)
+            return cellImageView
+           }()
+        
+        let _ : UILabel = {
+            label = UILabel()
+            stackview.addArrangedSubview(label)
+            return label
+        }()
+        
+        let _ : UITextView = {
+            textView = UITextView()
+            stackview.addArrangedSubview(textView)
+            return textView
+        }()
+           
+    }
+    
+  
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
