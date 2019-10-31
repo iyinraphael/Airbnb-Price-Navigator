@@ -42,13 +42,24 @@ class PropertyTeamViewController: PropertyBaseNavViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let titleLabel = UILabel()
+        titleLabel.text = "Team"
+        view.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textAlignment = .center
+        titleLabel.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 40.0).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        
+        
         tableView = UITableView()
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.separatorStyle = .none
         view.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 80.0).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
