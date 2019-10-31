@@ -31,12 +31,13 @@ class PropertyTeamViewCell: UITableViewCell {
         
         let _ : UIImageView = {
             cellImageView = UIImageView()
-            cellImageView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
-            cellImageView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
+            stackview.addArrangedSubview(cellImageView)
+            cellImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            cellImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            cellImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
             cellImageView.clipsToBounds = true
             let radius = cellImageView.frame.width / 2
             cellImageView.layer.cornerRadius = radius
-            stackview.addArrangedSubview(cellImageView)
             return cellImageView
            }()
         
