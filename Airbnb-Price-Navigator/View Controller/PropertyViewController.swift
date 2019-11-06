@@ -320,9 +320,10 @@ class PropertyViewController: PropertyBaseNavViewController {
         let accomodationString = accommodatesTextField.text,
         let bedString = bedCountTextField.text else {return}
         
+        submitButton.backgroundColor = greenGradient
+        
         if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ) {
             
-             submitButton.backgroundColor = greenGradient
            
             let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
             

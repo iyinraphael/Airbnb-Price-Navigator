@@ -47,6 +47,7 @@ class PropertyTeamViewController: PropertyBaseNavViewController {
         view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
+        titleLabel.font = .systemFont(ofSize: 20.0, weight: .bold)
         titleLabel.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 40.0).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true

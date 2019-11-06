@@ -22,12 +22,12 @@ class PropertyTeamViewCell: UITableViewCell {
         self.addSubview(stackview)
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.alignment = .center
-        stackview.spacing = 5.0
+        stackview.distribution = .equalSpacing
         stackview.axis = .vertical
         stackview.topAnchor.constraint(equalTo: self.topAnchor, constant: 0.0).isActive = true
         stackview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30.0).isActive = true
         
         let _ : UIImageView = {
             cellImageView = UIImageView()
@@ -43,6 +43,7 @@ class PropertyTeamViewCell: UITableViewCell {
         
         let _ : UILabel = {
             label = UILabel()
+            label.font = .systemFont(ofSize: 15.0, weight: .semibold)
             stackview.addArrangedSubview(label)
             return label
         }()
@@ -50,6 +51,7 @@ class PropertyTeamViewCell: UITableViewCell {
         let _ : UITextView = {
             textView = UITextView()
             stackview.addArrangedSubview(textView)
+            textView.font = .systemFont(ofSize: 12.0, weight: .light)
             textView.textAlignment = .center
             textView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
             textView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
