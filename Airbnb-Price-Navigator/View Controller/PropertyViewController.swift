@@ -130,7 +130,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             return propertyLabel
         }()
         
-        let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
+        let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest suite", "Bungalow", "Villa", "Other"]
         dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: "House", options: propertyTypes)
         dropDownPropertyTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownPropertyTextfield.delegate = self

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Property: Codable {
+class Property: Codable {
     var zipCode: String
     var propertyType: String
     var roomType: String
@@ -54,4 +54,22 @@ struct Prediction: Codable {
         case prediction = "prediction"
         
     }
+}
+
+
+struct RoomType: Codable {
+    let entireProperty: String
+    let privateRoom: String
+    let sharedRoom: String
+    
+    enum CodingKeys: String, CodingKey {
+        case entireProperty = "Entire home/apt"
+        case privateRoom = "Private Room"
+        case sharedRoom = "Shared Room"
+    }
+}
+
+
+struct BedType: Codable {
+    let Standard
 }
