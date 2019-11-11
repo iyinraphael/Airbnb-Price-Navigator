@@ -17,16 +17,14 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
     let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
     
+    var valuesLabel: UILabel!
+    var priceStackView: UIStackView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        updatePrice()
-    }
-    
-    private func updatePrice() {
-        guard isViewLoaded else {return}
         
-        let priceStackView = UIStackView()
+        priceStackView = UIStackView()
         view.addSubview(priceStackView)
         priceStackView.axis = .vertical
         priceStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,11 +40,20 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         worthLabel.font = .systemFont(ofSize: 20)
         priceStackView.addArrangedSubview(worthLabel)
         
-        let valuesLabel = UILabel()
+        valuesLabel = UILabel()
         valuesLabel.textAlignment = .center
         valuesLabel.adjustsFontSizeToFitWidth = true
         valuesLabel.font = .systemFont(ofSize: 45.0, weight: .bold)
         priceStackView.addArrangedSubview(valuesLabel)
+        
+        updatePrice()
+        updateForNoData()
+        
+        
+    }
+    
+    private func updatePrice() {
+        guard isViewLoaded else {return}
         
         let barChartView  = HorizontalBarChartView()
         view.addSubview(barChartView)
@@ -93,5 +100,43 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         }
         
         
+    }
+    
+    private func updateForNoData() {
+        
+        let backGroundView = UIView()
+        view.addSubview(backGroundView)
+        backGroundView.isHidden = true
+        backGroundView.backgroundColor =  UIColor.black.withAlphaComponent(0.5)
+        backGroundView.translatesAutoresizingMaskIntoConstraints = false
+        backGroundView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 300).isActive = true
+        backGroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        backGroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        backGroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+        
+        let textView = UITextView()
+        backGroundView.addSubview(textView)
+        textView.backgroundColor = .white
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 350).isActive = true
+        textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60).isActive = true
+        textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
+        textView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
+        textView.text = """
+                    No Data For Your Zip Code
+
+                    Our data is gathered from Inside Airbnb,
+                    and it looks like your ZIP code is not included in the data set.
+                    The national average for the parameters entered is $281/night.
+                    """
+        
+        guard let prediction = predictions else {return}
+        
+        for values in prediction.plotValues {
+            if values == 0 {
+                backGroundView.isHidden = false
+                valuesLabel.text = "$\(281) / night"
+            }
+        }
     }
 }
