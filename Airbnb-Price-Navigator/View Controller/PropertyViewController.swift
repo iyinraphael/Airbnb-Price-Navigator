@@ -370,8 +370,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             
         let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
             
-            print(property)
-            
+
             self.propertyController.postPropeties(property: property) { (prediction, error) in
                 DispatchQueue.main.async {
                     let vc = PropertyPriceViewController()

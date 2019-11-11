@@ -18,16 +18,6 @@ struct Property: Codable {
     var beds: Int
     var bedType: String?
     
-//    init(zipCode: String, propertyType: String, roomType: String, accomodates: Int, bathrooms: Int, bedrooms: Int, beds: Int, bedType: String) {
-//        self.zipCode = zipCode
-//        self.propertyType = propertyType
-//        self.roomType = roomType
-//        self.accomodates = accomodates
-//        self.bathrooms = bathrooms
-//        self.bedrooms = bedrooms
-//        self.beds = beds
-//        self.bedType = bedType
-//    }
     
     enum CodingKeys: String, CodingKey {
         case zipCode = "zipcode"
