@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class PropertyViewController: PropertyBaseNavViewController {
     
     //MARK: - Properties
@@ -29,13 +30,30 @@ class PropertyViewController: PropertyBaseNavViewController {
     
     var prediction: Prediction?
     let propertyController = PropertyController()
-   
+    let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
+    let bedTypes = ["Standard Beds",  "Couches", "Pull-out Couches", "Air Mattresses"]
+    var roomType: String?
+    var bedType: String?
+    
+    enum BedType: String, Codable {
+       case standardBed = "Real Bed"
+       case couch = "Couch"
+       case futon = "Futon"
+       case pullOutCouch = "Pull-Out Sofa"
+       case airMattress = "Airbed"
+   }
+    
+    enum RoomType: String, Codable {
+            case entireProperty = "Entire home/apt"
+            case privateRoom = "Private Room"
+            case sharedRoom = "Shared Room"
+    }
     
     
     //MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         
         view.backgroundColor = .white
         stackview = UIStackView()
@@ -130,7 +148,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             return propertyLabel
         }()
         
-        let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest suite", "Bungalow", "Villa", "Other"]
+        let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
         dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: "House", options: propertyTypes)
         dropDownPropertyTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownPropertyTextfield.delegate = self
@@ -160,7 +178,6 @@ class PropertyViewController: PropertyBaseNavViewController {
             return roomTypeLabel
         }()
         
-        let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
         dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Entire Property", options: roomTypes)
         dropDownRoomTypeTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownRoomTypeTextfield.delegate = self
@@ -244,7 +261,8 @@ class PropertyViewController: PropertyBaseNavViewController {
             return bedTypesLabel
         }()
         
-        let bedTypes = ["Standard Beds", "Couches", "Futons", "Pull-out Couches", "Air Mattresses"]
+//        let bed = Pro (standardBed: "Standard Beds", couch: "Couches", futon: "Futons", pullOutCouch: "Pull-out Couches", airMattress: "Air Mattresses")
+    
         dropDownBedTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Standard Bed", options: bedTypes)
         dropDownBedTypeTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
         dropDownBedTypeTextfield.delegate = self
@@ -313,19 +331,46 @@ class PropertyViewController: PropertyBaseNavViewController {
     @objc func displayPrice() {
         guard let zipcode = zipcodeTextField.text,
         let propertyType = dropDownPropertyTextfield.textField.text,
-        let roomType = dropDownRoomTypeTextfield.textField.text,
+        let roomTypeText = dropDownRoomTypeTextfield.textField.text,
         let bedroomString = bedroomTextField.text,
         let bathroomString = bathroomsTextField.text,
-        let bedTypes = dropDownBedTypeTextfield.textField.text,
+        let bedTypesText = dropDownBedTypeTextfield.textField.text,
         let accomodationString = accommodatesTextField.text,
         let bedString = bedCountTextField.text else {return}
         
         submitButton.backgroundColor = greenGradient
         
-        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ) {
+        switch roomTypeText {
+        case "Entire Property":
+            roomType = RoomType.entireProperty.rawValue
+        case "Private Room":
+            roomType = RoomType.privateRoom.rawValue
+        case "Shared Room":
+            roomType = RoomType.sharedRoom.rawValue
+        default:
+            return
+        }
+        
+        switch bedTypesText {
+        case "Standard Beds":
+            bedType = BedType.standardBed.rawValue
+        case "Couches":
+            bedType = BedType.couch.rawValue
+        case "Pull-out Couches":
+            bedType = BedType.pullOutCouch.rawValue
+        case "Air Mattresses":
+            bedType = BedType.airMattress.rawValue
+        default:
+            return
+        }
+        
+        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
             
-           
-            let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedTypes)
+        
+            
+        let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
+            
+            print(property)
             
             self.propertyController.postPropeties(property: property) { (prediction, error) in
                 DispatchQueue.main.async {
