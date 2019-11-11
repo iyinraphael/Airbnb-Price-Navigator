@@ -36,6 +36,18 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         priceStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -80).isActive = true
         priceStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
         
+        let worthLabel = UILabel()
+        worthLabel.adjustsFontSizeToFitWidth = true
+        worthLabel.text = "Your property could be worth"
+        worthLabel.font = .systemFont(ofSize: 20)
+        priceStackView.addArrangedSubview(worthLabel)
+        
+        let valuesLabel = UILabel()
+        valuesLabel.textAlignment = .center
+        valuesLabel.adjustsFontSizeToFitWidth = true
+        valuesLabel.font = .systemFont(ofSize: 45.0, weight: .bold)
+        priceStackView.addArrangedSubview(valuesLabel)
+        
         let barChartView  = HorizontalBarChartView()
         view.addSubview(barChartView)
         barChartView.translatesAutoresizingMaskIntoConstraints = false
@@ -44,16 +56,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         barChartView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
        
-        let worthLabel = UILabel()
-        worthLabel.adjustsFontSizeToFitWidth = true
-        worthLabel.text = "Your property could be worth"
-        priceStackView.addArrangedSubview(worthLabel)
         
-        let valuesLabel = UILabel()
-        valuesLabel.textAlignment = .center
-        valuesLabel.adjustsFontSizeToFitWidth = true
-        valuesLabel.font = .systemFont(ofSize: 45.0, weight: .bold)
-        priceStackView.addArrangedSubview(valuesLabel)
         
         var dataEntries = [BarChartDataEntry]()
         if let prediction = predictions {
