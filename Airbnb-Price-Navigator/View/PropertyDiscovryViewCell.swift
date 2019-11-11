@@ -45,12 +45,12 @@ class PropertyDiscoveryViewCell: UITableViewCell {
         
         let _: UITextView = {
             textView = UITextView()
+            textView.translatesAutoresizingMaskIntoConstraints = true
             textView.isEditable = false
             textView.textAlignment = .center
             stackview.addArrangedSubview(textView)
-            textView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
-            textView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
-          
+            textView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
+            textView.widthAnchor.constraint(equalToConstant: 300.0).isActive = true
             return textView
         }()
     }
