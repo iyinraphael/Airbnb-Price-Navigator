@@ -13,6 +13,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     //MARK:- Properties
     var barChart: BarChartData?
+    
     var predictions: Prediction?
     let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
     let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
@@ -102,7 +103,18 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         
     }
     
+    
     private func updateForNoData() {
+        
+        guard let prediction = predictions else {return}
+        
+        for values in prediction.plotValues {
+            if values != 0 {
+                return
+            }
+        }
+        
+        valuesLabel.text = "$\(281) / night"
         
         let backGroundView = UIView()
         view.addSubview(backGroundView)
@@ -114,29 +126,33 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         backGroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         backGroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        backGroundView.addSubview(stackView)
+        stackView.backgroundColor = .white
+        stackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 350).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
+        
+        let textLabel = UILabel()
+        textLabel.backgroundColor = .white
+        stackView.addArrangedSubview(textLabel)
+        textLabel.text =  "No Data For Your Zip Code"
+        textLabel.font = .systemFont(ofSize: 20.0, weight: .medium)
+        textLabel.textAlignment = .center
+ 
+        
         let textView = UITextView()
-        backGroundView.addSubview(textView)
-        textView.backgroundColor = .white
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 350).isActive = true
-        textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60).isActive = true
-        textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
-        textView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
+        stackView.addArrangedSubview(textView)
+        textView.isEditable = false
+        textView.sizeToFit()
+        textView.textAlignment = .center
         textView.text = """
-                    No Data For Your Zip Code
-
-                    Our data is gathered from Inside Airbnb,
-                    and it looks like your ZIP code is not included in the data set.
+                    Our data is gathered from Inside Airbnb,and it looks like your ZIP code is not included in the data set.
                     The national average for the parameters entered is $281/night.
                     """
-        
-        guard let prediction = predictions else {return}
-        
-        for values in prediction.plotValues {
-            if values == 0 {
-                backGroundView.isHidden = false
-                valuesLabel.text = "$\(281) / night"
-            }
-        }
+    
     }
 }
