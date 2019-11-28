@@ -93,7 +93,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 6
-        submitButton.addTarget(self, action: #selector(displayPrice()), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
         submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 610).isActive = true
         submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
