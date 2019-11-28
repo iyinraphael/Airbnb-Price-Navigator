@@ -16,7 +16,7 @@ class PropertyViewController: PropertyBaseNavViewController {
     
     var bedroomTextField: UITextField!
     var bathroomsTextField: UITextField!
-    var accommodatesTextField: UITextField!
+    @objc dynamic var accommodatesTextField: UITextField!
     var zipcodeTextField: UITextField!
     var bedCountTextField: UITextField!
     
@@ -89,16 +89,21 @@ class PropertyViewController: PropertyBaseNavViewController {
         addAccomodationTexField()
         
         submitButton = UIButton()
+        submitButton.isEnabled = false
         view.addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 6
-        submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(displayPrice()), for: .touchUpInside)
         submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 610).isActive = true
         submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(.white, for: .normal)
         submitButton.backgroundColor = .lightGray
+        
+        [zipcodeTextField, dropDownPropertyTextfield.textField, dropDownRoomTypeTextfield.textField, bedroomTextField, bathroomsTextField, bedCountTextField, dropDownBedTypeTextfield.textField, accommodatesTextField].forEach({$0?.addTarget(self, action: #selector(checkTextfield(_:)), for: .editingChanged)})
+        
+        
     }
     
     //MARK:- Functions and Uitility
@@ -324,21 +329,47 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatesTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         accommodatesTextField.layer.borderColor = textFieldBorderColor
         accommodatStackView.addArrangedSubview(accommodatesTextField)
+    
     }
     
     
     
-    @objc func displayPrice() {
-        guard let zipcode = zipcodeTextField.text,
-        let propertyType = dropDownPropertyTextfield.textField.text,
-        let roomTypeText = dropDownRoomTypeTextfield.textField.text,
-        let bedroomString = bedroomTextField.text,
-        let bathroomString = bathroomsTextField.text,
-        let bedTypesText = dropDownBedTypeTextfield.textField.text,
-        let accomodationString = accommodatesTextField.text,
-        let bedString = bedCountTextField.text else {return}
+    @objc func checkTextfield(_ textfield: UITextField) {
+        
+        if textfield.text?.count == 1{
+            if textfield.text?.first == " " {
+                textfield.text = " "
+                return
+            }
+        }
+        
+        guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
+            let propertyType = dropDownPropertyTextfield.textField.text, !propertyType.isEmpty,
+            let roomTypeText = dropDownRoomTypeTextfield.textField.text, !roomTypeText.isEmpty,
+            let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,
+            let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
+            let bedTypesText = dropDownBedTypeTextfield.textField.text, !bedTypesText.isEmpty,
+            let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty,
+            let bedString = bedCountTextField.text, !bedString.isEmpty
+        else
+            { submitButton.isEnabled = false
+                return
+        }
         
         submitButton.backgroundColor = greenGradient
+        submitButton.isEnabled = true
+    }
+    
+    @objc func displayPrice() {
+        
+        guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
+            let propertyType = dropDownPropertyTextfield.textField.text, !propertyType.isEmpty,
+            let roomTypeText = dropDownRoomTypeTextfield.textField.text, !roomTypeText.isEmpty,
+            let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,
+            let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
+            let bedTypesText = dropDownBedTypeTextfield.textField.text, !bedTypesText.isEmpty,
+            let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty,
+            let bedString = bedCountTextField.text, !bedString.isEmpty else {return}
         
         switch roomTypeText {
         case "Entire Property":
@@ -364,29 +395,24 @@ class PropertyViewController: PropertyBaseNavViewController {
             return
         }
         
-        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
-            
         
+        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
+        
+            let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
             
-        let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
-            
-
             self.propertyController.postPropeties(property: property) { (prediction, error) in
-                DispatchQueue.main.async {
-                    let vc = PropertyPriceViewController()
-                    vc.predictions = prediction
-                    let nav = UINavigationController(rootViewController: vc)
-                    nav.modalPresentationStyle = .fullScreen
-                    self.present(nav, animated: true, completion: nil)
-                    self.removeFromParent()
+                       DispatchQueue.main.async {
+                           let vc = PropertyPriceViewController()
+                           vc.predictions = prediction
+                           let nav = UINavigationController(rootViewController: vc)
+                           nav.modalPresentationStyle = .fullScreen
+                           self.present(nav, animated: true, completion: nil)
+                           self.removeFromParent()
+                       }
                 }
             }
-        
         }
-        
-   
-    }
-   
+
 }
 
 
