@@ -77,7 +77,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
                 
             }
             
-            let dataset = BarChartDataSet(values: dataEntries, label: " ")
+            let dataset = BarChartDataSet(entries: dataEntries, label: " ")
             barChart = BarChartData(dataSet: dataset)
             barChart?.barWidth = 0.5
             dataset.colors = [greenGradient]
@@ -118,7 +118,6 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         
         let backGroundView = UIView()
         view.addSubview(backGroundView)
-        backGroundView.isHidden = true
         backGroundView.backgroundColor =  UIColor.black.withAlphaComponent(0.5)
         backGroundView.translatesAutoresizingMaskIntoConstraints = false
         backGroundView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 300).isActive = true

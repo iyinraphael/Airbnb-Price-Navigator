@@ -344,18 +344,17 @@ class PropertyViewController: PropertyBaseNavViewController {
         }
         
         guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
-            let propertyType = dropDownPropertyTextfield.textField.text, !propertyType.isEmpty,
-            let roomTypeText = dropDownRoomTypeTextfield.textField.text, !roomTypeText.isEmpty,
-            let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,
-            let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
-            let bedTypesText = dropDownBedTypeTextfield.textField.text, !bedTypesText.isEmpty,
-            let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty,
-            let bedString = bedCountTextField.text, !bedString.isEmpty
+            let propertyType = dropDownPropertyTextfield.textField.text, !propertyType.isEmpty, textfieldReturn(dropDownPropertyTextfield.textField) == true,
+            let roomTypeText = dropDownRoomTypeTextfield.textField.text, !roomTypeText.isEmpty,  textfieldReturn(dropDownRoomTypeTextfield.textField) == true,
+            let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,  textfieldReturn(bedroomTextField) == true,
+            let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,  textfieldReturn(bathroomsTextField) == true,
+            let bedTypesText = dropDownBedTypeTextfield.textField.text, !bedTypesText.isEmpty, textfieldReturn(dropDownBedTypeTextfield.textField) == true,
+            let bedString = bedCountTextField.text,  !bedString.isEmpty, textfieldReturn(bedCountTextField) == true,
+            let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty, textfieldReturn(accommodatesTextField) == true
         else
             { submitButton.isEnabled = false
                 return
         }
-        
         submitButton.backgroundColor = greenGradient
         submitButton.isEnabled = true
     }
@@ -412,6 +411,12 @@ class PropertyViewController: PropertyBaseNavViewController {
                 }
             }
         }
+    
+    func textfieldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
 
 }
 
