@@ -136,8 +136,10 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
         
         let textLabel = UILabel()
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.backgroundColor = .white
         stackView.addArrangedSubview(textLabel)
+        textLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 60).isActive = true
         textLabel.text =  "No Data For Your Zip Code"
         textLabel.font = .systemFont(ofSize: 20.0, weight: .medium)
         textLabel.textAlignment = .center

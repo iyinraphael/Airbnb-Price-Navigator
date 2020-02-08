@@ -8,7 +8,7 @@
 
 import UIKit
 
-
+ 
 class PropertyViewController: PropertyBaseNavViewController {
     
     //MARK: - Properties
@@ -53,7 +53,6 @@ class PropertyViewController: PropertyBaseNavViewController {
     //MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         view.backgroundColor = .white
         stackview = UIStackView()
@@ -76,6 +75,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             headerLabel.textAlignment = .center
             headerLabel.font = .boldSystemFont(ofSize: 20.0)
             headerLabel.numberOfLines = 2
+            headerLabel.textColor = .black
             
             return headerLabel
         }()
@@ -116,6 +116,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let zipcodeLabel = UILabel()
             zipcodeLabel.text = "Zip Code"
+            zipcodeLabel.textColor = .black
             zipcodeLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             zipcodeStackView.addArrangedSubview(zipcodeLabel)
             return zipcodeLabel
@@ -123,14 +124,17 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         let _: UITextField = {
             zipcodeTextField = UITextField(frame: .zero)
+            zipcodeTextField.delegate = self
             zipcodeTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
             zipcodeTextField.layer.borderWidth = 1.0
             zipcodeTextField.layer.borderColor = textFieldBorderColor
             zipcodeTextField.font = .systemFont(ofSize: 14.0, weight: .light)
+            zipcodeTextField.textColor = .black
             zipcodeTextField.placeholder = "90210"
             zipcodeStackView.addArrangedSubview(zipcodeTextField)
             return zipcodeTextField
         }()
+        
     }
     private func addDropDownPropertyTextfield() {
         let lm = view.layoutMargins
@@ -148,6 +152,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let propertyLabel = UILabel()
             propertyLabel.text = "Property Type"
+            propertyLabel.textColor = .black
             propertyLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             propertyTypeStackView.addArrangedSubview(propertyLabel)
             return propertyLabel
@@ -178,6 +183,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let roomTypeLabel = UILabel()
             roomTypeLabel.text = "Room Type"
+            roomTypeLabel.textColor = .black
             roomTypeLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             roomTypeStackView.addArrangedSubview(roomTypeLabel)
             return roomTypeLabel
@@ -213,6 +219,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bedroomsLabel = UILabel()
             bedroomsLabel.text = "Bedrooms"
+            bedroomsLabel.textColor = .black
             bedroomsLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bedroomsStackView.addArrangedSubview(bedroomsLabel)
             return bedroomsLabel
@@ -221,6 +228,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bathroomsLabel = UILabel()
             bathroomsLabel.text = "Bathrooms"
+            bathroomsLabel.textColor = .black
             bathroomsLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bathroomsStackView.addArrangedSubview(bathroomsLabel)
             return bathroomsLabel
@@ -232,6 +240,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedroomTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bedroomTextField.layer.borderColor = textFieldBorderColor
         bedroomTextField.placeholder = "0"
+        bedroomTextField.textColor = .black
         bedroomsStackView.addArrangedSubview(bedroomTextField)
         
         bathroomsTextField = UITextField()
@@ -240,6 +249,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bathroomsTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bathroomsTextField.layer.borderColor = textFieldBorderColor
         bathroomsTextField.placeholder = "0"
+        bathroomsTextField.textColor = .black
         bathroomsStackView.addArrangedSubview(bathroomsTextField)
     }
     private func addDropdownBedTypeTextfield() {
@@ -261,6 +271,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bedTypesLabel = UILabel()
             bedTypesLabel.text = "Bed Types"
+            bedTypesLabel.textColor = .black
             bedTypesLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bedTypesStackView.addArrangedSubview(bedTypesLabel)
             return bedTypesLabel
@@ -289,6 +300,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let bedLabel = UILabel()
             bedLabel.text = "Bed"
+            bedLabel.textColor = .black
             bedLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             bedStackView.addArrangedSubview(bedLabel)
             return bedLabel
@@ -300,6 +312,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedCountTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         bedCountTextField.layer.borderColor = textFieldBorderColor
         bedCountTextField.placeholder = "0"
+        bedCountTextField.textColor = .black
         bedStackView.addArrangedSubview(bedCountTextField)
         
     }
@@ -317,6 +330,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         let _: UILabel = {
             let accommodateLabel = UILabel()
             accommodateLabel.text = "Accomodates how many guest?"
+            accommodateLabel.textColor = .black
             accommodateLabel.font = .systemFont(ofSize: 12.0, weight: .light)
             accommodatStackView.addArrangedSubview(accommodateLabel)
             return accommodateLabel
@@ -324,6 +338,7 @@ class PropertyViewController: PropertyBaseNavViewController {
     
         accommodatesTextField = UITextField(frame: .zero)
         accommodatesTextField.placeholder = "0"
+        accommodatesTextField.textColor = .black
         accommodatesTextField.layer.borderWidth = 1.0
         accommodatesTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         accommodatesTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -460,4 +475,12 @@ extension PropertyViewController: DropDownTextFieldDelegate {
     }
     
     
+}
+
+extension PropertyViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+    }
 }
