@@ -53,15 +53,24 @@ class PropertyViewController: PropertyBaseNavViewController {
     //MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardDidHideNotification,
+                                               object: nil)
+        
         stackview = UIStackView()
         view.addSubview(stackview)
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.distribution = .fillEqually
         stackview.spacing = 50.0
-        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
        
@@ -94,7 +103,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 6
         submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
-        submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 610).isActive = true
+        submitButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
         submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         submitButton.setTitle("Submit", for: .normal)
@@ -106,7 +115,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         
     }
     
-    //MARK:- Functions and Uitility
+    //MARK:- Methods
     private func addZipcodeTextField() {
 
         let zipcodeStackView = UIStackView()
@@ -176,7 +185,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         roomTypeStackView.axis = .vertical
         roomTypeStackView.tag = 1
         roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
-        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 310).isActive = true
+        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 410).isActive = true
         roomTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         roomTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
         
@@ -204,7 +213,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedAndBathStackView.spacing = 5.0
         bedAndBathStackView.axis = .vertical
         bedAndBathStackView.tag = 2
-        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 360).isActive = true
+        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460).isActive = true
         bedAndBathStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedAndBathStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -262,7 +271,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedTypesStackView.translatesAutoresizingMaskIntoConstraints = false
         bedTypesStackView.axis = .vertical
         bedTypesStackView.tag = 3
-        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 410).isActive = true
+        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 510).isActive = true
         bedTypesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedTypesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -293,7 +302,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedStackView.translatesAutoresizingMaskIntoConstraints = false
         bedStackView.axis = .vertical
         bedStackView.tag = 4
-        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460).isActive = true
+        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 560).isActive = true
         bedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -323,7 +332,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
         accommodatStackView.axis = .vertical
         accommodatStackView.tag = 5
-        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 510).isActive = true
+        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 610).isActive = true
         accommodatStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         accommodatStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -431,6 +440,20 @@ class PropertyViewController: PropertyBaseNavViewController {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notication: NotificationCenter) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 
 }

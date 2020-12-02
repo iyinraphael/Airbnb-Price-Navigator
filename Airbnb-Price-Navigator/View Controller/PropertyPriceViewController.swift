@@ -69,6 +69,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         var dataEntries = [BarChartDataEntry]()
         if let prediction = predictions {
             valuesLabel.text = "$\(prediction.prediction) / night"
+            print(prediction.prediction)
             
             for i in 0..<bins.count {
                 
