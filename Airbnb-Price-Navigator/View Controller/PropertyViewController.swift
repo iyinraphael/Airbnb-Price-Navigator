@@ -11,7 +11,8 @@ import UIKit
  
 class PropertyViewController: PropertyBaseNavViewController {
     
-    //MARK: - Properties
+
+//MARK: - Properties
     var stackview: UIStackView!
     
     var bedroomTextField: UITextField!
@@ -29,7 +30,7 @@ class PropertyViewController: PropertyBaseNavViewController {
 
     
     var prediction: Prediction?
-    let propertyController = PropertyController()
+    let propertyController = NetworkController()
     let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
     let bedTypes = ["Standard Beds",  "Couches", "Pull-out Couches", "Air Mattresses"]
     var roomType: String?
@@ -50,7 +51,7 @@ class PropertyViewController: PropertyBaseNavViewController {
     }
     
     
-    //MARK:- UI SETUP
+//MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -70,7 +71,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.distribution = .fillEqually
         stackview.spacing = 50.0
-        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
+        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
        
@@ -115,7 +116,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         
     }
     
-    //MARK:- Methods
+//MARK:- Methods
     private func addZipcodeTextField() {
 
         let zipcodeStackView = UIStackView()
@@ -185,7 +186,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         roomTypeStackView.axis = .vertical
         roomTypeStackView.tag = 1
         roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
-        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 410).isActive = true
+        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 310).isActive = true
         roomTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
         roomTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
         
@@ -213,7 +214,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedAndBathStackView.spacing = 5.0
         bedAndBathStackView.axis = .vertical
         bedAndBathStackView.tag = 2
-        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460).isActive = true
+        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 360).isActive = true
         bedAndBathStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedAndBathStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -271,7 +272,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedTypesStackView.translatesAutoresizingMaskIntoConstraints = false
         bedTypesStackView.axis = .vertical
         bedTypesStackView.tag = 3
-        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 510).isActive = true
+        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 410).isActive = true
         bedTypesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedTypesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -302,7 +303,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedStackView.translatesAutoresizingMaskIntoConstraints = false
         bedStackView.axis = .vertical
         bedStackView.tag = 4
-        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 560).isActive = true
+        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460).isActive = true
         bedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         bedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -332,7 +333,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
         accommodatStackView.axis = .vertical
         accommodatStackView.tag = 5
-        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 610).isActive = true
+        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 510).isActive = true
         accommodatStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         accommodatStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
@@ -421,7 +422,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         
         if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
         
-            let property = Property(zipCode: zipcode, propertyType: propertyType, roomType: roomType, accomodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
+            let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomType, accommodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
             
             self.propertyController.postPropeties(property: property) { (prediction, error) in
                        DispatchQueue.main.async {
@@ -502,8 +503,6 @@ extension PropertyViewController: DropDownTextFieldDelegate {
 
 extension PropertyViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        
-    }
+
 }
+
