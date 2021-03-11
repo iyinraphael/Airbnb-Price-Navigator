@@ -117,7 +117,6 @@
 		EB6C134323793123006777F5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EBB8D72125F9579D00CCE284 /* View Model */,
 				EBDD789E232DCB6C008CFC6D /* AppDelegate.swift */,
 				EBDD78AA232DCB71008CFC6D /* Assets.xcassets */,
 				EBDD78AC232DCB71008CFC6D /* LaunchScreen.storyboard */,
@@ -163,13 +162,14 @@
 		EBDD789D232DCB6C008CFC6D /* Airbnb-Price-Navigator */ = {
 			isa = PBXGroup;
 			children = (
-				EBB8D72B25FAAA4800CCE284 /* Utility */,
 				EBDD78AF232DCB71008CFC6D /* Info.plist */,
-				EB6C134323793123006777F5 /* Resources */,
-				EBF9AC1D2332AEEC004664D4 /* View */,
-				EBDD78B7232DCEAD008CFC6D /* Model Controller */,
-				EBDD78B6232DCE9B008CFC6D /* View Controller */,
 				EBDD78B5232DCE8B008CFC6D /* Model */,
+				EBDD78B7232DCEAD008CFC6D /* Model Controller */,
+				EB6C134323793123006777F5 /* Resources */,
+				EBB8D72B25FAAA4800CCE284 /* Utility */,
+				EBF9AC1D2332AEEC004664D4 /* View */,
+				EBDD78B6232DCE9B008CFC6D /* View Controller */,
+				EBB8D72125F9579D00CCE284 /* View Model */,
 			);
 			path = "Airbnb-Price-Navigator";
 			sourceTree = "<group>";

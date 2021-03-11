@@ -30,8 +30,11 @@ class PropertyViewController: PropertyBaseNavViewController {
     var prediction: Prediction?
     let propertyViewModel = PropertyViewModel()
     let propertyController = Network()
+    
     let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
     let bedTypes = ["Standard Beds",  "Couches", "Pull-out Couches", "Air Mattresses"]
+    let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse",
+                         "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
     var roomType: String?
     var bedType: String?
     
@@ -55,6 +58,10 @@ class PropertyViewController: PropertyBaseNavViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        let lm = view.layoutMargins
+        let height: CGFloat = 30.0
+        let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -63,39 +70,100 @@ class PropertyViewController: PropertyBaseNavViewController {
                                                selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardDidHideNotification,
                                                object: nil)
-        
-        stackview = UIStackView()
-        view.addSubview(stackview)
-        stackview.axis = .vertical
-        stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.distribution = .fillEqually
-        stackview.spacing = 50.0
-        stackview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
        
-        let _: UILabel = {
-            let headerLabel = UILabel()
-            stackview.addArrangedSubview(headerLabel)
-            headerLabel.text = """
-                                Find out the value of
-                                your property!
-                                """
-            headerLabel.textAlignment = .center
-            headerLabel.font = .boldSystemFont(ofSize: 20.0)
-            headerLabel.numberOfLines = 2
-            headerLabel.textColor = .black
-            
-            return headerLabel
-        }()
+
+        let headerLabel = UILabel()
+        headerLabel.text = "Find out the value of your property!"
+        headerLabel.numberOfLines = 0
+        headerLabel.textAlignment = .center
+        headerLabel.font = Appearance.headerFont
         
-        addZipcodeTextField()
-        addDropDownPropertyTextfield()
-        addDropDownRoomTypeTextfield()
-        addBedAndBathTextfield()
-        addDropdownBedTypeTextfield()
-        displayBeds()
-        addAccomodationTexField()
+        let zipcodeLabel = UILabel()
+        zipcodeLabel.text = "Zip Code"
+        zipcodeLabel.font = Appearance.labelFont
+        zipcodeTextField = UITextField(frame: .zero)
+        zipcodeTextField.delegate = self
+        zipcodeTextField.layer.borderWidth = 1.0
+        zipcodeTextField.layer.borderColor = Appearance.textFieldBorderColor
+        zipcodeTextField.font = Appearance.textFieldFont
+        zipcodeTextField.placeholder = "90210"
+        
+        let propertyLabel = UILabel()
+        propertyLabel.text = "Property Type"
+        propertyLabel.font = Appearance.labelFont
+        dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: propertyTypes[0], options: propertyTypes)
+        dropDownPropertyTextfield.delegate = self
+        dropDownPropertyTextfield.textField.font = Appearance.textFieldFont
+        
+        let roomTypeLabel = UILabel()
+        roomTypeLabel.text = "Room Type"
+        roomTypeLabel.font = Appearance.labelFont
+        dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: roomTypes[0], options: roomTypes)
+        dropDownRoomTypeTextfield.textField.font = Appearance.textFieldFont
+        dropDownRoomTypeTextfield.delegate = self
+        
+        let bedroomsLabel = UILabel()
+        bedroomsLabel.text = "Bedrooms"
+        bedroomsLabel.font = Appearance.labelFont
+        bedroomTextField = UITextField()
+        bedroomTextField.layer.borderWidth = 1.0
+        bedroomTextField.font = Appearance.textFieldFont
+        bedroomTextField.layer.borderColor = Appearance.textFieldBorderColor
+        bedroomTextField.placeholder = " 0"
+        
+        let bathroomsLabel = UILabel()
+        bathroomsLabel.text = "Bathrooms"
+        bathroomsLabel.font = Appearance.labelFont
+        bathroomsTextField = UITextField()
+        bathroomsTextField.layer.borderWidth = 1.0
+        bathroomsTextField.font = Appearance.textFieldFont
+        bathroomsTextField.layer.borderColor = Appearance.textFieldBorderColor
+        bathroomsTextField.placeholder = " 0"
+        
+        let bedTypesLabel = UILabel()
+        bedTypesLabel.text = "Bed Types"
+        bedTypesLabel.font = Appearance.labelFont
+        dropDownBedTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Standard Bed", options: bedTypes)
+        dropDownBedTypeTextfield.textField.font = Appearance.textFieldFont
+        dropDownBedTypeTextfield.delegate = self
+        
+        let bedLabel = UILabel()
+        bedLabel.text = "Bed"
+        bedLabel.font = Appearance.labelFont
+        bedCountTextField = UITextField()
+        bedCountTextField.layer.borderWidth = 1.0
+        bedCountTextField.font = Appearance.textFieldFont
+        bedCountTextField.layer.borderColor = Appearance.textFieldBorderColor
+        bedCountTextField.placeholder = "0"
+        
+        let accommodateLabel = UILabel()
+        accommodateLabel.text = "Accomodates how many guest?"
+        accommodateLabel.font = Appearance.labelFont
+        accommodatesTextField = UITextField(frame: .zero)
+        accommodatesTextField.placeholder = "0"
+        accommodatesTextField.layer.borderWidth = 1.0
+        accommodatesTextField.font = Appearance.textFieldFont
+        accommodatesTextField.layer.borderColor = Appearance.textFieldBorderColor
+
+        
+        view.addSubview(headerLabel)
+        view.addSubview(zipcodeLabel)
+        view.addSubview(zipcodeTextField)
+        view.addSubview(propertyLabel)
+        view.addSubview(dropDownPropertyTextfield)
+        view.addSubview(roomTypeLabel)
+        view.addSubview(dropDownRoomTypeTextfield)
+        view.addSubview(bedroomsLabel)
+        view.addSubview(bedroomTextField)
+        view.addSubview(bathroomsLabel)
+        view.addSubview(bathroomsTextField)
+        view.addSubview(bedTypesLabel)
+        view.addSubview(dropDownBedTypeTextfield)
+        view.addSubview(bedLabel)
+        view.addSubview(bedCountTextField)
+        view.addSubview(accommodateLabel)
+        view.addSubview(accommodatesTextField)
+      
         
         submitButton = UIButton()
         submitButton.isEnabled = false
@@ -116,248 +184,6 @@ class PropertyViewController: PropertyBaseNavViewController {
     }
     
 //MARK:- Methods
-    private func addZipcodeTextField() {
-
-        let zipcodeStackView = UIStackView()
-        stackview.addArrangedSubview(zipcodeStackView)
-        zipcodeStackView.axis = .vertical
-        
-        let _: UILabel = {
-            let zipcodeLabel = UILabel()
-            zipcodeLabel.text = "Zip Code"
-            zipcodeLabel.textColor = .black
-            zipcodeLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            zipcodeStackView.addArrangedSubview(zipcodeLabel)
-            return zipcodeLabel
-        }()
-        
-        let _: UITextField = {
-            zipcodeTextField = UITextField(frame: .zero)
-            zipcodeTextField.delegate = self
-            zipcodeTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-            zipcodeTextField.layer.borderWidth = 1.0
-            zipcodeTextField.layer.borderColor = Appearance.textFieldBorderColor
-            zipcodeTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-            zipcodeTextField.textColor = .black
-            zipcodeTextField.placeholder = "90210"
-            zipcodeStackView.addArrangedSubview(zipcodeTextField)
-            return zipcodeTextField
-        }()
-        
-    }
-    private func addDropDownPropertyTextfield() {
-        let lm = view.layoutMargins
-        let height: CGFloat = 30.0
-        let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
-        
-        let propertyTypeStackView = UIStackView()
-        view.addSubview(propertyTypeStackView)
-        propertyTypeStackView.translatesAutoresizingMaskIntoConstraints = false
-        propertyTypeStackView.axis = .vertical
-        propertyTypeStackView.topAnchor.constraint(equalTo: stackview.bottomAnchor, constant: 10).isActive = true
-        propertyTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
-        propertyTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
-        
-        let _: UILabel = {
-            let propertyLabel = UILabel()
-            propertyLabel.text = "Property Type"
-            propertyLabel.textColor = .black
-            propertyLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            propertyTypeStackView.addArrangedSubview(propertyLabel)
-            return propertyLabel
-        }()
-        
-        let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse", "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
-        dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: "House", options: propertyTypes)
-        dropDownPropertyTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
-        dropDownPropertyTextfield.delegate = self
-        propertyTypeStackView.addArrangedSubview(dropDownPropertyTextfield)
-        
-    }
-    
-    private func addDropDownRoomTypeTextfield() {
-        let lm = view.layoutMargins
-        let height: CGFloat = 30.0
-        let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
-        
-        let roomTypeStackView = UIStackView()
-        view.addSubview(roomTypeStackView)
-        roomTypeStackView.axis = .vertical
-        roomTypeStackView.tag = 1
-        roomTypeStackView.translatesAutoresizingMaskIntoConstraints = false
-        roomTypeStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 310).isActive = true
-        roomTypeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40.0).isActive = true
-        roomTypeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40.0).isActive = true
-        
-        let _: UILabel = {
-            let roomTypeLabel = UILabel()
-            roomTypeLabel.text = "Room Type"
-            roomTypeLabel.textColor = .black
-            roomTypeLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            roomTypeStackView.addArrangedSubview(roomTypeLabel)
-            return roomTypeLabel
-        }()
-        
-        dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Entire Property", options: roomTypes)
-        dropDownRoomTypeTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
-        dropDownRoomTypeTextfield.delegate = self
-        roomTypeStackView.addArrangedSubview(dropDownRoomTypeTextfield)
-    }
-    
-    private func addBedAndBathTextfield() {
-        let bedAndBathStackView = UIStackView()
-        view.addSubview(bedAndBathStackView)
-        bedAndBathStackView.translatesAutoresizingMaskIntoConstraints = false
-        bedAndBathStackView.axis = .horizontal
-        bedAndBathStackView.distribution = .fillEqually
-        bedAndBathStackView.spacing = 5.0
-        bedAndBathStackView.axis = .vertical
-        bedAndBathStackView.tag = 2
-        bedAndBathStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 360).isActive = true
-        bedAndBathStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
-        bedAndBathStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
-        
-        let bedroomsStackView = UIStackView()
-        let bathroomsStackView = UIStackView()
-        bedroomsStackView.axis = .vertical
-        bathroomsStackView.axis = .vertical
-        bedAndBathStackView.addArrangedSubview(bedroomsStackView)
-        bedAndBathStackView.addArrangedSubview(bathroomsStackView)
-        bedAndBathStackView.axis = .horizontal
-        
-        let _: UILabel = {
-            let bedroomsLabel = UILabel()
-            bedroomsLabel.text = "Bedrooms"
-            bedroomsLabel.textColor = .black
-            bedroomsLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            bedroomsStackView.addArrangedSubview(bedroomsLabel)
-            return bedroomsLabel
-        }()
-       
-        let _: UILabel = {
-            let bathroomsLabel = UILabel()
-            bathroomsLabel.text = "Bathrooms"
-            bathroomsLabel.textColor = .black
-            bathroomsLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            bathroomsStackView.addArrangedSubview(bathroomsLabel)
-            return bathroomsLabel
-        }()
-        
-        bedroomTextField = UITextField()
-        bedroomTextField.layer.borderWidth = 1.0
-        bedroomTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        bedroomTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-        bedroomTextField.layer.borderColor = Appearance.textFieldBorderColor
-        bedroomTextField.placeholder = "0"
-        bedroomTextField.textColor = .black
-        bedroomsStackView.addArrangedSubview(bedroomTextField)
-        
-        bathroomsTextField = UITextField()
-        bathroomsTextField.layer.borderWidth = 1.0
-        bathroomsTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        bathroomsTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-        bathroomsTextField.layer.borderColor = Appearance.textFieldBorderColor
-        bathroomsTextField.placeholder = "0"
-        bathroomsTextField.textColor = .black
-        bathroomsStackView.addArrangedSubview(bathroomsTextField)
-    }
-    private func addDropdownBedTypeTextfield() {
-        let lm = view.layoutMargins
-        let height: CGFloat = 30.0
-        let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
-        
-        let bedTypesStackView = UIStackView()
-        view.addSubview(bedTypesStackView)
-        bedTypesStackView.translatesAutoresizingMaskIntoConstraints = false
-        bedTypesStackView.axis = .vertical
-        bedTypesStackView.tag = 3
-        bedTypesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 410).isActive = true
-        bedTypesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
-        bedTypesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
-        
-        
-        
-        let _: UILabel = {
-            let bedTypesLabel = UILabel()
-            bedTypesLabel.text = "Bed Types"
-            bedTypesLabel.textColor = .black
-            bedTypesLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            bedTypesStackView.addArrangedSubview(bedTypesLabel)
-            return bedTypesLabel
-        }()
-        
-//        let bed = Pro (standardBed: "Standard Beds", couch: "Couches", futon: "Futons", pullOutCouch: "Pull-out Couches", airMattress: "Air Mattresses")
-    
-        dropDownBedTypeTextfield = DropDownTextField(frame: dropDownFrame, title: "Standard Bed", options: bedTypes)
-        dropDownBedTypeTextfield.textField.font = .systemFont(ofSize: 14.0, weight: .light)
-        dropDownBedTypeTextfield.delegate = self
-        bedTypesStackView.addArrangedSubview(dropDownBedTypeTextfield)
-    }
-    
-    
-    private func displayBeds() {
-        
-        let bedStackView = UIStackView()
-        view.addSubview(bedStackView)
-        bedStackView.translatesAutoresizingMaskIntoConstraints = false
-        bedStackView.axis = .vertical
-        bedStackView.tag = 4
-        bedStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460).isActive = true
-        bedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
-        bedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
-        
-        let _: UILabel = {
-            let bedLabel = UILabel()
-            bedLabel.text = "Bed"
-            bedLabel.textColor = .black
-            bedLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            bedStackView.addArrangedSubview(bedLabel)
-            return bedLabel
-        }()
-        
-        bedCountTextField = UITextField()
-        bedCountTextField.layer.borderWidth = 1.0
-        bedCountTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-        bedCountTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        bedCountTextField.layer.borderColor = Appearance.textFieldBorderColor
-        bedCountTextField.placeholder = "0"
-        bedCountTextField.textColor = .black
-        bedStackView.addArrangedSubview(bedCountTextField)
-        
-    }
-    
-    private func addAccomodationTexField() {
-        let accommodatStackView = UIStackView()
-        view.addSubview(accommodatStackView)
-        accommodatStackView.translatesAutoresizingMaskIntoConstraints = false
-        accommodatStackView.axis = .vertical
-        accommodatStackView.tag = 5
-        accommodatStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 510).isActive = true
-        accommodatStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
-        accommodatStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
-        
-        let _: UILabel = {
-            let accommodateLabel = UILabel()
-            accommodateLabel.text = "Accomodates how many guest?"
-            accommodateLabel.textColor = .black
-            accommodateLabel.font = .systemFont(ofSize: 12.0, weight: .light)
-            accommodatStackView.addArrangedSubview(accommodateLabel)
-            return accommodateLabel
-        }()
-    
-        accommodatesTextField = UITextField(frame: .zero)
-        accommodatesTextField.placeholder = "0"
-        accommodatesTextField.textColor = .black
-        accommodatesTextField.layer.borderWidth = 1.0
-        accommodatesTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-        accommodatesTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        accommodatesTextField.layer.borderColor = Appearance.textFieldBorderColor
-        accommodatStackView.addArrangedSubview(accommodatesTextField)
-    
-    }
-    
-    
-    
     @objc func checkTextfield(_ textfield: UITextField) {
         
         if textfield.text?.count == 1{
