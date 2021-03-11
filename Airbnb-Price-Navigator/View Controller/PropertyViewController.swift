@@ -25,12 +25,11 @@ class PropertyViewController: PropertyBaseNavViewController {
     var dropDownRoomTypeTextfield: DropDownTextField!
     var dropDownBedTypeTextfield: DropDownTextField!
     var submitButton: UIButton!
-    var textFieldBorderColor = UIColor(red: 220.0/255.0, green: 220.0/255.0, blue: 220.0/255.0, alpha: 1.0).cgColor
-    let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
 
     
     var prediction: Prediction?
-    let propertyController = NetworkController()
+    let propertyViewModel = PropertyViewModel()
+    let propertyController = Network()
     let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
     let bedTypes = ["Standard Beds",  "Couches", "Pull-out Couches", "Air Mattresses"]
     var roomType: String?
@@ -137,7 +136,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             zipcodeTextField.delegate = self
             zipcodeTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
             zipcodeTextField.layer.borderWidth = 1.0
-            zipcodeTextField.layer.borderColor = textFieldBorderColor
+            zipcodeTextField.layer.borderColor = Appearance.textFieldBorderColor
             zipcodeTextField.font = .systemFont(ofSize: 14.0, weight: .light)
             zipcodeTextField.textColor = .black
             zipcodeTextField.placeholder = "90210"
@@ -248,7 +247,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedroomTextField.layer.borderWidth = 1.0
         bedroomTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         bedroomTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-        bedroomTextField.layer.borderColor = textFieldBorderColor
+        bedroomTextField.layer.borderColor = Appearance.textFieldBorderColor
         bedroomTextField.placeholder = "0"
         bedroomTextField.textColor = .black
         bedroomsStackView.addArrangedSubview(bedroomTextField)
@@ -257,7 +256,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bathroomsTextField.layer.borderWidth = 1.0
         bathroomsTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         bathroomsTextField.font = .systemFont(ofSize: 14.0, weight: .light)
-        bathroomsTextField.layer.borderColor = textFieldBorderColor
+        bathroomsTextField.layer.borderColor = Appearance.textFieldBorderColor
         bathroomsTextField.placeholder = "0"
         bathroomsTextField.textColor = .black
         bathroomsStackView.addArrangedSubview(bathroomsTextField)
@@ -320,7 +319,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedCountTextField.layer.borderWidth = 1.0
         bedCountTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         bedCountTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        bedCountTextField.layer.borderColor = textFieldBorderColor
+        bedCountTextField.layer.borderColor = Appearance.textFieldBorderColor
         bedCountTextField.placeholder = "0"
         bedCountTextField.textColor = .black
         bedStackView.addArrangedSubview(bedCountTextField)
@@ -352,7 +351,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatesTextField.layer.borderWidth = 1.0
         accommodatesTextField.font = .systemFont(ofSize: 14.0, weight: .light)
         accommodatesTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        accommodatesTextField.layer.borderColor = textFieldBorderColor
+        accommodatesTextField.layer.borderColor = Appearance.textFieldBorderColor
         accommodatStackView.addArrangedSubview(accommodatesTextField)
     
     }
@@ -380,7 +379,7 @@ class PropertyViewController: PropertyBaseNavViewController {
             { submitButton.isEnabled = false
                 return
         }
-        submitButton.backgroundColor = greenGradient
+        submitButton.backgroundColor = Appearance.greenGradient
         submitButton.isEnabled = true
     }
     
@@ -419,22 +418,23 @@ class PropertyViewController: PropertyBaseNavViewController {
             return
         }
         
-        
-        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
-        
-            let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomType, accommodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
-            
-            self.propertyController.postPropeties(property: property) { (prediction, error) in
-                       DispatchQueue.main.async {
-                           let vc = PropertyPriceViewController()
-                           vc.predictions = prediction
-                           let nav = UINavigationController(rootViewController: vc)
-                           nav.modalPresentationStyle = .fullScreen
-                           self.present(nav, animated: true, completion: nil)
-                           self.removeFromParent()
-                       }
-                }
-            }
+        propertyViewModel.displayPropertyPrice()
+//
+//        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
+//
+//            let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomType, accommodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
+//
+//            self.propertyController.postPropeties(property: property) { (prediction, error) in
+//                       DispatchQueue.main.async {›
+//                           let vc = PropertyPriceViewController()
+//                           vc.predictions = prediction
+//                           let nav = UINavigationController(rootViewController: vc)
+//                           nav.modalPresentationStyle = .fullScreen
+//                           self.present(nav, animated: true, completion: nil)
+//                           self.removeFromParent()
+//                       }
+//                }
+//            }
         }
     
     func textfieldReturn(_ textField: UITextField) -> Bool {

@@ -8,11 +8,11 @@
 
 import Foundation
 
-class NetworkController {
+class Network {
     
     // MARK: - Properties
     
-    let baseUrl = URL(string: "https://airbnbpricepredictor.tk/prediction")!
+    private let baseUrl = URL(string: "https://airbnbpricepredictor.tk/prediction")!
     typealias completionHandler = (Prediction?,Error?) -> Void
     var prediction: Prediction?
 
