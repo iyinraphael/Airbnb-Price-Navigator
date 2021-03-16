@@ -39,6 +39,7 @@ class DropDownTextField: UIView {
         tableView.backgroundColor = .clear
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.separatorStyle = .none
+        tableView.isOpaque = true
         return tableView
     }()
     
@@ -141,7 +142,7 @@ extension DropDownTextField {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
+        tableView.isOpaque = true
         self.addSubview(tableView)
         tableView.constraintsPinTo(leading: leadingAnchor,
                                    trailing: trailingAnchor,

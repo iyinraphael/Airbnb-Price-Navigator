@@ -19,13 +19,13 @@ class PropertyViewModel {
     let bedrooms = Box(value: " ")
     let beds = Box(value: " ")
     let bedType: Box<Property.BedType?> = Box(value: nil)
-    
-    var prediction: Prediction?
+
     let network = Network()
+    var prediction: Prediction?
     
     
     // MARK: - Methods
-    func displayPropertyPrice() {
+    private func displayPropertyPrice() {
         guard let accomodateInt = Int(accomodates.value),
               let bathroomInt = Int(bathrooms.value),
               let bedroomInt = Int(bedrooms.value),

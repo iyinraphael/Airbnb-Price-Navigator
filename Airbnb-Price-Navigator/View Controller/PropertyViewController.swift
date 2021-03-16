@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iOSDropDown
 
  
 class PropertyViewController: PropertyBaseNavViewController {
@@ -21,8 +22,8 @@ class PropertyViewController: PropertyBaseNavViewController {
     var zipcodeTextField: UITextField!
     var bedCountTextField: UITextField!
     
-    var dropDownPropertyTextfield: DropDownTextField!
-    var dropDownRoomTypeTextfield: DropDownTextField!
+    var dropDownPropertyTextfield: DropDown!
+    var dropDownRoomTypeTextfield: DropDown!
     var dropDownBedTypeTextfield: DropDownTextField!
     var submitButton: UIButton!
 
@@ -59,7 +60,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.backgroundColor = .white
         
         let lm = view.layoutMargins
-        let height: CGFloat = 30.0
+        let height: CGFloat = 40.0
         let dropDownFrame = CGRect(x: lm.left, y: lm.top + 60, width: 296, height: height)
         
         NotificationCenter.default.addObserver(self,
@@ -73,15 +74,18 @@ class PropertyViewController: PropertyBaseNavViewController {
        
 
         let headerLabel = UILabel()
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
         headerLabel.text = "Find out the value of your property!"
         headerLabel.numberOfLines = 0
         headerLabel.textAlignment = .center
         headerLabel.font = Appearance.headerFont
         
         let zipcodeLabel = UILabel()
+        zipcodeLabel.translatesAutoresizingMaskIntoConstraints = false
         zipcodeLabel.text = "Zip Code"
         zipcodeLabel.font = Appearance.labelFont
         zipcodeTextField = UITextField(frame: .zero)
+        zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
         zipcodeTextField.delegate = self
         zipcodeTextField.layer.borderWidth = 1.0
         zipcodeTextField.layer.borderColor = Appearance.textFieldBorderColor
@@ -89,17 +93,24 @@ class PropertyViewController: PropertyBaseNavViewController {
         zipcodeTextField.placeholder = "90210"
         
         let propertyLabel = UILabel()
+        propertyLabel.translatesAutoresizingMaskIntoConstraints = false
         propertyLabel.text = "Property Type"
         propertyLabel.font = Appearance.labelFont
-        dropDownPropertyTextfield = DropDownTextField(frame: dropDownFrame, title: propertyTypes[0], options: propertyTypes)
+        dropDownPropertyTextfield = DropDown(frame: .zero)
+        dropDownPropertyTextfield.optionArray = propertyTypes
+        dropDownPropertyTextfield.translatesAutoresizingMaskIntoConstraints = false
         dropDownPropertyTextfield.delegate = self
-        dropDownPropertyTextfield.textField.font = Appearance.textFieldFont
+        dropDownPropertyTextfield.font = Appearance.textFieldFont
+        dropDownPropertyTextfield.layer.borderColor = Appearance.textFieldBorderColor
         
         let roomTypeLabel = UILabel()
+        roomTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         roomTypeLabel.text = "Room Type"
         roomTypeLabel.font = Appearance.labelFont
-        dropDownRoomTypeTextfield = DropDownTextField(frame: dropDownFrame, title: roomTypes[0], options: roomTypes)
-        dropDownRoomTypeTextfield.textField.font = Appearance.textFieldFont
+        dropDownRoomTypeTextfield = DropDown(frame: .zero)
+        dropDownRoomTypeTextfield.optionArray = roomTypes
+        dropDownRoomTypeTextfield.translatesAutoresizingMaskIntoConstraints = false
+        dropDownRoomTypeTextfield.font = Appearance.textFieldFont
         dropDownRoomTypeTextfield.delegate = self
         
         let bedroomsLabel = UILabel()
@@ -152,7 +163,9 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.addSubview(propertyLabel)
         view.addSubview(dropDownPropertyTextfield)
         view.addSubview(roomTypeLabel)
+        view.sendSubviewToBack(roomTypeLabel)
         view.addSubview(dropDownRoomTypeTextfield)
+        view.sendSubviewToBack(dropDownRoomTypeTextfield)
         view.addSubview(bedroomsLabel)
         view.addSubview(bedroomTextField)
         view.addSubview(bathroomsLabel)
@@ -171,14 +184,36 @@ class PropertyViewController: PropertyBaseNavViewController {
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 6
         submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
-        submitButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
-        submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
-        submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(.white, for: .normal)
         submitButton.backgroundColor = .lightGray
         
-        [zipcodeTextField, dropDownPropertyTextfield.textField, dropDownRoomTypeTextfield.textField, bedroomTextField, bathroomsTextField, bedCountTextField, dropDownBedTypeTextfield.textField, accommodatesTextField].forEach({$0?.addTarget(self, action: #selector(checkTextfield(_:)), for: .editingChanged)})
+        NSLayoutConstraint.activate([
+            headerLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
+            headerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            headerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            zipcodeLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 40),
+            zipcodeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            zipcodeTextField.topAnchor.constraint(equalTo: zipcodeLabel.bottomAnchor),
+            zipcodeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            zipcodeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            zipcodeTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            propertyLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor, constant: 10),
+            propertyLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            dropDownPropertyTextfield.topAnchor.constraint(equalTo: propertyLabel.bottomAnchor),
+            dropDownPropertyTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            dropDownPropertyTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            dropDownPropertyTextfield.heightAnchor.constraint(equalToConstant: 40),
+            
+            roomTypeLabel.topAnchor.constraint(equalTo: dropDownPropertyTextfield.bottomAnchor, constant: 10),
+            roomTypeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            dropDownRoomTypeTextfield.topAnchor.constraint(equalTo: roomTypeLabel.bottomAnchor),
+            dropDownRoomTypeTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            dropDownRoomTypeTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+        ])
         
         
     }
@@ -194,8 +229,8 @@ class PropertyViewController: PropertyBaseNavViewController {
         }
         
         guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
-            let propertyType = dropDownPropertyTextfield.textField.text, !propertyType.isEmpty, textfieldReturn(dropDownPropertyTextfield.textField) == true,
-            let roomTypeText = dropDownRoomTypeTextfield.textField.text, !roomTypeText.isEmpty,  textfieldReturn(dropDownRoomTypeTextfield.textField) == true,
+            let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty, textfieldReturn(dropDownPropertyTextfield) == true,
+            let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,  textfieldReturn(dropDownRoomTypeTextfield) == true,
             let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,  textfieldReturn(bedroomTextField) == true,
             let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,  textfieldReturn(bathroomsTextField) == true,
             let bedTypesText = dropDownBedTypeTextfield.textField.text, !bedTypesText.isEmpty, textfieldReturn(dropDownBedTypeTextfield.textField) == true,
@@ -212,8 +247,8 @@ class PropertyViewController: PropertyBaseNavViewController {
     @objc func displayPrice() {
         
         guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
-            let propertyType = dropDownPropertyTextfield.textField.text, !propertyType.isEmpty,
-            let roomTypeText = dropDownRoomTypeTextfield.textField.text, !roomTypeText.isEmpty,
+            let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty,
+            let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,
             let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,
             let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
             let bedTypesText = dropDownBedTypeTextfield.textField.text, !bedTypesText.isEmpty,
@@ -244,7 +279,6 @@ class PropertyViewController: PropertyBaseNavViewController {
             return
         }
         
-        propertyViewModel.displayPropertyPrice()
 //
 //        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
 //
@@ -289,7 +323,7 @@ class PropertyViewController: PropertyBaseNavViewController {
 extension PropertyViewController: DropDownTextFieldDelegate {
     
     func menuDidAnimate(up: Bool) {
-        if dropDownPropertyTextfield.isDroppedDown == true {
+        if dropDownPropertyTextfield.isEnabled == true {
                 view.viewWithTag(1)?.isHidden = true
                 view.viewWithTag(2)?.isHidden = true
                 view.viewWithTag(3)?.isHidden = true
@@ -298,7 +332,7 @@ extension PropertyViewController: DropDownTextFieldDelegate {
                 view.viewWithTag(6)?.isHidden = true
             }
         
-        else if dropDownRoomTypeTextfield.isDroppedDown == true {
+        else if dropDownRoomTypeTextfield.isEnabled == true {
             view.viewWithTag(2)?.isHidden = true
             view.viewWithTag(3)?.isHidden = true
             view.viewWithTag(4)?.isHidden = true
