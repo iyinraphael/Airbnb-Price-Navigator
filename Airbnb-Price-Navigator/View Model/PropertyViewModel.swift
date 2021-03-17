@@ -13,19 +13,18 @@ class PropertyViewModel {
     // MARK: - Properties
     let zipcode = Box(value: " ")
     let propertyType = Box(value: " ")
-    let roomType: Box<Property.RoomType?> = Box(value: nil)
+    let roomType = Box(value: " ")
     let accomodates = Box(value: " ")
     let bathrooms = Box(value: " ")
     let bedrooms = Box(value: " ")
     let beds = Box(value: " ")
-    let bedType: Box<Property.BedType?> = Box(value: nil)
+    let bedType = Box(value: " ")
+    let prediction: Box<PricePredict?> = Box(value: nil)
 
     let network = Network()
-    var prediction: Prediction?
-    
     
     // MARK: - Methods
-    private func displayPropertyPrice() {
+    func displayPropertyPrice() {
         guard let accomodateInt = Int(accomodates.value),
               let bathroomInt = Int(bathrooms.value),
               let bedroomInt = Int(bedrooms.value),
@@ -41,9 +40,8 @@ class PropertyViewModel {
                                 bedType: bedType.value)
         
         network.postPropeties(property: property) { prediction, _ in
-            self.prediction = prediction
+            self.prediction.value = prediction
         }
-        
     }
     
 }

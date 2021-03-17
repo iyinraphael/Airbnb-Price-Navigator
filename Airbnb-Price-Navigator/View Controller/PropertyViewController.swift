@@ -15,7 +15,6 @@ class PropertyViewController: PropertyBaseNavViewController {
 
 //MARK: - Properties
     var stackview: UIStackView!
-    
     var bedroomTextField: UITextField!
     var bathroomsTextField: UITextField!
     @objc dynamic var accommodatesTextField: UITextField!
@@ -26,32 +25,14 @@ class PropertyViewController: PropertyBaseNavViewController {
     var dropDownRoomTypeTextfield: DropDown!
     var dropDownBedTypeTextfield: DropDown!
     var submitButton: UIButton!
-
+    let network = Network()
     
-    var prediction: Prediction?
-    let propertyViewModel = PropertyViewModel()
-    let propertyController = Network()
-    
-    let roomTypes = ["Entire Property", "Private Room", "Shared Room"]
-    let bedTypes = ["Standard Beds",  "Couches", "Pull-out Couches", "Air Mattresses"]
+    let roomTypes = ["Entire home/apt", "Private Room", "Shared Room"]
+    let bedTypes = ["Real Bed",  "Couch", "Futon", "Pull-Out Sofa", "Airbed"]
     let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse",
                          "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
     var roomType: String?
     var bedType: String?
-    
-    enum BedType: String, Codable {
-       case standardBed = "Real Bed"
-       case couch = "Couch"
-       case futon = "Futon"
-       case pullOutCouch = "Pull-Out Sofa"
-       case airMattress = "Airbed"
-   }
-    
-    enum RoomType: String, Codable {
-            case entireProperty = "Entire home/apt"
-            case privateRoom = "Private Room"
-            case sharedRoom = "Shared Room"
-    }
     
     
 //MARK:- UI SETUP
@@ -60,7 +41,6 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.backgroundColor = .white
         
         let radius: CGFloat = 5
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -131,6 +111,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bedroomsLabel.font = Appearance.labelFont
         bedroomTextField = UITextField()
         bedroomTextField.translatesAutoresizingMaskIntoConstraints = false
+        bedroomTextField.delegate = self
         bedroomTextField.layer.borderWidth = 1.0
         bedroomTextField.font = Appearance.textFieldFont
         bedroomTextField.layer.borderColor = Appearance.textFieldBorderColor
@@ -143,6 +124,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         bathroomsLabel.font = Appearance.labelFont
         bathroomsTextField = UITextField()
         bathroomsTextField.translatesAutoresizingMaskIntoConstraints = false
+        bathroomsTextField.delegate = self
         bathroomsTextField.layer.borderWidth = 1.0
         bathroomsTextField.font = Appearance.textFieldFont
         bathroomsTextField.layer.borderColor = Appearance.textFieldBorderColor
@@ -186,6 +168,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatesTextField.translatesAutoresizingMaskIntoConstraints = false
         accommodatesTextField.placeholder = "0"
         accommodatesTextField.layer.borderWidth = 1.0
+        accommodatesTextField.delegate = self
         accommodatesTextField.font = Appearance.textFieldFont
         accommodatesTextField.layer.borderColor = Appearance.textFieldBorderColor
         accommodatesTextField.layer.cornerRadius = radius
@@ -208,10 +191,9 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.addSubview(bedCountTextField)
         view.addSubview(accommodateLabel)
         view.addSubview(accommodatesTextField)
-      
         
         submitButton = UIButton()
-        submitButton.isEnabled = false
+        submitButton.isEnabled = true
         view.addSubview(submitButton)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.tag = 6
@@ -249,35 +231,35 @@ class PropertyViewController: PropertyBaseNavViewController {
             dropDownRoomTypeTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             dropDownRoomTypeTextfield.heightAnchor.constraint(equalToConstant: space * 3/2),
             
-            bedroomsLabel.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 4),
-            bedroomsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            bedroomTextField.topAnchor.constraint(equalTo: bedroomsLabel.bottomAnchor),
-            bedroomTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            bedroomTextField.widthAnchor.constraint(equalTo: dropDownRoomTypeTextfield.widthAnchor, multiplier: 0.49),
-            bedroomTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            bathroomsLabel.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 4),
-            bathroomsLabel.leadingAnchor.constraint(equalTo: bedroomTextField.trailingAnchor, constant: space / 4),
-            bathroomsTextField.topAnchor.constraint(equalTo: bathroomsLabel.bottomAnchor),
-            bathroomsTextField.leadingAnchor.constraint(equalTo: bedroomTextField.trailingAnchor, constant: space / 6),
-            bathroomsTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
-            bathroomsTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            bedTypesLabel.topAnchor.constraint(equalTo: bathroomsTextField.bottomAnchor, constant: space / 4),
+            bedTypesLabel.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 4),
             bedTypesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             dropDownBedTypeTextfield.topAnchor.constraint(equalTo: bedTypesLabel.bottomAnchor),
             dropDownBedTypeTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             dropDownBedTypeTextfield.widthAnchor.constraint(equalTo: dropDownRoomTypeTextfield.widthAnchor, multiplier: 0.49),
             dropDownBedTypeTextfield.heightAnchor.constraint(equalToConstant: space * 3/2),
             
-            bedLabel.topAnchor.constraint(equalTo: bathroomsTextField.bottomAnchor, constant: space / 4),
+            bedLabel.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 4),
             bedLabel.leadingAnchor.constraint(equalTo: dropDownBedTypeTextfield.trailingAnchor, constant: space / 4),
             bedCountTextField.topAnchor.constraint(equalTo: bedLabel.bottomAnchor),
             bedCountTextField.leadingAnchor.constraint(equalTo: dropDownBedTypeTextfield.trailingAnchor, constant: space / 6),
             bedCountTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             bedCountTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
             
-            accommodateLabel.topAnchor.constraint(equalTo: bedCountTextField.bottomAnchor, constant: space / 4),
+            bedroomsLabel.topAnchor.constraint(equalTo: dropDownBedTypeTextfield.bottomAnchor, constant: space / 4),
+            bedroomsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
+            bedroomTextField.topAnchor.constraint(equalTo: bedroomsLabel.bottomAnchor),
+            bedroomTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
+            bedroomTextField.widthAnchor.constraint(equalTo: dropDownRoomTypeTextfield.widthAnchor, multiplier: 0.49),
+            bedroomTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
+            
+            bathroomsLabel.topAnchor.constraint(equalTo: dropDownBedTypeTextfield.bottomAnchor, constant: space / 4),
+            bathroomsLabel.leadingAnchor.constraint(equalTo: bedroomTextField.trailingAnchor, constant: space / 4),
+            bathroomsTextField.topAnchor.constraint(equalTo: bathroomsLabel.bottomAnchor),
+            bathroomsTextField.leadingAnchor.constraint(equalTo: bedroomTextField.trailingAnchor, constant: space / 6),
+            bathroomsTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
+            bathroomsTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
+            
+            accommodateLabel.topAnchor.constraint(equalTo: bathroomsTextField.bottomAnchor, constant: space / 4),
             accommodateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             accommodatesTextField.topAnchor.constraint(equalTo: accommodateLabel.bottomAnchor),
             accommodatesTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
@@ -289,99 +271,58 @@ class PropertyViewController: PropertyBaseNavViewController {
             submitButton.heightAnchor.constraint(equalToConstant: space * 2),
             submitButton.widthAnchor.constraint(equalTo: zipcodeTextField.widthAnchor, multiplier: 0.5)
         ])
-        
-        
     }
     
 //MARK:- Methods
-    @objc func checkTextfield(_ textfield: UITextField) {
-        
-        if textfield.text?.count == 1{
-            if textfield.text?.first == " " {
-                textfield.text = " "
-                return
-            }
-        }
-        
-        guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
-            let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty, textfieldReturn(dropDownPropertyTextfield) == true,
-            let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,  textfieldReturn(dropDownRoomTypeTextfield) == true,
-            let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,  textfieldReturn(bedroomTextField) == true,
-            let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,  textfieldReturn(bathroomsTextField) == true,
-            let bedTypesText = dropDownBedTypeTextfield.text, !bedTypesText.isEmpty, textfieldReturn(dropDownBedTypeTextfield) == true,
-            let bedString = bedCountTextField.text,  !bedString.isEmpty, textfieldReturn(bedCountTextField) == true,
-            let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty, textfieldReturn(accommodatesTextField) == true
-        else
-            { submitButton.isEnabled = false
-                return
-        }
-        submitButton.backgroundColor = Appearance.greenGradient
-        submitButton.isEnabled = true
-    }
-    
     @objc func displayPrice() {
         
         guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
-            let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty,
-            let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,
-            let bedroomString = bedroomTextField.text, !bedroomString.isEmpty,
-            let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
-            let bedTypesText = dropDownBedTypeTextfield.text, !bedTypesText.isEmpty,
-            let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty,
-            let bedString = bedCountTextField.text, !bedString.isEmpty else {return}
+              let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty,
+              let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,
+              let bedroomString = bedroomTextField.text, !bedroomString.isEmpty, let bedroomInt = Int(bedroomString),
+              let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
+              let bathroomInt = Int(bathroomString),
+              let bedTypesText = dropDownBedTypeTextfield.text, !bedTypesText.isEmpty,
+              let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty,
+              let accomodates = Int(accomodationString),
+              let bedString = bedCountTextField.text, !bedString.isEmpty,
+              let bedInt = Int(bedString) else {return}
         
-        switch roomTypeText {
-        case "Entire Property":
-            roomType = RoomType.entireProperty.rawValue
-        case "Private Room":
-            roomType = RoomType.privateRoom.rawValue
-        case "Shared Room":
-            roomType = RoomType.sharedRoom.rawValue
-        default:
-            return
+        
+        let property = Property(zipcode: zipcode,
+                                propertyType: propertyType,
+                                roomType: roomTypeText,
+                                accommodates: accomodates,
+                                bathrooms: bathroomInt,
+                                bedrooms: bedroomInt,
+                                beds: bedInt,
+                                bedType: bedTypesText)
+        network.postPropeties(property: property) { pricePredict, _ in
+            if let pricePredict = pricePredict {
+                DispatchQueue.main.async {
+                    let vc = PropertyPriceViewController()
+                    vc.pricePredict = pricePredict
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
         }
-        
-        switch bedTypesText {
-        case "Standard Beds":
-            bedType = BedType.standardBed.rawValue
-        case "Couches":
-            bedType = BedType.couch.rawValue
-        case "Pull-out Couches":
-            bedType = BedType.pullOutCouch.rawValue
-        case "Air Mattresses":
-            bedType = BedType.airMattress.rawValue
-        default:
-            return
-        }
-        
-//
-//        if let bedroom = Int(bedroomString), let bathroom = Int(bathroomString), let accomodation = Int(accomodationString), let beds = Int(bedString ){
-//
-//            let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomType, accommodates: accomodation, bathrooms: bathroom, bedrooms: bedroom, beds: beds, bedType: bedType)
-//
-//            self.propertyController.postPropeties(property: property) { (prediction, error) in
-//                       DispatchQueue.main.async {›
-//                           let vc = PropertyPriceViewController()
-//                           vc.predictions = prediction
-//                           let nav = UINavigationController(rootViewController: vc)
-//                           nav.modalPresentationStyle = .fullScreen
-//                           self.present(nav, animated: true, completion: nil)
-//                           self.removeFromParent()
-//                       }
-//                }
-//            }
-        }
-    
-    func textfieldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        
-        return true
     }
+
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
+        if accommodatesTextField.isEditing {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                if self.view.frame.origin.y == 0 {
+                    self.view.frame.origin.y -= keyboardSize.height - 200
+                }
+            }
+        }
+    
+        dropDownBedTypeTextfield.listWillAppear {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                if self.view.frame.origin.y == 0 {
+                    self.view.frame.origin.y -= keyboardSize.height - 280
+                }
             }
         }
     }
@@ -391,53 +332,19 @@ class PropertyViewController: PropertyBaseNavViewController {
             self.view.frame.origin.y = 0
         }
     }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 
 }
 
-
-extension PropertyViewController: DropDownTextFieldDelegate {
-    
-    func menuDidAnimate(up: Bool) {
-        if dropDownPropertyTextfield.isEnabled == true {
-                view.viewWithTag(1)?.isHidden = true
-                view.viewWithTag(2)?.isHidden = true
-                view.viewWithTag(3)?.isHidden = true
-                view.viewWithTag(4)?.isHidden = true
-                view.viewWithTag(5)?.isHidden = true
-                view.viewWithTag(6)?.isHidden = true
-            }
-        
-        else if dropDownRoomTypeTextfield.isEnabled == true {
-            view.viewWithTag(2)?.isHidden = true
-            view.viewWithTag(3)?.isHidden = true
-            view.viewWithTag(4)?.isHidden = true
-        }
-        
-        else if dropDownBedTypeTextfield.isEnabled == true {
-            view.viewWithTag(4)?.isHidden = true
-            view.viewWithTag(5)?.isHidden = true
-            view.viewWithTag(6)?.isHidden = true
-        }
-        
-        else  {
-            view.viewWithTag(1)?.isHidden = false
-            view.viewWithTag(2)?.isHidden = false
-            view.viewWithTag(3)?.isHidden = false
-            view.viewWithTag(4)?.isHidden = false
-            view.viewWithTag(5)?.isHidden = false
-            view.viewWithTag(6)?.isHidden = false
-        }
-    }
-    
-    func optionSelected(option: String) {
-        print("option selected: \(option)")
-    }
-    
-    
-}
 
 extension PropertyViewController: UITextFieldDelegate {
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
 
 }
 

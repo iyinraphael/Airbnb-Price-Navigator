@@ -13,8 +13,8 @@ class Network {
     // MARK: - Properties
     
     private let baseUrl = URL(string: "https://airbnbpricepredictor.tk/prediction")!
-    typealias completionHandler = (Prediction?,Error?) -> Void
-    var prediction: Prediction?
+    typealias completionHandler = (PricePredict?,Error?) -> Void
+    var prediction: PricePredict?
 
     // MARK: - Methods
     
@@ -41,7 +41,7 @@ class Network {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             do {
-                let decodeJson = try decoder.decode(Prediction.self, from: data)
+                let decodeJson = try decoder.decode(PricePredict.self, from: data)
                 print("\(decodeJson)")
                 completion(decodeJson, nil)
             } catch {

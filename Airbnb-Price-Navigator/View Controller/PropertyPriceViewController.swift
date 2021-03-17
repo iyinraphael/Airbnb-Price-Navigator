@@ -14,7 +14,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     //MARK:- Properties
     var barChart: BarChartData?
     
-    var predictions: Prediction?
+    var pricePredict: PricePredict?
     let bins = ["$0-50", "$50-100", "$100-150", "$150-200", "$200-300", "$300-400", "$400-500", "$500-750", "$750-1000", "$1000+"]
     let greenGradient = UIColor(red: 0.0/255.0, green: 160.0/255.0, blue: 134.0/255.0, alpha: 1)
     
@@ -67,13 +67,13 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         
         
         var dataEntries = [BarChartDataEntry]()
-        if let prediction = predictions {
-            valuesLabel.text = "$\(prediction.prediction) / night"
-            print(prediction.prediction)
+        if let pricePredict = pricePredict {
+            valuesLabel.text = "$\(pricePredict.prediction) / night"
+            print(pricePredict.prediction)
             
             for i in 0..<bins.count {
                 
-                let dataEntry = BarChartDataEntry(x: Double(i), y: Double(prediction.plotValues[i]))
+                let dataEntry = BarChartDataEntry(x: Double(i), y: Double(pricePredict.plotValues[i]))
                 dataEntries.append(dataEntry)
                 
             }
@@ -107,9 +107,9 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     private func updateForNoData() {
         
-        guard let prediction = predictions else {return}
+        guard let pricePredict = pricePredict else {return}
         
-        for values in prediction.plotValues {
+        for values in pricePredict.plotValues {
             if values != 0 {
                 return
             }
