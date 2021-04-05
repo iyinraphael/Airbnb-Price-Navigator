@@ -12,9 +12,8 @@
 		EB0507EF2353BE4000B950D8 /* PropertyDiscovryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0507EE2353BE4000B950D8 /* PropertyDiscovryViewCell.swift */; };
 		EB57821F236A10080070C5A6 /* PropertyTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB57821E236A10080070C5A6 /* PropertyTeamViewController.swift */; };
 		EB578221236A134A0070C5A6 /* PropertyTeamViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB578220236A134A0070C5A6 /* PropertyTeamViewCell.swift */; };
+		EB5BA54C261B8BC4005DA2CB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5BA54B261B8BC4005DA2CB /* ViewModel.swift */; };
 		EB5D67B426005882007DD1AC /* libiOSDropDown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5D67B326005882007DD1AC /* libiOSDropDown.a */; };
-		EB681D6524C915BC00BC6036 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB681D6124C9150D00BC6036 /* Charts.framework */; };
-		EB681D6624C915BC00BC6036 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB681D6124C9150D00BC6036 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EBA8BB9723468BD70051E0AA /* PropertyMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8BB9623468BD70051E0AA /* PropertyMenuViewController.swift */; };
 		EBA8BB992347CA2A0051E0AA /* PropertyBaseNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8BB982347CA2A0051E0AA /* PropertyBaseNavViewController.swift */; };
 		EBA8BB9B2347F4D40051E0AA /* PropertyPriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8BB9A2347F4D40051E0AA /* PropertyPriceViewController.swift */; };
@@ -30,23 +29,6 @@
 		EBF9AC1F2332AF28004664D4 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9AC1E2332AF28004664D4 /* DropDownTextField.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		EB681D6024C9150D00BC6036 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EB681D5B24C9150D00BC6036 /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
-			remoteInfo = Charts;
-		};
-		EB681D6224C9150D00BC6036 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EB681D5B24C9150D00BC6036 /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
-			remoteInfo = ChartsTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		EBA8BBC4234807660051E0AA /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -54,7 +36,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EB681D6624C915BC00BC6036 /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,8 +50,8 @@
 		EB0507EE2353BE4000B950D8 /* PropertyDiscovryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyDiscovryViewCell.swift; sourceTree = "<group>"; };
 		EB57821E236A10080070C5A6 /* PropertyTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTeamViewController.swift; sourceTree = "<group>"; };
 		EB578220236A134A0070C5A6 /* PropertyTeamViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTeamViewCell.swift; sourceTree = "<group>"; };
+		EB5BA54B261B8BC4005DA2CB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		EB5D67B326005882007DD1AC /* libiOSDropDown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libiOSDropDown.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB681D5B24C9150D00BC6036 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		EBA8BB9623468BD70051E0AA /* PropertyMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyMenuViewController.swift; sourceTree = "<group>"; };
 		EBA8BB982347CA2A0051E0AA /* PropertyBaseNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyBaseNavViewController.swift; sourceTree = "<group>"; };
 		EBA8BB9A2347F4D40051E0AA /* PropertyPriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyPriceViewController.swift; sourceTree = "<group>"; };
@@ -93,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB681D6524C915BC00BC6036 /* Charts.framework in Frameworks */,
 				EB5D67B426005882007DD1AC /* libiOSDropDown.a in Frameworks */,
 				591A91B6061489BA55AE9798 /* libPods-Airbnb-Price-Navigator.a in Frameworks */,
 			);
@@ -102,15 +82,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		EB681D5C24C9150D00BC6036 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				EB681D6124C9150D00BC6036 /* Charts.framework */,
-				EB681D6324C9150D00BC6036 /* ChartsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		EB681D6424C915BC00BC6036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,7 +97,6 @@
 				EBDD789E232DCB6C008CFC6D /* AppDelegate.swift */,
 				EBDD78AA232DCB71008CFC6D /* Assets.xcassets */,
 				EBDD78AC232DCB71008CFC6D /* LaunchScreen.storyboard */,
-				EBB8D71F25F9535600CCE284 /* Appearance.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -134,6 +104,7 @@
 		EBB8D72125F9579D00CCE284 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB5BA54B261B8BC4005DA2CB /* ViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -141,6 +112,7 @@
 		EBB8D72B25FAAA4800CCE284 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				EBB8D71F25F9535600CCE284 /* Appearance.swift */,
 				EBB8D72E25FAAA9A00CCE284 /* Box.swift */,
 			);
 			path = Utility;
@@ -151,7 +123,6 @@
 			children = (
 				EBDD789D232DCB6C008CFC6D /* Airbnb-Price-Navigator */,
 				EBDD789C232DCB6C008CFC6D /* Products */,
-				EB681D5B24C9150D00BC6036 /* Charts.xcodeproj */,
 				EB681D6424C915BC00BC6036 /* Frameworks */,
 				F02AADA58F8EDD02F6300A01 /* Pods */,
 			);
@@ -277,35 +248,12 @@
 			mainGroup = EBDD7892232DCB6C008CFC6D;
 			productRefGroup = EBDD789C232DCB6C008CFC6D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = EB681D5C24C9150D00BC6036 /* Products */;
-					ProjectRef = EB681D5B24C9150D00BC6036 /* Charts.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				EBDD789A232DCB6C008CFC6D /* Airbnb-Price-Navigator */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		EB681D6124C9150D00BC6036 /* Charts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Charts.framework;
-			remoteRef = EB681D6024C9150D00BC6036 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		EB681D6324C9150D00BC6036 /* ChartsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ChartsTests.xctest;
-			remoteRef = EB681D6224C9150D00BC6036 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		EBDD7899232DCB6C008CFC6D /* Resources */ = {
@@ -355,6 +303,7 @@
 				EBDD789F232DCB6C008CFC6D /* AppDelegate.swift in Sources */,
 				EBDD78BF232DFB60008CFC6D /* PropertyViewController.swift in Sources */,
 				EBF9AC1F2332AF28004664D4 /* DropDownTextField.swift in Sources */,
+				EB5BA54C261B8BC4005DA2CB /* ViewModel.swift in Sources */,
 				EBA8BB9723468BD70051E0AA /* PropertyMenuViewController.swift in Sources */,
 				EBDD78BB232DD5C3008CFC6D /* PropertryController.swift in Sources */,
 				EB57821F236A10080070C5A6 /* PropertyTeamViewController.swift in Sources */,

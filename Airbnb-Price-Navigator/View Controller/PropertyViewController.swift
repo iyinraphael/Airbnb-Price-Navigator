@@ -14,31 +14,29 @@ class PropertyViewController: PropertyBaseNavViewController {
     
 
 //MARK: - Properties
-    var stackview: UIStackView!
-    var bedroomTextField: UITextField!
-    var bathroomsTextField: UITextField!
+    private var bedroomTextField: UITextField!
+    private var bathroomsTextField: UITextField!
     @objc dynamic var accommodatesTextField: UITextField!
-    var zipcodeTextField: UITextField!
-    var bedCountTextField: UITextField!
+    private var zipcodeTextField: UITextField!
+    private var bedCountTextField: UITextField!
+    private var dropDownPropertyTextfield: DropDown!
+    private var dropDownRoomTypeTextfield: DropDown!
+    private var dropDownBedTypeTextfield: DropDown!
+    private var submitButton: UIButton!
     
-    var dropDownPropertyTextfield: DropDown!
-    var dropDownRoomTypeTextfield: DropDown!
-    var dropDownBedTypeTextfield: DropDown!
-    var submitButton: UIButton!
-    let network = Network()
-    
-    let roomTypes = ["Entire home/apt", "Private Room", "Shared Room"]
-    let bedTypes = ["Real Bed",  "Couch", "Futon", "Pull-Out Sofa", "Airbed"]
-    let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse",
+    private let roomTypes = ["Entire home/apt", "Private Room", "Shared Room"]
+    private let bedTypes = ["Real Bed",  "Couch", "Futon", "Pull-Out Sofa", "Airbed"]
+    private let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse",
                          "Loft", "Guest Suite", "Bungalow", "Villa", "Other"]
-    var roomType: String?
-    var bedType: String?
-    
+    private var roomType: String?
+    private var bedType: String?
+    private var viewModel = ViewModel()
     
 //MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = Appearance.greenGradient
         
         let radius: CGFloat = 5
         NotificationCenter.default.addObserver(self,
@@ -172,7 +170,17 @@ class PropertyViewController: PropertyBaseNavViewController {
         accommodatesTextField.font = Appearance.textFieldFont
         accommodatesTextField.layer.borderColor = Appearance.textFieldBorderColor
         accommodatesTextField.layer.cornerRadius = radius
-
+        
+        submitButton = UIButton()
+        submitButton.isEnabled = true
+        submitButton.translatesAutoresizingMaskIntoConstraints = false
+        submitButton.tag = 6
+        submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.backgroundColor = Appearance.greenGradient
+        submitButton.layer.masksToBounds = true
+        submitButton.layer.cornerRadius = radius
         
         view.addSubview(headerLabel)
         view.addSubview(zipcodeLabel)
@@ -191,18 +199,8 @@ class PropertyViewController: PropertyBaseNavViewController {
         view.addSubview(bedCountTextField)
         view.addSubview(accommodateLabel)
         view.addSubview(accommodatesTextField)
-        
-        submitButton = UIButton()
-        submitButton.isEnabled = true
         view.addSubview(submitButton)
-        submitButton.translatesAutoresizingMaskIntoConstraints = false
-        submitButton.tag = 6
-        submitButton.addTarget(self, action: #selector(displayPrice), for: .touchUpInside)
-        submitButton.setTitle("Submit", for: .normal)
-        submitButton.setTitleColor(.white, for: .normal)
-        submitButton.backgroundColor = Appearance.greenGradient
-        submitButton.layer.masksToBounds = true
-        submitButton.layer.cornerRadius = radius
+
         
         let space: CGFloat = 20
         NSLayoutConstraint.activate([
@@ -271,6 +269,17 @@ class PropertyViewController: PropertyBaseNavViewController {
             submitButton.heightAnchor.constraint(equalToConstant: space * 2),
             submitButton.widthAnchor.constraint(equalTo: zipcodeTextField.widthAnchor, multiplier: 0.5)
         ])
+        
+        viewModel.didFinish = { [weak self] in
+            if let self = self {
+                DispatchQueue.main.async {
+                    let vc = PropertyPriceViewController()
+                    vc.pricePredict = self.viewModel.price
+                    self.present(vc, animated: true)
+                }
+            }
+            
+        }
     }
     
 //MARK:- Methods
@@ -289,39 +298,18 @@ class PropertyViewController: PropertyBaseNavViewController {
               let bedInt = Int(bedString) else {return}
         
         
-        let property = Property(zipcode: zipcode,
-                                propertyType: propertyType,
-                                roomType: roomTypeText,
-                                accommodates: accomodates,
-                                bathrooms: bathroomInt,
-                                bedrooms: bedroomInt,
-                                beds: bedInt,
-                                bedType: bedTypesText)
-        network.postPropeties(property: property) { pricePredict, _ in
-            if let pricePredict = pricePredict {
-                DispatchQueue.main.async {
-                    let vc = PropertyPriceViewController()
-                    vc.pricePredict = pricePredict
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
+        let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomTypeText,
+                                accommodates: accomodates, bathrooms: bathroomInt, bedrooms: bedroomInt,
+                                beds: bedInt, bedType: bedTypesText)
+        viewModel.predictPrice(property: property)
     }
 
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if accommodatesTextField.isEditing {
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                if self.view.frame.origin.y == 0 {
-                    self.view.frame.origin.y -= keyboardSize.height - 200
-                }
-            }
-        }
-    
         dropDownBedTypeTextfield.listWillAppear {
             if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 if self.view.frame.origin.y == 0 {
-                    self.view.frame.origin.y -= keyboardSize.height - 280
+                    self.view.frame.origin.y -= keyboardSize.height - 300
                 }
             }
         }
@@ -339,7 +327,7 @@ class PropertyViewController: PropertyBaseNavViewController {
 
 }
 
-
+    // MARK: -  UITextFieldDelegate
 extension PropertyViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
