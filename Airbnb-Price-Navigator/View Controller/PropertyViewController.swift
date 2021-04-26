@@ -13,7 +13,8 @@ import iOSDropDown
 class PropertyViewController: PropertyBaseNavViewController {
     
 
-//MARK: - Properties
+    //MARK: - Properties
+    private var backgroundView: UIImageView!
     private var bedroomTextField: UITextField!
     private var bathroomsTextField: UITextField!
     @objc dynamic var accommodatesTextField: UITextField!
@@ -31,14 +32,13 @@ class PropertyViewController: PropertyBaseNavViewController {
     private var roomType: String?
     private var bedType: String?
     private var viewModel = ViewModel()
+    let radius: CGFloat = 5
     
 //MARK:- UI SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationController?.navigationBar.barTintColor = Appearance.greenGradient
         
-        let radius: CGFloat = 5
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -49,6 +49,12 @@ class PropertyViewController: PropertyBaseNavViewController {
                                                object: nil)
        
 
+        let height = view.frame.height * 1/4
+        let width = view.frame.width
+        backgroundView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        backgroundView.image = UIImage(named: "backgroundImage")
+        applyGradient(with: [Appearance.blackGradient.cgColor, UIColor.white.cgColor])
+        
         let headerLabel = UILabel()
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         headerLabel.text = "Find out the value of your property!"
@@ -56,120 +62,23 @@ class PropertyViewController: PropertyBaseNavViewController {
         headerLabel.textAlignment = .center
         headerLabel.font = Appearance.headerFont
         
-        let zipcodeLabel = UILabel()
-        zipcodeLabel.translatesAutoresizingMaskIntoConstraints = false
-        zipcodeLabel.text = "Zip Code"
-        zipcodeLabel.font = Appearance.labelFont
-        zipcodeTextField = UITextField(frame: .zero)
-        zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
-        zipcodeTextField.delegate = self
-        zipcodeTextField.layer.borderWidth = 1.0
-        zipcodeTextField.layer.borderColor = Appearance.textFieldBorderColor
-        zipcodeTextField.layer.cornerRadius = radius
-        zipcodeTextField.font = Appearance.textFieldFont
-        zipcodeTextField.placeholder = "90210"
-        
-        let propertyLabel = UILabel()
-        propertyLabel.translatesAutoresizingMaskIntoConstraints = false
-        propertyLabel.text = "Property Type"
-        propertyLabel.font = Appearance.labelFont
-        dropDownPropertyTextfield = DropDown(frame: .zero)
-        dropDownPropertyTextfield.optionArray = propertyTypes
-        dropDownPropertyTextfield.placeholder = propertyTypes[0]
-        dropDownPropertyTextfield.checkMarkEnabled = false
-        dropDownPropertyTextfield.selectedRowColor = Appearance.greenGradient
-        dropDownPropertyTextfield.isSearchEnable = false
-        dropDownPropertyTextfield.translatesAutoresizingMaskIntoConstraints = false
-        dropDownPropertyTextfield.delegate = self
-        dropDownPropertyTextfield.font = Appearance.textFieldFont
-        dropDownPropertyTextfield.borderWidth = 1.0
-        dropDownPropertyTextfield.layer.borderColor = Appearance.textFieldBorderColor
-        dropDownPropertyTextfield.layer.cornerRadius = radius
-        
-        let roomTypeLabel = UILabel()
-        roomTypeLabel.translatesAutoresizingMaskIntoConstraints = false
-        roomTypeLabel.text = "Room Type"
-        roomTypeLabel.font = Appearance.labelFont
-        dropDownRoomTypeTextfield = DropDown(frame: .zero)
-        dropDownRoomTypeTextfield.optionArray = roomTypes
-        dropDownPropertyTextfield.placeholder = roomTypes[0]
-        dropDownRoomTypeTextfield.checkMarkEnabled = false
-        dropDownRoomTypeTextfield.selectedRowColor = Appearance.greenGradient
-        dropDownRoomTypeTextfield.isSearchEnable = false
-        dropDownRoomTypeTextfield.translatesAutoresizingMaskIntoConstraints = false
-        dropDownRoomTypeTextfield.font = Appearance.textFieldFont
-        dropDownRoomTypeTextfield.delegate = self
-        dropDownRoomTypeTextfield.borderWidth = 1.0
-        dropDownRoomTypeTextfield.layer.borderColor = Appearance.textFieldBorderColor
-        dropDownRoomTypeTextfield.layer.cornerRadius = radius
+        zipcodeTextField = UITextField()
+        dropDownPropertyTextfield = DropDown()
+        dropDownRoomTypeTextfield = DropDown()
+        dropDownBedTypeTextfield = DropDown()
+        addTextField(zipcodeTextField, with: "Zip Code")
+        addDropdownTextField(dropDownPropertyTextfield, with: propertyTypes, "Property Type")
+        addDropdownTextField(dropDownRoomTypeTextfield, with: roomTypes, "Room Type")
+        addDropdownTextField(dropDownBedTypeTextfield, with: bedTypes, "Bed Type")
         
         let bedroomsLabel = UILabel()
-        bedroomsLabel.translatesAutoresizingMaskIntoConstraints = false
-        bedroomsLabel.text = "Bedrooms"
-        bedroomsLabel.font = Appearance.labelFont
-        bedroomTextField = UITextField()
-        bedroomTextField.translatesAutoresizingMaskIntoConstraints = false
-        bedroomTextField.delegate = self
-        bedroomTextField.layer.borderWidth = 1.0
-        bedroomTextField.font = Appearance.textFieldFont
-        bedroomTextField.layer.borderColor = Appearance.textFieldBorderColor
-        bedroomTextField.placeholder = "# of Bedrooms"
-        bedroomTextField.layer.cornerRadius = radius
-        
         let bathroomsLabel = UILabel()
-        bathroomsLabel.translatesAutoresizingMaskIntoConstraints = false
-        bathroomsLabel.text = "Bathrooms"
-        bathroomsLabel.font = Appearance.labelFont
-        bathroomsTextField = UITextField()
-        bathroomsTextField.translatesAutoresizingMaskIntoConstraints = false
-        bathroomsTextField.delegate = self
-        bathroomsTextField.layer.borderWidth = 1.0
-        bathroomsTextField.font = Appearance.textFieldFont
-        bathroomsTextField.layer.borderColor = Appearance.textFieldBorderColor
-        bathroomsTextField.placeholder = "# of Bathrooms"
-        bathroomsTextField.layer.cornerRadius = radius
-        
-        let bedTypesLabel = UILabel()
-        bedTypesLabel.translatesAutoresizingMaskIntoConstraints = false
-        bedTypesLabel.text = "Bed Types"
-        bedTypesLabel.font = Appearance.labelFont
-        dropDownBedTypeTextfield = DropDown()
-        dropDownBedTypeTextfield.optionArray = bedTypes
-        dropDownBedTypeTextfield.placeholder = bedTypes[0]
-        dropDownBedTypeTextfield.checkMarkEnabled = false
-        dropDownBedTypeTextfield.selectedRowColor = Appearance.greenGradient
-        dropDownBedTypeTextfield.isSearchEnable = false
-        dropDownBedTypeTextfield.translatesAutoresizingMaskIntoConstraints = false
-        dropDownBedTypeTextfield.font = Appearance.textFieldFont
-        dropDownBedTypeTextfield.delegate = self
-        dropDownBedTypeTextfield.borderWidth = 1.0
-        dropDownBedTypeTextfield.layer.borderColor = Appearance.textFieldBorderColor
-        dropDownBedTypeTextfield.layer.cornerRadius = radius
-        
         let bedLabel = UILabel()
-        bedLabel.translatesAutoresizingMaskIntoConstraints = false
-        bedLabel.text = "Bed"
-        bedLabel.font = Appearance.labelFont
-        bedCountTextField = UITextField()
-        bedCountTextField.translatesAutoresizingMaskIntoConstraints = false
-        bedCountTextField.font = Appearance.textFieldFont
-        bedCountTextField.placeholder = "# of Beds"
-        bedCountTextField.layer.borderWidth = 1.0
-        bedCountTextField.layer.borderColor = Appearance.textFieldBorderColor
-        bedCountTextField.layer.cornerRadius = radius
-        
         let accommodateLabel = UILabel()
-        accommodateLabel.translatesAutoresizingMaskIntoConstraints = false
-        accommodateLabel.text = "Accomodates how many guest?"
-        accommodateLabel.font = Appearance.labelFont
-        accommodatesTextField = UITextField(frame: .zero)
-        accommodatesTextField.translatesAutoresizingMaskIntoConstraints = false
-        accommodatesTextField.placeholder = "0"
-        accommodatesTextField.layer.borderWidth = 1.0
-        accommodatesTextField.delegate = self
-        accommodatesTextField.font = Appearance.textFieldFont
-        accommodatesTextField.layer.borderColor = Appearance.textFieldBorderColor
-        accommodatesTextField.layer.cornerRadius = radius
+        addLabel(bedroomsLabel, with: "No. of Bedrooms")
+        addLabel(bathroomsLabel, with: "No of Bathrooms")
+        addLabel(bedLabel, with: "No. of Beds")
+        addLabel(accommodateLabel, with: "Accomodates how many guests")
         
         submitButton = UIButton()
         submitButton.isEnabled = true
@@ -182,24 +91,8 @@ class PropertyViewController: PropertyBaseNavViewController {
         submitButton.layer.masksToBounds = true
         submitButton.layer.cornerRadius = radius
         
+        view.addSubview(backgroundView)
         view.addSubview(headerLabel)
-        view.addSubview(zipcodeLabel)
-        view.addSubview(zipcodeTextField)
-        view.addSubview(propertyLabel)
-        view.addSubview(dropDownPropertyTextfield)
-        view.addSubview(roomTypeLabel)
-        view.addSubview(dropDownRoomTypeTextfield)
-        view.addSubview(bedroomsLabel)
-        view.addSubview(bedroomTextField)
-        view.addSubview(bathroomsLabel)
-        view.addSubview(bathroomsTextField)
-        view.addSubview(bedTypesLabel)
-        view.addSubview(dropDownBedTypeTextfield)
-        view.addSubview(bedLabel)
-        view.addSubview(bedCountTextField)
-        view.addSubview(accommodateLabel)
-        view.addSubview(accommodatesTextField)
-        view.addSubview(submitButton)
 
         
         let space: CGFloat = 20
@@ -208,66 +101,25 @@ class PropertyViewController: PropertyBaseNavViewController {
             headerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             headerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             
-            zipcodeLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: space * 2),
-            zipcodeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            zipcodeTextField.topAnchor.constraint(equalTo: zipcodeLabel.bottomAnchor),
+            zipcodeTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 1/3),
             zipcodeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             zipcodeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             zipcodeTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            propertyLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor, constant: space / 4),
-            propertyLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            dropDownPropertyTextfield.topAnchor.constraint(equalTo: propertyLabel.bottomAnchor),
+
+            dropDownPropertyTextfield.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor, constant: space / 2),
             dropDownPropertyTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             dropDownPropertyTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             dropDownPropertyTextfield.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            roomTypeLabel.topAnchor.constraint(equalTo: dropDownPropertyTextfield.bottomAnchor, constant: space / 4),
-            roomTypeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            dropDownRoomTypeTextfield.topAnchor.constraint(equalTo: roomTypeLabel.bottomAnchor),
+
+            dropDownRoomTypeTextfield.topAnchor.constraint(equalTo:dropDownPropertyTextfield.bottomAnchor, constant: space / 2),
             dropDownRoomTypeTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             dropDownRoomTypeTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             dropDownRoomTypeTextfield.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            bedTypesLabel.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 4),
-            bedTypesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            dropDownBedTypeTextfield.topAnchor.constraint(equalTo: bedTypesLabel.bottomAnchor),
+
+            dropDownBedTypeTextfield.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 2),
             dropDownBedTypeTextfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            dropDownBedTypeTextfield.widthAnchor.constraint(equalTo: dropDownRoomTypeTextfield.widthAnchor, multiplier: 0.49),
-            dropDownBedTypeTextfield.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            bedLabel.topAnchor.constraint(equalTo: dropDownRoomTypeTextfield.bottomAnchor, constant: space / 4),
-            bedLabel.leadingAnchor.constraint(equalTo: dropDownBedTypeTextfield.trailingAnchor, constant: space / 4),
-            bedCountTextField.topAnchor.constraint(equalTo: bedLabel.bottomAnchor),
-            bedCountTextField.leadingAnchor.constraint(equalTo: dropDownBedTypeTextfield.trailingAnchor, constant: space / 6),
-            bedCountTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
-            bedCountTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            bedroomsLabel.topAnchor.constraint(equalTo: dropDownBedTypeTextfield.bottomAnchor, constant: space / 4),
-            bedroomsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            bedroomTextField.topAnchor.constraint(equalTo: bedroomsLabel.bottomAnchor),
-            bedroomTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            bedroomTextField.widthAnchor.constraint(equalTo: dropDownRoomTypeTextfield.widthAnchor, multiplier: 0.49),
-            bedroomTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            bathroomsLabel.topAnchor.constraint(equalTo: dropDownBedTypeTextfield.bottomAnchor, constant: space / 4),
-            bathroomsLabel.leadingAnchor.constraint(equalTo: bedroomTextField.trailingAnchor, constant: space / 4),
-            bathroomsTextField.topAnchor.constraint(equalTo: bathroomsLabel.bottomAnchor),
-            bathroomsTextField.leadingAnchor.constraint(equalTo: bedroomTextField.trailingAnchor, constant: space / 6),
-            bathroomsTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
-            bathroomsTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            accommodateLabel.topAnchor.constraint(equalTo: bathroomsTextField.bottomAnchor, constant: space / 4),
-            accommodateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            accommodatesTextField.topAnchor.constraint(equalTo: accommodateLabel.bottomAnchor),
-            accommodatesTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            accommodatesTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
-            accommodatesTextField.heightAnchor.constraint(equalToConstant: space * 3/2),
-            
-            submitButton.topAnchor.constraint(equalTo: accommodatesTextField.bottomAnchor, constant: space),
-            submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            submitButton.heightAnchor.constraint(equalToConstant: space * 2),
-            submitButton.widthAnchor.constraint(equalTo: zipcodeTextField.widthAnchor, multiplier: 0.5)
+            dropDownBedTypeTextfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
+            dropDownBedTypeTextfield.heightAnchor.constraint(equalToConstant: space * 3/2)
         ])
         
         viewModel.didFinish = { [weak self] in
@@ -280,6 +132,10 @@ class PropertyViewController: PropertyBaseNavViewController {
             }
             
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
 //MARK:- Methods
@@ -323,6 +179,58 @@ class PropertyViewController: PropertyBaseNavViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    
+    private func addLabel(_ label: UILabel, with title: String) {
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = title
+        label.font = Appearance.labelFont
+        view.addSubview(label)
+    }
+    
+    private func addTextField( _ textField: UITextField, with placholder: String) {
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.attributedText = attributedTextForTextField(placholder)
+        textField.delegate = self
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = radius
+        textField.font = Appearance.textFieldFont
+        textField.layer.borderColor = Appearance.textFieldBorderColor
+        textField.placeholder = placholder
+        view.addSubview(textField)
+    }
+    
+    private func addDropdownTextField(_ textField: DropDown, with options: [String], _ placeholder: String) {
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.attributedText = attributedTextForTextField(placeholder)
+        textField.optionArray = options
+        textField.checkMarkEnabled = false
+        textField.isSearchEnable = false
+        textField.selectedRowColor = Appearance.greenGradient
+        textField.delegate = self
+        textField.borderWidth = 1.0
+        textField.layer.borderColor = Appearance.textFieldBorderColor
+        textField.layer.cornerRadius = radius
+        view.addSubview(textField)
+        
+    }
+    
+    private func applyGradient(with colors: [CGColor]) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors
+        gradientLayer.frame = backgroundView.bounds
+        gradientLayer.locations = [0.6, 1]
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    private func attributedTextForTextField(_ placeholder: String) -> NSAttributedString {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .left
+        paragraph.firstLineHeadIndent = 5.0
+        let attributedText: [NSAttributedString.Key : Any] =  [.paragraphStyle : paragraph,
+                                                               .font : Appearance.textFieldFont!]
+        return NSAttributedString(string: placeholder, attributes: attributedText)
     }
 
 }
