@@ -10,18 +10,22 @@ import UIKit
 
 class PropertyPriceViewController: PropertyBaseNavViewController {
     
+    //MARK:- UI Oultets
+    var valuesLabel: UILabel!
+    var priceView: UIView!
+    var doneButton: UIButton!
+    
     //MARK:- Properties
     var pricePredict: PricePredict?
-    var valuesLabel: UILabel!
     let space: CGFloat = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Appearance.greenGradient
+        view.backgroundColor = .clear
         
         valuesLabel = UILabel()
-        valuesLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(valuesLabel)
+        valuesLabel.translatesAutoresizingMaskIntoConstraints = false
         valuesLabel.textAlignment = .center
         valuesLabel.textColor = .white
         valuesLabel.numberOfLines = 0
@@ -30,6 +34,29 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         valuesLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         valuesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space).isActive = true
         valuesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space).isActive = true
+        
+        doneButton = UIButton()
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        doneButton.layer.masksToBounds = true
+        doneButton.layer.cornerRadius =  space / 4
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitleColor(Appearance.greenGradient, for: .normal)
+        doneButton.tintColor =  Appearance.greenGradient
+        
+        let height = view.frame.height
+        priceView = UILabel(frame: CGRect(x: 0, y: height / 2, width: view.frame.width, height: height / 2))
+        priceView.layer.masksToBounds = true
+        priceView.layer.cornerRadius = space * 2
+        priceView.backgroundColor = .white
+        priceView.addSubview(doneButton)
+        
+        view.addSubview(priceView)
+        
+        NSLayoutConstraint.activate([
+            doneButton.topAnchor.constraint(equalTo: priceView.topAnchor, constant: space),
+            doneButton.trailingAnchor.constraint(equalTo: priceView.trailingAnchor, constant: -space)
+        ])
         
         updatePrice()
         updateForNoData()
@@ -58,38 +85,9 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
         }
         
         valuesLabel.text = "$\(281) / night"
-        
-        let backGroundView = UIView()
-        view.addSubview(backGroundView)
-        backGroundView.backgroundColor =  UIColor.black.withAlphaComponent(0.5)
-        backGroundView.translatesAutoresizingMaskIntoConstraints = false
-        backGroundView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 300).isActive = true
-        backGroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        backGroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        backGroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
-        
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        backGroundView.addSubview(stackView)
-        stackView.backgroundColor = .white
-        stackView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 350).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150).isActive = true
-        
-        let textLabel = UILabel()
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.backgroundColor = .white
-        stackView.addArrangedSubview(textLabel)
-        textLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 60).isActive = true
-        textLabel.text =  "No Data For Your Zip Code"
-        textLabel.font = .systemFont(ofSize: 20.0, weight: .medium)
-        textLabel.textAlignment = .center
  
         
         let textView = UITextView()
-        stackView.addArrangedSubview(textView)
         textView.isEditable = false
         textView.sizeToFit()
         textView.textAlignment = .center
@@ -98,5 +96,9 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
                     The national average for the parameters entered is $281/night.
                     """
     
+    }
+    
+    @objc func dismissView() {
+        presentingViewController?.dismiss(animated: true)
     }
 }

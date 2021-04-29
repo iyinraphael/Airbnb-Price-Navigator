@@ -13,18 +13,23 @@ import iOSDropDown
 class PropertyViewController: PropertyBaseNavViewController {
     
 
-    //MARK: - Properties
-    private var backgroundView: UIImageView!
+    //MARK: - Outlets
     private var bedroomSlider: UISlider!
     private var bathroomsSlider: UISlider!
-    @objc dynamic var accommodateSlider: UISlider!
+    private var accommodateSlider: UISlider!
     private var bedCountSlider: UISlider!
+    private var backgroundView: UIImageView!
+    private var submitButton: UIButton!
     private var zipcodeTextField: UITextField!
+    private var numberOfBedsLabel: UILabel!
+    private var numberOfBedroomLabel: UILabel!
+    private var numberOfBathroomLabel: UILabel!
+    private var numberOfaccomodateLabel: UILabel!
     private var dropDownPropertyTextfield: DropDown!
     private var dropDownRoomTypeTextfield: DropDown!
     private var dropDownBedTypeTextfield: DropDown!
-    private var submitButton: UIButton!
     
+    // MARK: - Properties
     private let roomTypes = ["Entire home/apt", "Private Room", "Shared Room"]
     private let bedTypes = ["Real Bed",  "Couch", "Futon", "Pull-Out Sofa", "Airbed"]
     private let propertyTypes = ["House", "Apartment", "Condominium", "Townhouse",
@@ -71,14 +76,23 @@ class PropertyViewController: PropertyBaseNavViewController {
         addDropdownTextField(dropDownRoomTypeTextfield, with: roomTypes, "Room Type")
         addDropdownTextField(dropDownBedTypeTextfield, with: bedTypes, "Bed Type")
         
+
         let bedroomsLabel = UILabel()
         let bathroomsLabel = UILabel()
         let bedLabel = UILabel()
         let accommodateLabel = UILabel()
+        numberOfBedsLabel = UILabel()
+        numberOfBedroomLabel = UILabel()
+        numberOfBathroomLabel = UILabel()
+        numberOfaccomodateLabel = UILabel()
         addLabel(bedroomsLabel, with: "No. of Bedrooms")
         addLabel(bathroomsLabel, with: "No of Bathrooms")
         addLabel(bedLabel, with: "No. of Beds")
         addLabel(accommodateLabel, with: "Accomodates how many guests?")
+        addLabel(numberOfBedsLabel, with: "0")
+        addLabel(numberOfBedroomLabel, with: "0")
+        addLabel(numberOfBathroomLabel, with: "0")
+        addLabel(numberOfaccomodateLabel, with: "0")
         
         bedCountSlider = UISlider()
         bedroomSlider = UISlider()
@@ -88,7 +102,10 @@ class PropertyViewController: PropertyBaseNavViewController {
         addSlider(bedroomSlider, from: 0, to: 15)
         addSlider(bathroomsSlider, from: 0, to: 10)
         addSlider(accommodateSlider, from: 0, to: 30)
-        
+        bedCountSlider.addTarget(self, action: #selector(bedsCountSliderChanged), for: .valueChanged)
+        bedroomSlider.addTarget(self, action: #selector(numberOfBedroomSliderChanged), for: .valueChanged)
+        bathroomsSlider.addTarget(self, action: #selector(numberOfBathroomSliderChanged), for: .valueChanged)
+        accommodateSlider.addTarget(self, action: #selector(numberOfaccomodateSliderChanged), for: .valueChanged)
         
         submitButton = UIButton()
         submitButton.isEnabled = true
@@ -134,25 +151,33 @@ class PropertyViewController: PropertyBaseNavViewController {
             
             bedLabel.topAnchor.constraint(equalTo: dropDownBedTypeTextfield.bottomAnchor, constant: space / 2),
             bedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
-            bedCountSlider.topAnchor.constraint(equalTo: bedLabel.bottomAnchor, constant: space / 4),
+            numberOfBedsLabel.topAnchor.constraint(equalTo: bedLabel.topAnchor),
+            numberOfBedsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
+            bedCountSlider.topAnchor.constraint(equalTo: bedLabel.bottomAnchor),
             bedCountSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             bedCountSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             
             bedroomsLabel.topAnchor.constraint(equalTo: bedCountSlider.bottomAnchor, constant: space / 2),
             bedroomsLabel.leadingAnchor.constraint(equalTo: bedCountSlider.leadingAnchor),
-            bedroomSlider.topAnchor.constraint(equalTo: bedroomsLabel.bottomAnchor, constant: space / 4),
+            numberOfBedroomLabel.topAnchor.constraint(equalTo: bedroomsLabel.topAnchor),
+            numberOfBedroomLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
+            bedroomSlider.topAnchor.constraint(equalTo: bedroomsLabel.bottomAnchor),
             bedroomSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             bedroomSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
-            
+
             bathroomsLabel.topAnchor.constraint(equalTo: bedroomSlider.bottomAnchor, constant: space / 2),
             bathroomsLabel.leadingAnchor.constraint(equalTo: bedroomsLabel.leadingAnchor),
-            bathroomsSlider.topAnchor.constraint(equalTo: bathroomsLabel.bottomAnchor, constant: space / 4),
+            numberOfBathroomLabel.topAnchor.constraint(equalTo: bathroomsLabel.topAnchor),
+            numberOfBathroomLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
+            bathroomsSlider.topAnchor.constraint(equalTo: bathroomsLabel.bottomAnchor),
             bathroomsSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             bathroomsSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
-            
+
             accommodateLabel.topAnchor.constraint(equalTo: bathroomsSlider.bottomAnchor, constant: space / 2),
             accommodateLabel.leadingAnchor.constraint(equalTo: bathroomsSlider.leadingAnchor),
-            accommodateSlider.topAnchor.constraint(equalTo: accommodateLabel.bottomAnchor, constant: space / 4),
+            numberOfaccomodateLabel.topAnchor.constraint(equalTo: accommodateLabel.topAnchor),
+            numberOfaccomodateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
+            accommodateSlider.topAnchor.constraint(equalTo: accommodateLabel.bottomAnchor),
             accommodateSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space),
             accommodateSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space),
             
@@ -198,6 +223,8 @@ class PropertyViewController: PropertyBaseNavViewController {
 //                                accommodates: accomodates, bathrooms: bathroomInt, bedrooms: bedroomInt,
 //                                beds: bedInt, bedType: bedTypesText)
 //        viewModel.predictPrice(property: property)
+        
+        present(PropertyPriceViewController(), animated: true)
     }
 
     
@@ -263,11 +290,9 @@ class PropertyViewController: PropertyBaseNavViewController {
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue  = minValue
         slider.maximumValue = maxValue
-        slider.value = minValue
         slider.thumbTintColor = Appearance.greenGradient
         slider.minimumTrackTintColor = Appearance.greenGradient
         view.addSubview(slider)
-        
     }
     
     private func applyGradient(with colors: [CGColor]) {
@@ -292,6 +317,22 @@ class PropertyViewController: PropertyBaseNavViewController {
         paragraph.firstLineHeadIndent = 5.0
         let attributedText =  [NSAttributedString.Key.paragraphStyle : paragraph, .font : Appearance.labelFont!]
         return NSAttributedString(string: placeholder, attributes: attributedText)
+    }
+    
+    @objc func bedsCountSliderChanged(_ sender: UISlider) {
+        numberOfBedsLabel.text = "\(Int(sender.value))"
+    }
+    
+    @objc func numberOfBedroomSliderChanged(_ sender: UISlider) {
+        numberOfBedroomLabel.text = "\(Int(sender.value))"
+    }
+    
+    @objc func numberOfBathroomSliderChanged(_ sender: UISlider) {
+        numberOfBathroomLabel.text = "\(Int(sender.value))"
+    }
+    
+    @objc func numberOfaccomodateSliderChanged( _ sender: UISlider) {
+        numberOfaccomodateLabel.text = "\(Int(sender.value))"
     }
 }
 
