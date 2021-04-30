@@ -12,6 +12,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     //MARK:- UI Oultets
     var valuesLabel: UILabel!
+    var titleLabel: UILabel!
     var priceView: UIView!
     var doneButton: UIButton!
     
@@ -22,40 +23,54 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
+
+        titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = "Your property could be worth"
+        titleLabel.font = Appearance.titleFont
+        titleLabel.textColor = .black
         
         valuesLabel = UILabel()
-        view.addSubview(valuesLabel)
         valuesLabel.translatesAutoresizingMaskIntoConstraints = false
         valuesLabel.textAlignment = .center
-        valuesLabel.textColor = .white
-        valuesLabel.numberOfLines = 0
+        valuesLabel.textColor = Appearance.greenGradient
         valuesLabel.adjustsFontSizeToFitWidth = true
-        valuesLabel.font = .systemFont(ofSize: space, weight: .bold)
-        valuesLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        valuesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: space).isActive = true
-        valuesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -space).isActive = true
+        valuesLabel.font = Appearance.headerFont
         
         doneButton = UIButton()
         doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        doneButton.isUserInteractionEnabled = true
+        doneButton.addTarget(self, action: #selector(removeViewFromParent), for: .touchUpInside)
         doneButton.layer.masksToBounds = true
-        doneButton.layer.cornerRadius =  space / 4
+        doneButton.layer.cornerRadius =  space / 2
         doneButton.setTitle("Done", for: .normal)
+        doneButton.titleLabel?.font  = Appearance.labelFont
         doneButton.setTitleColor(Appearance.greenGradient, for: .normal)
         doneButton.tintColor =  Appearance.greenGradient
+        doneButton.backgroundColor = Appearance.greenGradientShade
         
         let height = view.frame.height
         priceView = UILabel(frame: CGRect(x: 0, y: height / 2, width: view.frame.width, height: height / 2))
         priceView.layer.masksToBounds = true
         priceView.layer.cornerRadius = space * 2
         priceView.backgroundColor = .white
-        priceView.addSubview(doneButton)
         
         view.addSubview(priceView)
+        view.addSubview(doneButton)
+        view.addSubview(valuesLabel)
+        view.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
             doneButton.topAnchor.constraint(equalTo: priceView.topAnchor, constant: space),
-            doneButton.trailingAnchor.constraint(equalTo: priceView.trailingAnchor, constant: -space)
+            doneButton.trailingAnchor.constraint(equalTo: priceView.trailingAnchor, constant: -space),
+            doneButton.heightAnchor.constraint(equalToConstant: space),
+            doneButton.widthAnchor.constraint(equalToConstant: space * 2),
+            
+            titleLabel.topAnchor.constraint(equalTo: priceView.topAnchor, constant: space * 3),
+            titleLabel.centerXAnchor.constraint(equalTo: priceView.centerXAnchor),
+            
+            valuesLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: space * 3),
+            valuesLabel.centerXAnchor.constraint(equalTo: priceView.centerXAnchor)
         ])
         
         updatePrice()
@@ -67,7 +82,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
        
         
         if let pricePredict = pricePredict {
-            valuesLabel.text = " Your property could be worth $\(pricePredict.prediction) / night"
+            valuesLabel.text = " $\(pricePredict.prediction)/night"
             print(pricePredict.prediction)
         }
         
@@ -98,7 +113,7 @@ class PropertyPriceViewController: PropertyBaseNavViewController {
     
     }
     
-    @objc func dismissView() {
-        presentingViewController?.dismiss(animated: true)
+    @objc func removeViewFromParent() {
+        self.dismiss(animated: true)
     }
 }

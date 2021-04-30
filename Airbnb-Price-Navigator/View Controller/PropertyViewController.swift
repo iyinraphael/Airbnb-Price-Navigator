@@ -203,28 +203,32 @@ class PropertyViewController: PropertyBaseNavViewController {
         return .lightContent
     }
     
-//MARK:- Methods
+    //MARK:- Methods
     @objc func displayPrice() {
         
-//        guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
-//              let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty,
-//              let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,
-//              let bedroomString = bedroomS.text, !bedroomString.isEmpty, let bedroomInt = Int(bedroomString),
-//              let bathroomString = bathroomsTextField.text, !bathroomString.isEmpty,
-//              let bathroomInt = Int(bathroomString),
-//              let bedTypesText = dropDownBedTypeTextfield.text, !bedTypesText.isEmpty,
-//              let accomodationString = accommodatesTextField.text, !accomodationString.isEmpty,
-//              let accomodates = Int(accomodationString),
-//              let bedString = bedCountTextField.text, !bedString.isEmpty,
-//              let bedInt = Int(bedString) else {return}
-//
-//
-//        let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomTypeText,
-//                                accommodates: accomodates, bathrooms: bathroomInt, bedrooms: bedroomInt,
-//                                beds: bedInt, bedType: bedTypesText)
-//        viewModel.predictPrice(property: property)
+        guard let zipcode = zipcodeTextField.text, !zipcode.isEmpty,
+              let propertyType = dropDownPropertyTextfield.text, !propertyType.isEmpty,
+              let roomTypeText = dropDownRoomTypeTextfield.text, !roomTypeText.isEmpty,
+              let bedTypesText = dropDownBedTypeTextfield.text, !bedTypesText.isEmpty else { return }
+              
+        let numberOfBeds = Int(bedCountSlider.value)
+        let numberOfBedrooms = Int(bedroomSlider.value)
+        let numberOfBathrooms = Int(bathroomsSlider.value)
+        let numberOfOccupants = Int(accommodateSlider.value)
+              
+
+
+        let property = Property(zipcode: zipcode, propertyType: propertyType, roomType: roomTypeText,
+                                accommodates: numberOfOccupants, bathrooms: numberOfBathrooms, bedrooms: numberOfBedrooms,
+                                beds: numberOfBeds, bedType: bedTypesText)
         
-        present(PropertyPriceViewController(), animated: true)
+        viewModel.predictPrice(property: property) { [weak self ] in
+            DispatchQueue.main.async {
+                let vc = PropertyPriceViewController()
+                vc.pricePredict = self?.viewModel.price
+                self?.present(vc, animated: true)
+            }
+        }
     }
 
     
@@ -253,6 +257,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = title
         label.font = Appearance.labelFont
+        label.textColor = .black
         view.addSubview(label)
     }
     
@@ -277,6 +282,7 @@ class PropertyViewController: PropertyBaseNavViewController {
         textField.optionArray = options
         textField.checkMarkEnabled = false
         textField.isSearchEnable = false
+        textField.allowsEditingTextAttributes = false
         textField.selectedRowColor = Appearance.greenGradient
         textField.delegate = self
         textField.borderWidth = 1.0

@@ -13,19 +13,13 @@ class ViewModel {
     // MARK: - Property
     private let network = Network()
     var didFinish: (()-> ())?
-    var price: PricePredict? {
-        didSet {
-            self.didFinish?()
-        }
-    }
+    var price: PricePredict?
     
-    
-    
-    func predictPrice(property: Property) {
+    func predictPrice(property: Property, completion: @escaping () -> () ) {
         network.postPropeties(property: property) { price, _ in
             if let price = price {
                 self.price = price
-                
+                completion()
             }
         }
     }
